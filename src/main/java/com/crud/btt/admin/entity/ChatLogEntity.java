@@ -16,9 +16,10 @@ import java.util.Date;
 @Entity
 public class ChatLogEntity {
 
+
+//    @SequenceGenerator(name = "chat_log_Sequence", sequenceName = "seq_chat_log", allocationSize = 1)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-   // @SequenceGenerator(name = "chat_log_Sequence", sequenceName = "seq_chat_log", allocationSize = 1)
     @Column(name = "LOG_NO")
     private long log_no;        //로그순번
     @Column(name = "USER_CODE1")
