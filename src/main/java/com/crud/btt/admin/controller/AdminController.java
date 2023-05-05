@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
 public class AdminController {
-    private final AdminService adminService;
+//    private final AdminService adminService;
 
 //    @GetMapping("counseling/chattinglist")
 //    public Header<List<ChatLogDto>> ChatLogList (@PageableDefault(sort = {"log_no"})Pageable pageable,
@@ -23,8 +23,8 @@ public class AdminController {
 //    }
 
     //chatlog table insert
-    public ChatLogEntity create(@RequestBody ChatLogDto chatLogDto){
-        return adminService.create(chatLogDto);
-    }
+//    public ChatLogEntity create(@RequestBody ChatLogDto chatLogDto){
+//        return adminService.create(chatLogDto);
+//    }
 
 }

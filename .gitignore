@@ -53,3 +53,4 @@ build
 /src/main/resources/static/js/
 /src/main/resources/static/favicon.ico
 /src/main/resources/static/index.html
+/src/test/java/com/crud/btt/MemberConnectTest.java
