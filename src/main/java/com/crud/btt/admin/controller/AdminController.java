@@ -18,7 +18,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class AdminController {
-    private final AdminService adminService;
+//    private final AdminService adminService;
 
     //chatlist 출력용
     @GetMapping("counseling/chattinglist")

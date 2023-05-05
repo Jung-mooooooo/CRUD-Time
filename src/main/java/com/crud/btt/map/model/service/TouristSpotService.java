@@ -34,8 +34,8 @@ public class TouristSpotService {
     //카테고리(미술관)별 리스트 조회
 
     //등록
-    public TouristSpotEntity create(TouristSpotDto touristSpotDto) {
-    }
+//    public TouristSpotEntity create(TouristSpotDto touristSpotDto) {
+//    }
     //수정
 
     //삭제
