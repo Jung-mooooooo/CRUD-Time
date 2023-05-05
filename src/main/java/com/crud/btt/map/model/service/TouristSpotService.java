@@ -15,7 +15,7 @@ import java.util.List;
 public class TouristSpotService {
 
     //지도 목록 조회(페이징 처리)
-    public Header<List<TouristSpotDto>> getTouristSpotList(){}
+//    public Header<List<TouristSpotDto>> getTouristSpotList(){}
 
     //검색 장소 리스트 조회
 

@@ -1,5 +1,6 @@
 package com.crud.btt.member.entity;
 
+import com.crud.btt.member.model.dto.MemberDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,11 +11,11 @@ import java.sql.Date;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
-@Table(name = "MEMBER")
+@NoArgsConstructor
+@Table(name = "Quit")
 @Entity
-public class QuitEntity {
+public class QuitEntity extends MemberDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="quit_user_code")
