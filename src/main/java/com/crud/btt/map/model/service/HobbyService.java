@@ -17,61 +17,61 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class HobbyService {
-    private final HobbyRepository hobbyRepository;
-
-    //지도 목록 조회(페이징 처리)
-    public List<HobbyDto> getHobbyList(Page page){
-
-        return hobbyRepository.getHobbyList(page);
-    }
-
-    //검색 장소 리스트 검색
-    public List<HobbyDto> selectSearchList(){
-
-        return hobbyRepository.selectSearchList();
-    }
-
-    //카테고리(음악)별 리스트 조회
-    public List<HobbyDto> getMusicList(){
-        return hobbyRepository.getMusicList();
-    }
-
-    //카테고리(미술)별 리스트 조회
-    public List<HobbyDto> getArtList(){
-        return hobbyRepository.getArtList();
-    }
-
-    //카테고리(무용)별 리스트 조회
-    public List<HobbyDto> getDanceList(){
-        return hobbyRepository.getDanceList();
-    }
-
-    //카테고리(언어)별 리스트 조회
-    public List<HobbyDto> getLanguageList(){
-        return hobbyRepository.getLanguageList();
-    }
-
-    //카테고리(미디어)별 리스트 조회
-    public List<HobbyDto> getMediaList(){
-        return hobbyRepository.getMediaList();
-    }
-
-
-    //등록
-    public HobbyEntity create(HobbyDto hobbyDto){
-        HobbyEntity entity = HobbyEntity.builder().build();
-
-        return hobbyRepository.save(entity);
-    }
-
-    //수정
-    public HobbyEntity update(HobbyDto hobbyDto){
-        HobbyEntity entity = HobbyEntity.builder().build();
-
-        return hobbyRepository.save(entity);
-    }
-
-    //삭제
-    public void delete(Long hobby_no){}
+//    private final HobbyRepository hobbyRepository;
+//
+//    //지도 목록 조회(페이징 처리)
+//    public List<HobbyDto> getHobbyList(Page page){
+//
+//        return hobbyRepository.getHobbyList(page);
+//    }
+//
+//    //검색 장소 리스트 검색
+//    public List<HobbyDto> selectSearchList(){
+//
+//        return hobbyRepository.selectSearchList();
+//    }
+//
+//    //카테고리(음악)별 리스트 조회
+//    public List<HobbyDto> getMusicList(){
+//        return hobbyRepository.getMusicList();
+//    }
+//
+//    //카테고리(미술)별 리스트 조회
+//    public List<HobbyDto> getArtList(){
+//        return hobbyRepository.getArtList();
+//    }
+//
+//    //카테고리(무용)별 리스트 조회
+//    public List<HobbyDto> getDanceList(){
+//        return hobbyRepository.getDanceList();
+//    }
+//
+//    //카테고리(언어)별 리스트 조회
+//    public List<HobbyDto> getLanguageList(){
+//        return hobbyRepository.getLanguageList();
+//    }
+//
+//    //카테고리(미디어)별 리스트 조회
+//    public List<HobbyDto> getMediaList(){
+//        return hobbyRepository.getMediaList();
+//    }
+//
+//
+//    //등록
+//    public HobbyEntity create(HobbyDto hobbyDto){
+//        HobbyEntity entity = HobbyEntity.builder().build();
+//
+//        return hobbyRepository.save(entity);
+//    }
+//
+//    //수정
+//    public HobbyEntity update(HobbyDto hobbyDto){
+//        HobbyEntity entity = HobbyEntity.builder().build();
+//
+//        return hobbyRepository.save(entity);
+//    }
+//
+//    //삭제
+//    public void delete(Long hobby_no){}
 
 }

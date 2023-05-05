@@ -29,9 +29,9 @@ public class TouristSpotController {
     //카테고리(상담센터)별 리스트 조회
 
     //등록
-    public TouristSpotEntity create(@RequestBody TouristSpotDto touristSpotDto){
-        return touristSpotService.create(touristSpotDto);
-    }
+//    public TouristSpotEntity create(@RequestBody TouristSpotDto touristSpotDto){
+//        return touristSpotService.create(touristSpotDto);
+//    }
 
     //수정
 

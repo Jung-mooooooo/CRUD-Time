@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class NoticeController {
 
-    private final NoticeService noticeService;
+//    private final NoticeService noticeService;
 //
 //    @GetMapping("/admin/AdminNotice")
 //    public Header<List<NoticeDto>> NoticeList(){
