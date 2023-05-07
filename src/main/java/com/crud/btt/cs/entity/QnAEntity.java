@@ -38,5 +38,7 @@ public class QnAEntity {
     @Column(name="QNA_PRIVATE")
     private String qna_private;
     @Column(name="QNA_REF")
-    private int qna_ref;
+    private long qna_ref;
+
+
 }

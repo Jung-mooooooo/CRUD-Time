@@ -6,7 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 @Data
 @AllArgsConstructor
@@ -33,5 +36,11 @@ public class NoticeEntity {
     private String notice_original_file;
     @Column(name="NOTICE_RENAME_FILE")
     private String notice_rename_file;
+
+
+//    public NoticeEntity setNotice_no(Long notice_no){
+//        this.notice_no = notice_no;
+//        return this;
+//    }
 
 }
