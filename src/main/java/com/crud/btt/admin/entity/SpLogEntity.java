@@ -1,4 +1,4 @@
-package com.crud.btt.sp.entity;
+package com.crud.btt.admin.entity;
 
 import lombok.*;
 

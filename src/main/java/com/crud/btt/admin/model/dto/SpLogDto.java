@@ -1,4 +1,4 @@
-package com.crud.btt.sp.model.dto;
+package com.crud.btt.admin.model.dto;
 
 import lombok.*;
 
