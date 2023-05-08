@@ -12,5 +12,5 @@ public interface SpLogRepository extends JpaRepository<SpEntity, Long> {
 
     int selectSpAvgCount();
 
-    ArrayList<SpEntity> selectNotForWeek();
+    ArrayList<SpLogEntity> selectNotForWeek();
 }
