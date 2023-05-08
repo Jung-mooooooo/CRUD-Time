@@ -14,9 +14,8 @@ public class SpDto {
     private long user_code;
     private String device_id;
     private String user_name;
-    private int user_auth;
+    private String user_auth;
     private String phone;
-
     private Date enroll_date;
 
 }

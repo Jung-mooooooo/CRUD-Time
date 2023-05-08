@@ -55,3 +55,4 @@ build
 /src/main/resources/static/index.html
 /src/test/java/com/crud/btt/bttTests.java
 /src/test/java/com/crud/btt/MemberConnectTest.java
+/src/main/resources/application.yml

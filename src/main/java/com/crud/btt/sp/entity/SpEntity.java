@@ -3,7 +3,7 @@ package com.crud.btt.sp.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -29,6 +29,6 @@ public class SpEntity {
     @Column(name = "PHONE")
     private String phone;
     @Column(name = "ENROLL_DATE")
-    private LocalDateTime enroll_date;
+    private Date enroll_date;
 
 }
