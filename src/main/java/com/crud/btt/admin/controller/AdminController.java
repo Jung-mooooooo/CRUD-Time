@@ -3,20 +3,24 @@ package com.crud.btt.admin.controller;
 import com.crud.btt.admin.entity.ChatLogEntity;
 import com.crud.btt.admin.model.dto.ChatLogDto;
 import com.crud.btt.admin.model.service.AdminService;
+import com.crud.btt.common.Header;
+import com.crud.btt.common.SearchCondition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.json.simple.JSONObject;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,18 +31,18 @@ public class AdminController {
 private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
 
-//    @GetMapping("counseling/chattinglist")
-//    public Header<List<ChatLogDto>> ChatLogList (@PageableDefault(sort = {"log_no"})Pageable pageable,
-//                                                 SearchCondition searchCondition) {
-//        return adminService.getChatLogList(pageable, searchCondition);
-//    }
+    //chatlist 출력용
+    @GetMapping("counseling/chattinglist")
+    public Header<List<ChatLogDto>> ChatLogList(@PageableDefault(sort = {"log_no"}) Pageable pageable,
+                                                SearchCondition searchCondition) {
+        return adminService.getChatLogList(pageable, searchCondition);
+    }
 
     //chatlog table insert
-//    public ChatLogEntity create(@RequestBody ChatLogDto chatLogDto){
-//        return adminService.create(chatLogDto);
-//    }
-
-
+    @PostMapping
+    public ChatLogEntity create(@RequestBody ChatLogDto chatLogDto) {
+        return adminService.create(chatLogDto);
+    }
 
 
 
@@ -145,4 +149,9 @@ private static final Logger logger = LoggerFactory.getLogger(AdminController.cla
         return null;
     }
 
+    //chatlog table delete
+    @DeleteMapping
+    public void delete(@PathVariable Long log_no){
+        adminService.delete(log_no);
+    }
 }
