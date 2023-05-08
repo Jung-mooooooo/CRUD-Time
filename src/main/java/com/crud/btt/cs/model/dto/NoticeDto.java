@@ -7,6 +7,8 @@ import java.util.Date;
 
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class NoticeDto {
 
     // 필드값 없으면 : object.notice_content = "" or null -> undefind

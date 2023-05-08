@@ -15,7 +15,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Table(name = "Quit")
 @Entity
-public class QuitEntity extends MemberDto {
+public class QuitEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="quit_user_code")

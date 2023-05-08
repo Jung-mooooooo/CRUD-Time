@@ -9,9 +9,12 @@ import com.crud.btt.cs.entity.QnARepositoryCustom;
 import com.crud.btt.cs.model.dto.QnADto;
 import com.crud.btt.cs.model.dto.QnAListDto;
 import com.crud.btt.cs.model.dto.QnAUpdateDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,6 +23,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+@Slf4j
+@RequiredArgsConstructor
+@Service
 public class QnAService {
     @Autowired
     QnARepository qnaRepository;

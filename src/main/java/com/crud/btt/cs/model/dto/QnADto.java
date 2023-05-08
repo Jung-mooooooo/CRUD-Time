@@ -8,6 +8,8 @@ import java.util.Date;
 
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class QnADto {
     private long qna_no;
     private Date create_at;

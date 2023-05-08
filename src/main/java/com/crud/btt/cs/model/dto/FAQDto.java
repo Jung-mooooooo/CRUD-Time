@@ -8,6 +8,8 @@ import java.util.Date;
 
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class FAQDto {
     private long faq_no;
     private Date create_at;
