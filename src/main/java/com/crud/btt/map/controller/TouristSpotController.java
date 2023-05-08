@@ -79,9 +79,9 @@ public class TouristSpotController {
     }
 
     //등록
-//    public TouristSpotEntity create(@RequestBody TouristSpotDto touristSpotDto){
-//        return touristSpotService.create(touristSpotDto);
-//    }
+    public TouristSpotEntity create(@RequestBody TouristSpotDto touristSpotDto){
+        return touristSpotService.create(touristSpotDto);
+    }
 
     //수정
     public TouristSpotEntity update(@RequestBody TouristSpotDto touristSpotDto){
