@@ -228,5 +228,4 @@ public class HobbyService {
     //삭제
     public void delete(Long hobby_no){}
 
-
 }

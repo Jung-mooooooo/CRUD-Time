@@ -8,6 +8,8 @@ import java.util.Date;
 
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class NoticeUpdateDto {
 
     private long notice_no;

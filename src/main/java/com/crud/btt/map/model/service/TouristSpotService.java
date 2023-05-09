@@ -283,4 +283,6 @@ public class TouristSpotService {
 
     //삭제
     public void delete (Long ts_no){}
+
+
 }

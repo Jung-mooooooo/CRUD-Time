@@ -1,28 +1,49 @@
 package com.crud.btt.sp.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+
+
+
+@Slf4j
+@RequiredArgsConstructor
+@CrossOrigin
+@RestController
 public class SpController {
 
 
-    @RequestMapping(value = "/sp/speech", method = RequestMethod.POST)
+    @PostMapping("/sp/auth")
     @ResponseBody
-    public String speechTest(
+    public String spAuthMethod() {
+        System.out.println("sp/auth 실행됨");
+//      String result = new Speech().vtos("1234");
+        return "1";
+    }
+
+
+    @PostMapping("/sp/speech")
+    @ResponseBody
+    public String spSpeechMethod(
             @RequestParam(value = "fd", required = false) MultipartFile mf
     ) throws Exception {
-        System.out.println("menu/speech 실행됨");
-
+        System.out.println("sp/speech 실행됨");
 
 //      String result = new Speech().vtos("1234");
         return "1";
     }
 
 
+    @PostMapping("/sp/music")
+    @ResponseBody
+    public String spMusicMethod() {
+        System.out.println("sp/music 실행됨");
+//      String result = new Speech().vtos("1234");
+        return "1";
+    }
 
 
 }

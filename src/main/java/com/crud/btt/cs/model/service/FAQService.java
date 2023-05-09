@@ -8,9 +8,12 @@ import com.crud.btt.cs.entity.FAQRepository;
 import com.crud.btt.cs.entity.FAQRepositoryCustom;
 import com.crud.btt.cs.model.dto.FAQDto;
 import com.crud.btt.cs.model.dto.FAQUpdateDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,6 +22,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+@Slf4j
+@RequiredArgsConstructor
+@Service
 public class FAQService {
 
     @Autowired
