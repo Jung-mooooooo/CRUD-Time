@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -38,51 +37,51 @@ public class AdminService {
 
 
     //감정현황 조회
-    public int emotionCount(){
-        return emotionRepository.selectEmotion();
-    }
+//    public int emotionCount(){
+//        return emotionRepository.selectEmotion();
+//    }
 
-
-    //접속자 수 조회
-    public int visitCount() {
-        return logRepository.selectLogCount();
-    }
-
-    //월 접속자 수 조회
-    public int visitCountMonth() {
-        return logRepository.selectMonthCount();
-    }
-
-    //월 평균 접속자 수 조회
-    public int visitCountAvg() {
-        return logRepository.selectAvgCount();
-    }
-
-    //접속자 로그테이블에 저장하기
-    public int insertLog(LogEntity logEntity) {
-        return logRepository.insertLog(logEntity);
-    }
-
-
-    //음성인식 사용자 수 조회
-    public int spVisitCount(){
-        return spLogRepository.selectSpLogCount();
-    }
-
-    //음성인식 이번달 사용자 수 조회
-    public int spVisitCountMonth(){
-        return spLogRepository.selectSpMonthCount();
-    }
-
-    //음성인식 월평균 사용자 수 조회
-    public int spVisitCountAvg(){
-        return spLogRepository.selectSpAvgCount();
-    }
-
-    //일주일간 이용이 없는 사용자 리스트 조회
-    public ArrayList<SpLogEntity> selectNotForWeek(){
-        return spLogRepository.selectNotForWeek();
-    }
+//
+//    //접속자 수 조회
+//    public int visitCount() {
+//        return logRepository.selectLogCount();
+//    }
+//
+//    //월 접속자 수 조회
+//    public int visitCountMonth() {
+//        return logRepository.selectMonthCount();
+//    }
+//
+//    //월 평균 접속자 수 조회
+//    public int visitCountAvg() {
+//        return logRepository.selectAvgCount();
+//    }
+//
+//    //접속자 로그테이블에 저장하기
+//    public int insertLog(LogEntity logEntity) {
+//        return logRepository.insertLog(logEntity);
+//    }
+//
+//
+//    //음성인식 사용자 수 조회
+//    public int spVisitCount(){
+//        return spLogRepository.selectSpLogCount();
+//    }
+//
+//    //음성인식 이번달 사용자 수 조회
+//    public int spVisitCountMonth(){
+//        return spLogRepository.selectSpMonthCount();
+//    }
+//
+//    //음성인식 월평균 사용자 수 조회
+//    public int spVisitCountAvg(){
+//        return spLogRepository.selectSpAvgCount();
+//    }
+//
+//    //일주일간 이용이 없는 사용자 리스트 조회
+//    public ArrayList<SpLogEntity> selectNotForWeek(){
+//        return spLogRepository.selectNotForWeek();
+//    }
 
 
     private final ChatLogRepository chatLogRepository;

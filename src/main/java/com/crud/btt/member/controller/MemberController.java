@@ -1,12 +1,11 @@
 package com.crud.btt.member.controller;
 
-import com.crud.btt.member.entity.QuitEntity;
 import com.crud.btt.member.model.dto.MemberDto;
 import com.crud.btt.member.model.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -19,26 +18,26 @@ public class MemberController {
     private final MemberService memberService;
 
     //해당 회원 존재 여부 확인 및 정보 출력용
-    @GetMapping("/member/{user_code}") //mapping은 임의로 작성한것.
-    public MemberDto getMember(@PathVariable Long user_code) {
-        return memberService.getMember(user_code);
+    @GetMapping("/member/{userCode}") //mapping은 임의로 작성한것.
+    public MemberDto getMember(@PathVariable Long userCode) {
+        return memberService.getMember(userCode);
     }
 
     //탈퇴회원 quit table로 이동
-    @PostMapping
-    public QuitEntity create(@RequestBody MemberDto memberDto) {
-        return create(memberService.create(memberDto));
-    }
+//    @PostMapping
+//    public QuitEntity create(@RequestBody MemberDto memberDto) {
+//        //return create(memberService.create(memberDto));
+//    }
 
     //탈퇴하기
     @DeleteMapping
-    public void delete(@PathVariable Long user_code) {
+    public void delete(@PathVariable Long userCode) {
 
-        if(getMember(user_code) != null) {
+        if(getMember(userCode) != null) {
             //if(만약 quit create가 성공이라면){
 
             //member table의 user를 삭제한다.
-            memberService.delete(user_code);
+            memberService.delete(userCode);
             //}
         }
 
@@ -51,11 +50,11 @@ public class MemberController {
     }
 
     //회원가입
-//    @PostMapping("/member/enroll")
-//    public String saveMember(@RequestBody MemberDto memberDto) throws Exception{
-//        memberService.saveMember(memberDto);
-//        return "OK";
-//    }
+    @PostMapping("/member/enroll")
+    public String saveMember(@RequestBody MemberDto memberDto) throws Exception{
+        memberService.saveMember(memberDto);
+        return "OK";
+    }
 
 
     //아이디찾기

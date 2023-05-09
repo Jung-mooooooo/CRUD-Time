@@ -1,15 +1,15 @@
 package com.crud.btt.cs.model.dto;
 
 import com.crud.btt.cs.entity.FAQEntity;
-import com.crud.btt.cs.entity.NoticeEntity;
-import lombok.*;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Builder
 public class FAQDto {
     private long faq_no;
