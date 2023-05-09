@@ -52,6 +52,11 @@ public class WelfareFacilityService {
         return Header.OK(list, pagination);
     }
 
+    //카테고리별 키워드 검색
+    public Header<List<WelfareFacilityDto>> getSearchList(Pageable pageable, SearchCondition searchCondition) {
+        return null;
+    }
+
 
     //카테고리(병원)별 리스트 조회
     public Header<List<WelfareFacilityDto>> getHospitalList(Pageable pageable, SearchCondition searchCondition){
@@ -129,5 +134,6 @@ public class WelfareFacilityService {
 
     //삭제
     public void delete (Long wf_no){}
+
 
 }

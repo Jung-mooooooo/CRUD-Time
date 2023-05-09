@@ -8,11 +8,9 @@ import com.crud.btt.map.entity.HobbyRepository;
 import com.crud.btt.map.model.dto.HobbyDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import com.crud.btt.common.Header;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +49,11 @@ public class HobbyService {
         );
 
         return Header.OK(list, pagination);
+    }
+
+    //카테고리별 키워드 검색
+    public Header<List<HobbyDto>> getSearchList(Pageable pageable, SearchCondition searchCondition) {
+        return null;
     }
 
 
@@ -221,5 +224,6 @@ public class HobbyService {
 
     //삭제
     public void delete(Long hobby_no){}
+
 
 }

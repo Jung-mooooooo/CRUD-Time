@@ -52,6 +52,11 @@ public class TouristSpotService {
         return Header.OK(list, pagination);
     }
 
+    //카테고리별 키워드 검색
+    public Header<List<TouristSpotDto>> getSearchList(Pageable pageable, SearchCondition searchCondition) {
+        return null;
+    }
+
 
     //카테고리(바다)별 리스트 조회
     public Header<List<TouristSpotDto>> getSeaList(Pageable pageable, SearchCondition searchCondition){
@@ -279,4 +284,6 @@ public class TouristSpotService {
 
     //삭제
     public void delete (Long ts_no){}
+
+
 }
