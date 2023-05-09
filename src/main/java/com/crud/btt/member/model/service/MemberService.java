@@ -46,7 +46,7 @@ public class MemberService {
     }
 
 
-    public MemberDto create(MemberDto memberDto) {
+    public QuitEntity create(MemberDto memberDto) {
         QuitEntity entity = QuitEntity.builder()
                 .quit_user_code(memberDto.getUser_code())
                 .quit_user_id(memberDto.getUser_id())

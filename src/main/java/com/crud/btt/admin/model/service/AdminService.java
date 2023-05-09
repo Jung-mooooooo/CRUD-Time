@@ -39,28 +39,28 @@ public class AdminService {
 
     //감정현황 조회
     public int emotionCount(){
-        return emotionRepository.selectEmotion();
+        return emotionRepository.CountEmotion();
     }
 
 
     //접속자 수 조회
     public int visitCount() {
-        return logRepository.selectLogCount();
+        return logRepository.logCount();
     }
 
     //월 접속자 수 조회
     public int visitCountMonth() {
-        return logRepository.selectMonthCount();
+        return logRepository.logMonthCount();
     }
 
     //월 평균 접속자 수 조회
     public int visitCountAvg() {
-        return logRepository.selectAvgCount();
+        return logRepository.logAvgCount();
     }
 
     //접속자 로그테이블에 저장하기
-    public int insertLog(LogEntity logEntity) {
-        return logRepository.insertLog(logEntity);
+    public int findLog(LogEntity logEntity) {
+        return logRepository.findLog(logEntity);
     }
 
 

@@ -25,10 +25,10 @@ public class MemberController {
     }
 
     //탈퇴회원 quit table로 이동
-    @PostMapping
-    public QuitEntity create(@RequestBody MemberDto memberDto) {
-        return create(memberService.create(memberDto));
-    }
+//    @PostMapping
+//    public QuitEntity create(@RequestBody MemberDto memberDto) {
+//        return create(memberService.create(memberDto));
+//    }
 
     //탈퇴하기
     @DeleteMapping
