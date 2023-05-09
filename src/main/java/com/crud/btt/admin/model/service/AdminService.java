@@ -98,9 +98,9 @@ public class AdminService {
     //등록
     public ChatLogEntity create(ChatLogDto chatLogDto) {
         ChatLogEntity entity = ChatLogEntity.builder()
-                .user_code1(chatLogDto.getUser_code1())
-                .user_code2(chatLogDto.getUser_code2())
-                .access_time(chatLogDto.getAccess_time())
+                .userCode1(chatLogDto.getUserCode1())
+                .userCode2(chatLogDto.getUserCode2())
+                .accessTime(chatLogDto.getAccessTime())
                 .entrance(chatLogDto.getEntrance())
                 .link(chatLogDto.getLink())
                 .build();
