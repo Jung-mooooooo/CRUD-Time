@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -83,6 +82,7 @@ public class AdminService {
     public ArrayList<SpLogEntity> selectNotForWeek(){
         return spLogRepository.selectNotForWeek();
     }
+
 
 
     private final ChatLogRepository chatLogRepository;
