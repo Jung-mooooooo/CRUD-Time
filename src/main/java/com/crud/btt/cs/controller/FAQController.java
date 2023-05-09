@@ -34,22 +34,23 @@ public class FAQController {
 
 
     //FAQ 글 작성
-//    @PostMapping("/admin/AdminFAQ/{id}")
-//    public FAQDto faqCreate(@RequestBody FAQDto FAQDto){
-//        return faqService.faqCreate(FAQDto);
-//    }
-//
-//    //FAQ 글 수정
-//    @PatchMapping("/admin/AdminFAQDetail/{id}")
-//    public FAQUpdateDto faqUpdate(@RequestBody FAQUpdateDto FAQUpdateDto){
-//        return faqService.faqUpdate(FAQUpdateDto);
-//    }
-//
-//    //FAQ 글 삭제
-//    @DeleteMapping("/admin/AdminFAQDetail/{id}")
-//    public Long  faqDelete(@PathVariable Long FAQ_no){
-//        return faqService.faqDelete(FAQ_no);
-//    }
+    @PostMapping("/admin/AdminFAQWrite/{id}")
+    public FAQDto faqCreate(@RequestBody FAQDto FAQDto){
+        return faqService.faqCreate(FAQDto);
+    }
+
+    //FAQ 글 수정
+    @PatchMapping("/admin/AdminFAQDetail/{id}")
+    public FAQUpdateDto faqUpdate(@RequestBody FAQUpdateDto FAQUpdateDto){
+        return faqService.faqUpdate(FAQUpdateDto);
+    }
+
+    //FAQ 글 삭제
+    @DeleteMapping("/admin/AdminFAQDetail/{id}")
+    public Long  faqDelete(@PathVariable Long FAQ_no){
+        return faqService.faqDelete(FAQ_no);
+    }
+
 
 
 

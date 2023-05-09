@@ -5,7 +5,7 @@ import com.crud.btt.common.Pagination;
 import com.crud.btt.common.SearchCondition;
 import com.crud.btt.cs.entity.NoticeEntity;
 import com.crud.btt.cs.entity.NoticeRepository;
-import com.crud.btt.cs.entity.NoticeRepositoryCustom;
+//import com.crud.btt.cs.entity.NoticeRepositoryCustom;
 import com.crud.btt.cs.model.dto.NoticeDto;
 import com.crud.btt.cs.model.dto.NoticeUpdateDto;
 import lombok.RequiredArgsConstructor;
@@ -29,46 +29,47 @@ public class NoticeService {
 
     @Autowired
     NoticeRepository noticeRepository;
-    NoticeRepositoryCustom noticeRepositoryCustom;
+    //NoticeRepositoryCustom noticeRepositoryCustom;
 
-    public Header<List<NoticeDto>> getNoticeList(Pageable pageable, SearchCondition searchCondition) {
-        List<NoticeDto> dtos = new ArrayList<>();
-
-        Page<NoticeEntity> noticeEntities =
-                noticeRepositoryCustom.findAllBySearchCondition(
-                        pageable, searchCondition);
-        for (NoticeEntity entity : noticeEntities) {
-            NoticeDto dto = NoticeDto.builder()
-                    .notice_no(entity.getNotice_no())
-                    .create_at(entity.getCreate_at())
-                    .notice_title(entity.getNotice_title())
-                    .notice_content(entity.getNotice_content())
-                    .notice_readcount(entity.getNotice_readcount())
-                    .admin_code(entity.getAdmin_code())
-                    .notice_original_file(entity.getNotice_original_file())
-                    .notice_rename_file(entity.getNotice_rename_file())
-                    .build();
-
-            dtos.add(dto);
-        }
-
-        Pagination pagination = new Pagination(
-                (int) noticeEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
-                , 10
-        );
-
-        /*
-        Page<NoticeEntity> noticeEntities1 = null;
-        if(searchCondition.getSv().length() > 0){
-            noticeEntities1 = noticeRepository.findByNoticeTitleOrNoticeContent(searchCondition.getSv());
-        } else {
-            noticeEntities1 = noticeRepository.findAll(pageable);
-        }
-        */
-        return Header.OK(dtos, pagination);
-    }
+    //목록보기
+//    public Header<List<NoticeDto>> getNoticeList(Pageable pageable, SearchCondition searchCondition) {
+//        List<NoticeDto> dtos = new ArrayList<>();
+//
+//        Page<NoticeEntity> noticeEntities =
+//                noticeRepositoryCustom.findAllBySearchCondition(
+//                        pageable, searchCondition);
+//        for (NoticeEntity entity : noticeEntities) {
+//            NoticeDto dto = NoticeDto.builder()
+//                    .notice_no(entity.getNotice_no())
+//                    .create_at(entity.getCreate_at())
+//                    .notice_title(entity.getNotice_title())
+//                    .notice_content(entity.getNotice_content())
+//                    .notice_readcount(entity.getNotice_readcount())
+//                    .admin_code(entity.getAdmin_code())
+//                    .notice_original_file(entity.getNotice_original_file())
+//                    .notice_rename_file(entity.getNotice_rename_file())
+//                    .build();
+//
+//            dtos.add(dto);
+//        }
+//
+//        Pagination pagination = new Pagination(
+//                (int) noticeEntities.getTotalElements()
+//                , pageable.getPageNumber() + 1
+//                , pageable.getPageSize()
+//                , 10
+//        );
+//
+//        /*
+//        Page<NoticeEntity> noticeEntities1 = null;
+//        if(searchCondition.getSv().length() > 0){
+//            noticeEntities1 = noticeRepository.findByNoticeTitleOrNoticeContent(searchCondition.getSv());
+//        } else {
+//            noticeEntities1 = noticeRepository.findAll(pageable);
+//        }
+//        */
+//        return Header.OK(dtos, pagination);
+//    }
 
     // 상세보기
     public NoticeDto getNotice(Long noticeNo) {
@@ -80,7 +81,7 @@ public class NoticeService {
             조회수 : 1
             글내용 : 내용입니다.
         */
-        noticeEntity.setNotice_readcount(noticeEntity.getNotice_readcount()+1);
+        noticeEntity.setNoticeReadCount(noticeEntity.getNoticeReadCount()+1);
         /*
             글제목 : 제목입니다.
             조회수 : 2            // setNotice_readcount(noticeEntity.getNotice_readcount() + 1 )
@@ -107,23 +108,23 @@ public class NoticeService {
         */
 
         NoticeEntity noticeEntity = NoticeEntity.builder()
-                                        .notice_title(noticeDto.getNotice_title())
-                                        .notice_content(noticeDto.getNotice_content())
-                                        .create_at(noticeDto.getCreate_at())
-                                        .notice_readcount(noticeDto.getNotice_readcount())
-                                        .notice_original_file(noticeDto.getNotice_original_file())
-                                        .notice_rename_file(noticeDto.getNotice_rename_file()).build();
+                .noticeTitle(noticeDto.getNotice_title())
+                .noticeContent(noticeDto.getNotice_content())
+                .createAt(noticeDto.getCreate_at())
+                .noticeReadCount(noticeDto.getNotice_readcount())
+                .noticeOriginalFile(noticeDto.getNotice_original_file())
+                .noticeRenameFile(noticeDto.getNotice_rename_file()).build();
 
         noticeEntity = noticeRepository.save(noticeEntity);
         // return new NoticeDto(noticeRepository.save(new NoticeEntity(noticeDto)));
       return NoticeDto.builder()
-              .notice_no(noticeEntity.getNotice_no())
-              .notice_title(noticeEntity.getNotice_title())
-              .notice_content(noticeEntity.getNotice_content())
-              .create_at(noticeEntity.getCreate_at())
-              .notice_readcount(noticeEntity.getNotice_readcount())
-              .notice_original_file(noticeEntity.getNotice_original_file())
-              .notice_rename_file(noticeEntity.getNotice_rename_file())
+              .notice_no(noticeEntity.getNoticeNo())
+              .notice_title(noticeEntity.getNoticeTitle())
+              .notice_content(noticeEntity.getNoticeContent())
+              .create_at(noticeEntity.getCreateAt())
+              .notice_readcount(noticeEntity.getNoticeReadCount())
+              .notice_original_file(noticeEntity.getNoticeOriginalFile())
+              .notice_rename_file(noticeEntity.getNoticeRenameFile())
               .build();
     }
 
@@ -154,12 +155,12 @@ public class NoticeService {
             e.printStackTrace();
         }
 
-        NoticeEntity noticeEntity = NoticeEntity.builder().notice_no(noticeUpdateDto.getNotice_no())
-                .notice_title(noticeUpdateDto.getNotice_title())
-                .notice_content(noticeUpdateDto.getNotice_content())
-                .create_at(now)
-                .notice_original_file(noticeUpdateDto.getNotice_original_file())
-                .notice_rename_file(noticeUpdateDto.getNotice_rename_file())
+        NoticeEntity noticeEntity = NoticeEntity.builder().noticeNo(noticeUpdateDto.getNotice_no())
+                .noticeTitle(noticeUpdateDto.getNotice_title())
+                .noticeContent(noticeUpdateDto.getNotice_content())
+                .createAt(now)
+                .noticeOriginalFile(noticeUpdateDto.getNotice_original_file())
+                .noticeRenameFile(noticeUpdateDto.getNotice_rename_file())
                 .build();
         /*
         NoticeEntity noticeEntity1 = noticeRepository.findByNoticeNo(noticeUpdateDto.getNotice_no());

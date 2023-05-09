@@ -22,9 +22,9 @@ public class FAQDto {
 
 
     public FAQDto(FAQEntity faqEntity){
-        this.faq_title = faqEntity.getFaq_title();
-        this.faq_content = faqEntity.getFaq_content();
-        this.faq_readcount = faqEntity.getFaq_readcount();
-        this.create_at = faqEntity.getCreate_at();
+        this.faq_title = faqEntity.getFaqTitle();
+        this.faq_content = faqEntity.getFaqContent();
+        this.faq_readcount = faqEntity.getFaqReadCount();
+        this.create_at = faqEntity.getCreateAt();
     }
 }
