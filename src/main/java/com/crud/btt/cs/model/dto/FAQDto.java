@@ -3,9 +3,12 @@ package com.crud.btt.cs.model.dto;
 import com.crud.btt.cs.entity.FAQEntity;
 import com.crud.btt.cs.entity.NoticeEntity;
 import lombok.*;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 
 import java.util.Date;
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Builder
 public class FAQDto {
@@ -16,6 +19,7 @@ public class FAQDto {
     private int faq_readcount;
     private long admin_code;
     private String faq_cat;
+
 
     public FAQDto(FAQEntity faqEntity){
         this.faq_title = faqEntity.getFaq_title();

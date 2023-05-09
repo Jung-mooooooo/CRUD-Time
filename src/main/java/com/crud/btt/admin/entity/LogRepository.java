@@ -4,11 +4,13 @@ import com.crud.btt.map.entity.TouristSpotEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LogRepository extends JpaRepository<LogEntity, Long> {
-    int selectLogCount();
 
-    int insertLog(LogEntity logEntity);
+    //접속자 수
+    Long countAllByLogNo();
 
-    int selectMonthCount();
+    //월 접속자
+    Long countAllByLogNoBetweenAndVisitTime();
 
-    int selectAvgCount();
+    //월 평균 접속자 수
+
 }

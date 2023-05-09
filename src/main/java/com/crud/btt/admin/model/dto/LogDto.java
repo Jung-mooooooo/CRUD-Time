@@ -13,9 +13,9 @@ import java.util.Date;
 @Builder
 public class LogDto {
 
-    private long log_no;
-    private long user_code;
-    private String visit_ip;
-    private Date visit_time;
+    private long logNo;
+    private long userCode;
+    private String visitIp;
+    private Date visitTime;
 
 }

@@ -29,9 +29,9 @@ public class WelfareFacilityService {
         Page<WelfareFacilityEntity> welfareFacilityEntities = welfareFacilityRepository.findAllBySearchCondition(pageable, searchCondition);
         for (WelfareFacilityEntity entity : welfareFacilityEntities) {
             WelfareFacilityDto dto = WelfareFacilityDto.builder()
-                    .wf_no(entity.getWf_no())
-                    .wf_name(entity.getWf_name())
-                    .wf_cat(entity.getWf_cat())
+                    .wfNo(entity.getWfNo())
+                    .wfName(entity.getWfName())
+                    .wfCat(entity.getWfCat())
                     .address(entity.getAddress())
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())
@@ -52,6 +52,11 @@ public class WelfareFacilityService {
         return Header.OK(list, pagination);
     }
 
+    //카테고리별 키워드 검색
+    public Header<List<WelfareFacilityDto>> getSearchList(Pageable pageable, SearchCondition searchCondition) {
+        return null;
+    }
+
 
     //카테고리(병원)별 리스트 조회
     public Header<List<WelfareFacilityDto>> getHospitalList(Pageable pageable, SearchCondition searchCondition){
@@ -60,16 +65,15 @@ public class WelfareFacilityService {
         Page<WelfareFacilityEntity> welfareFacilityEntities = welfareFacilityRepository.findAllBySearchCondition(pageable, searchCondition);
         for (WelfareFacilityEntity entity : welfareFacilityEntities) {
             WelfareFacilityDto dto = WelfareFacilityDto.builder()
-                    .wf_no(entity.getWf_no())
-                    .wf_name(entity.getWf_name())
-                    .wf_cat(entity.getWf_cat())
+                    .wfNo(entity.getWfNo())
+                    .wfName(entity.getWfName())
+                    .wfCat(entity.getWfCat())
                     .address(entity.getAddress())
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())
                     .latitude(entity.getLatitude())
                     .logitude(entity.getLogitude())
                     .build();
-
             list.add(dto);
         }
 
@@ -90,9 +94,9 @@ public class WelfareFacilityService {
         Page<WelfareFacilityEntity> welfareFacilityEntities = welfareFacilityRepository.findAllBySearchCondition(pageable, searchCondition);
         for (WelfareFacilityEntity entity : welfareFacilityEntities) {
             WelfareFacilityDto dto = WelfareFacilityDto.builder()
-                    .wf_no(entity.getWf_no())
-                    .wf_name(entity.getWf_name())
-                    .wf_cat(entity.getWf_cat())
+                    .wfNo(entity.getWfNo())
+                    .wfName(entity.getWfName())
+                    .wfCat(entity.getWfCat())
                     .address(entity.getAddress())
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())

@@ -29,6 +29,13 @@ public class TouristSpotController {
         return touristSpotService.getTouristSpotList(pageable, searchCondition);
     }
 
+    //카테고리별 키워드 검색
+    @GetMapping("/touristspot/searchlist")
+    public Header<List<TouristSpotDto>> getSearchList(@PageableDefault(sort = {"idx"}) Pageable pageable,
+                                                      SearchCondition searchCondition){
+        return touristSpotService.getSearchList(pageable, searchCondition);
+    }
+
     //카테고리(바다)별 리스트 조회
     @GetMapping("/sea/list")
     public Header<List<TouristSpotDto>> getSeaList(@PageableDefault(sort = {"idx"}) Pageable pageable,

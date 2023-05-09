@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class HobbyDto {
 
-    private long hobby_no;
-    private String hobby_name;
-    private String hobby_cat;
+    private long hobbyNo;
+    private String hobbyName;
+    private String hobbyCat;
     private String address;
     private String address2;
     private String phone;

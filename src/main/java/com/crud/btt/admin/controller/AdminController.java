@@ -68,38 +68,40 @@ private static final Logger logger = LoggerFactory.getLogger(AdminController.cla
 
     //접속자 수 조회
     public String visitUserCount(HttpServletResponse response) {
-        // 오늘 접속자 수
-        String visitorsT = Integer.toString(adminService.visitCount());
+//        // 오늘 접속자 수
+//        String visitorsT = Integer.toString(adminService.visitCount());
+//
+//        // 월 접속자 수(해당 달 총 접속자수=> 데일리로 누적됨)
+//        String visitorsM = Integer.toString(adminService.visitCountMonth());
+//
+//        // 월평균 접속자 수(한달 평균 접속자수)
+//        // 월접속자수를 view단에서 일수로 나누기. => if문 사용
+//        // <c:if test="new Date().substring(4, 6) == '02'">
+//        Date date = new Date();
+//        String visitorsAvg;
+//        if (date.toString().substring(4, 6) == "02") {
+//            visitorsAvg = Integer.toString(adminService.visitCountMonth() / 28);
+//        } else if (date.toString().substring(4, 6) == "04" || date.toString().substring(4, 6) == "06"
+//                || date.toString().substring(4, 6) == "09" || date.toString().substring(4, 6) == "11") {
+//            visitorsAvg = Integer.toString(adminService.visitCountMonth() / 30);
+//
+//        } else {
+//            visitorsAvg = Integer.toString(adminService.visitCountMonth() / 31);
+//
+//        }
+//
+//        JSONObject job = new JSONObject();
+//
+//        job.put("visitorsT", visitorsT);
+//        job.put("visitorsM", visitorsM);
+//        job.put("visitorsAvg", visitorsAvg);
+//
+//
+//        logger.info("adminBox.do 실행");
+//
+//        return job.toJSONString();
 
-        // 월 접속자 수(해당 달 총 접속자수=> 데일리로 누적됨)
-        String visitorsM = Integer.toString(adminService.visitCountMonth());
-
-        // 월평균 접속자 수(한달 평균 접속자수)
-        // 월접속자수를 view단에서 일수로 나누기. => if문 사용
-        // <c:if test="new Date().substring(4, 6) == '02'">
-        Date date = new Date();
-        String visitorsAvg;
-        if (date.toString().substring(4, 6) == "02") {
-            visitorsAvg = Integer.toString(adminService.visitCountMonth() / 28);
-        } else if (date.toString().substring(4, 6) == "04" || date.toString().substring(4, 6) == "06"
-                || date.toString().substring(4, 6) == "09" || date.toString().substring(4, 6) == "11") {
-            visitorsAvg = Integer.toString(adminService.visitCountMonth() / 30);
-
-        } else {
-            visitorsAvg = Integer.toString(adminService.visitCountMonth() / 31);
-
-        }
-
-        JSONObject job = new JSONObject();
-
-        job.put("visitorsT", visitorsT);
-        job.put("visitorsM", visitorsM);
-        job.put("visitorsAvg", visitorsAvg);
-
-
-        logger.info("adminBox.do 실행");
-
-        return job.toJSONString();
+        return null;
 
     }
 
@@ -108,37 +110,39 @@ private static final Logger logger = LoggerFactory.getLogger(AdminController.cla
 
     //음성인식 사용자 수 조회
     public String visitSpecialUserCount(HttpServletResponse response) {
-        // 오늘 접속자 수
-        String visitorsT = Integer.toString(adminService.spVisitCount());
+//        // 오늘 접속자 수
+//        String visitorsT = Integer.toString(adminService.spVisitCount());
+//
+//        // 월 접속자 수(해당 달 총 접속자수=> 데일리로 누적됨)
+//        String visitorsM = Integer.toString(adminService.spVisitCountMonth());
+//
+//        // 월평균 접속자 수(한달 평균 접속자수)
+//        // 월접속자수를 view단에서 일수로 나누기. => if문 사용
+//        // <c:if test="new Date().substring(4, 6) == '02'">
+//        Date date = new Date();
+//        String visitorsAvg;
+//        if (date.toString().substring(4, 6) == "02") {
+//            visitorsAvg = Integer.toString(adminService.spVisitCountMonth() / 28);
+//        } else if (date.toString().substring(4, 6) == "04" || date.toString().substring(4, 6) == "06"
+//                || date.toString().substring(4, 6) == "09" || date.toString().substring(4, 6) == "11") {
+//            visitorsAvg = Integer.toString(adminService.spVisitCountMonth() / 30);
+//
+//        } else {
+//            visitorsAvg = Integer.toString(adminService.spVisitCountMonth() / 31);
+//
+//        }
+//
+//        JSONObject job = new JSONObject();
+//
+//        job.put("visitorsT", visitorsT);
+//        job.put("visitorsM", visitorsM);
+//        job.put("visitorsAvg", visitorsAvg);
+//
+//        logger.info("adminBox.do 실행");
+//
+//        return job.toJSONString();
 
-        // 월 접속자 수(해당 달 총 접속자수=> 데일리로 누적됨)
-        String visitorsM = Integer.toString(adminService.spVisitCountMonth());
-
-        // 월평균 접속자 수(한달 평균 접속자수)
-        // 월접속자수를 view단에서 일수로 나누기. => if문 사용
-        // <c:if test="new Date().substring(4, 6) == '02'">
-        Date date = new Date();
-        String visitorsAvg;
-        if (date.toString().substring(4, 6) == "02") {
-            visitorsAvg = Integer.toString(adminService.spVisitCountMonth() / 28);
-        } else if (date.toString().substring(4, 6) == "04" || date.toString().substring(4, 6) == "06"
-                || date.toString().substring(4, 6) == "09" || date.toString().substring(4, 6) == "11") {
-            visitorsAvg = Integer.toString(adminService.spVisitCountMonth() / 30);
-
-        } else {
-            visitorsAvg = Integer.toString(adminService.spVisitCountMonth() / 31);
-
-        }
-
-        JSONObject job = new JSONObject();
-
-        job.put("visitorsT", visitorsT);
-        job.put("visitorsM", visitorsM);
-        job.put("visitorsAvg", visitorsAvg);
-
-        logger.info("adminBox.do 실행");
-
-        return job.toJSONString();
+        return null;
 
     }
 

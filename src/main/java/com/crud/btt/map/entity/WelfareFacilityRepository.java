@@ -11,5 +11,7 @@ public interface WelfareFacilityRepository extends JpaRepository<WelfareFacility
 
     Page<WelfareFacilityEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition);
 
+    Page<WelfareFacilityEntity> findAllByCategoryIsAndNameLike(String category, String name);
 
+    Long deleteByWfNo(Long wfNo);
 }

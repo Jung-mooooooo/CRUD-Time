@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class TouristSpotDto {
 
-    private long ts_no;
-    private String ts_name;
-    private String ts_cat;
+    private long tsNo;
+    private String tsName;
+    private String tsCat;
     private String address;
     private String address2;
     private String phone;

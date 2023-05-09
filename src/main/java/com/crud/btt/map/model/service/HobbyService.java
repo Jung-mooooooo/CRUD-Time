@@ -30,9 +30,9 @@ public class HobbyService {
         Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
         for (HobbyEntity entity : hobbyEntities) {
             HobbyDto dto = HobbyDto.builder()
-                    .hobby_no(entity.getHobby_no())
-                    .hobby_name(entity.getHobby_name())
-                    .hobby_cat(entity.getHobby_cat())
+                    .hobbyNo(entity.getHobbyNo())
+                    .hobbyName(entity.getHobbyName())
+                    .hobbyCat(entity.getHobbyCat())
                     .address(entity.getAddress())
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())
@@ -53,6 +53,12 @@ public class HobbyService {
         return Header.OK(list, pagination);
     }
 
+    //카테고리별 키워드 검색
+    public Header<List<HobbyDto>> getSearchList(Pageable pageable, SearchCondition searchCondition) {
+        return null;
+    }
+
+
 
     //카테고리(음악)별 리스트 조회
     public Header<List<HobbyDto>> getMusicList(Pageable pageable, SearchCondition searchCondition){
@@ -61,9 +67,9 @@ public class HobbyService {
         Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
         for (HobbyEntity entity : hobbyEntities) {
             HobbyDto dto = HobbyDto.builder()
-                    .hobby_no(entity.getHobby_no())
-                    .hobby_name(entity.getHobby_name())
-                    .hobby_cat(entity.getHobby_cat())
+                    .hobbyNo(entity.getHobbyNo())
+                    .hobbyName(entity.getHobbyName())
+                    .hobbyCat(entity.getHobbyCat())
                     .address(entity.getAddress())
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())
@@ -91,9 +97,9 @@ public class HobbyService {
         Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
         for (HobbyEntity entity : hobbyEntities) {
             HobbyDto dto = HobbyDto.builder()
-                    .hobby_no(entity.getHobby_no())
-                    .hobby_name(entity.getHobby_name())
-                    .hobby_cat(entity.getHobby_cat())
+                    .hobbyNo(entity.getHobbyNo())
+                    .hobbyName(entity.getHobbyName())
+                    .hobbyCat(entity.getHobbyCat())
                     .address(entity.getAddress())
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())
@@ -121,9 +127,9 @@ public class HobbyService {
         Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
         for (HobbyEntity entity : hobbyEntities) {
             HobbyDto dto = HobbyDto.builder()
-                    .hobby_no(entity.getHobby_no())
-                    .hobby_name(entity.getHobby_name())
-                    .hobby_cat(entity.getHobby_cat())
+                    .hobbyNo(entity.getHobbyNo())
+                    .hobbyName(entity.getHobbyName())
+                    .hobbyCat(entity.getHobbyCat())
                     .address(entity.getAddress())
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())
@@ -151,9 +157,9 @@ public class HobbyService {
         Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
         for (HobbyEntity entity : hobbyEntities) {
             HobbyDto dto = HobbyDto.builder()
-                    .hobby_no(entity.getHobby_no())
-                    .hobby_name(entity.getHobby_name())
-                    .hobby_cat(entity.getHobby_cat())
+                    .hobbyNo(entity.getHobbyNo())
+                    .hobbyName(entity.getHobbyName())
+                    .hobbyCat(entity.getHobbyCat())
                     .address(entity.getAddress())
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())
@@ -181,9 +187,9 @@ public class HobbyService {
         Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
         for (HobbyEntity entity : hobbyEntities) {
             HobbyDto dto = HobbyDto.builder()
-                    .hobby_no(entity.getHobby_no())
-                    .hobby_name(entity.getHobby_name())
-                    .hobby_cat(entity.getHobby_cat())
+                    .hobbyNo(entity.getHobbyNo())
+                    .hobbyName(entity.getHobbyName())
+                    .hobbyCat(entity.getHobbyCat())
                     .address(entity.getAddress())
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())
@@ -221,5 +227,6 @@ public class HobbyService {
 
     //삭제
     public void delete(Long hobby_no){}
+
 
 }

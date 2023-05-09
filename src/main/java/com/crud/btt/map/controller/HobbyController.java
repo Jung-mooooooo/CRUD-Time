@@ -28,6 +28,13 @@ public class HobbyController {
         return hobbyService.getHobbyList(pageable, searchCondition);
     }
 
+    //카테고리별 키워드 검색
+    @GetMapping("/hobby/searchlist")
+    public Header<List<HobbyDto>> getSearchList(@PageableDefault(sort = {"idx"}) Pageable pageable,
+                                                SearchCondition searchCondition){
+        return hobbyService.getSearchList(pageable, searchCondition);
+    }
+
     //카테고리(음악)별 리스트 조회
     @GetMapping("/hobby/musiclist")
     public Header<List<HobbyDto>> getMusicList(@PageableDefault(sort = {"idx"}) Pageable pageable,

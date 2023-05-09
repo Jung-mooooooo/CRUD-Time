@@ -11,8 +11,8 @@ import java.util.Date;
 @ToString
 public class SpLogDto {
 
-    private long log_no;
-    private int user_code;
-    private Date login_date;
+    private long logNo;
+    private int userCode;
+    private Date loginDate;
 
 }
