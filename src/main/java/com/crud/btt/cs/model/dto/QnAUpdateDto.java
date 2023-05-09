@@ -3,13 +3,13 @@ package com.crud.btt.cs.model.dto;
 import com.crud.btt.cs.entity.NoticeEntity;
 import com.crud.btt.cs.entity.QnAEntity;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 
+@Data
 @Getter
 @Builder
 @AllArgsConstructor
@@ -24,12 +24,12 @@ public class QnAUpdateDto {
     private String qna_rename_file;
 
     public QnAUpdateDto(QnAEntity qnaEntity){
-        this.qna_no = qnaEntity.getQna_no();
-        this.qna_title = qnaEntity.getQna_title();
-        this.qna_content = qnaEntity.getQna_content();
-        this.create_at = qnaEntity.getCreate_at();
-        this.qna_original_file = qnaEntity.getQna_original_file();
-        this.qna_rename_file = qnaEntity.getQna_rename_file();
+        this.qna_no = qnaEntity.getQnaNo();
+        this.qna_title = qnaEntity.getQnaTitle();
+        this.qna_content = qnaEntity.getQnaContent();
+        this.create_at = qnaEntity.getCreateAt();
+        this.qna_original_file = qnaEntity.getQnaOriginalFile();
+        this.qna_rename_file = qnaEntity.getQnaRename_File();
     }
 
     public QnAUpdateDto(String fail_msg){

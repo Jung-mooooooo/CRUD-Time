@@ -4,7 +4,7 @@ import com.crud.btt.cs.entity.NoticeEntity;
 import lombok.*;
 
 import java.util.Date;
-
+@Data
 @Getter
 @Builder
 @AllArgsConstructor
@@ -24,12 +24,12 @@ public class NoticeDto {
     private String notice_rename_file;
 
     public NoticeDto(NoticeEntity noticeEntity){
-        this.notice_title = noticeEntity.getNotice_title();
-        this.notice_content = noticeEntity.getNotice_content();
-        this.notice_readcount = noticeEntity.getNotice_readcount();
-        this.create_at = noticeEntity.getCreate_at();
-        this.notice_original_file = noticeEntity.getNotice_original_file();
-        this.notice_rename_file = noticeEntity.getNotice_rename_file();
+        this.notice_title = noticeEntity.getNoticeTitle();
+        this.notice_content = noticeEntity.getNoticeContent();
+        this.notice_readcount = noticeEntity.getNoticeReadCount();
+        this.create_at = noticeEntity.getCreateAt();
+        this.notice_original_file = noticeEntity.getNoticeOriginalFile();
+        this.notice_rename_file = noticeEntity.getNoticeRenameFile();
     }
 
 }

@@ -3,13 +3,12 @@ package com.crud.btt.cs.model.dto;
 import com.crud.btt.cs.entity.FAQEntity;
 import com.crud.btt.cs.entity.NoticeEntity;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-
+@Data
 @Getter
 @Builder
 @AllArgsConstructor
@@ -25,11 +24,11 @@ public class FAQUpdateDto {
 
 
     public FAQUpdateDto(FAQEntity faqEntity){
-        this.faq_no = faqEntity.getFaq_no();
-        this.faq_title = faqEntity.getFaq_title();
-        this.faq_content = faqEntity.getFaq_content();
-        this.create_at = faqEntity.getCreate_at();
-        this.faq_readcount = faqEntity.getFaq_readcount();
+        this.faq_no = faqEntity.getFaqNo();
+        this.faq_title = faqEntity.getFaqTitle();
+        this.faq_content = faqEntity.getFaqContent();
+        this.create_at = faqEntity.getCreateAt();
+        this.faq_readcount = faqEntity.getFaqReadCount();
     }
 
     public FAQUpdateDto(String fail_msg){

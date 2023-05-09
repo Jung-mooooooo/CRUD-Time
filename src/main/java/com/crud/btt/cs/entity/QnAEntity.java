@@ -19,27 +19,27 @@ public class QnAEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @SequenceGenerator(name = "qna_sequence", sequenceName = "your_sequence_name", allocationSize = 1)
     @Column(name="QNA_NO")
-    private long qna_no;
+    private long qnaNo;
     @Column(name="CREATE_AT")
-    private Date create_at;
+    private Date createAt;
     @Column(name="QNA_TITLE")
-    private String qna_title;
+    private String qnaTitle;
     @Column(name="QNA_CONTENT")
-    private String qna_content;
+    private String qnaContent;
     @Column(name="QNA_READCOUNT")
-    private int qna_readcount;
+    private int qnaReadCount;
     @Column(name="ADMIN_CODE")
-    private long admin_code;
+    private long adminCode;
     @Column(name="USER_CODE")
-    private long user_code;
+    private long userCode;
     @Column(name="QNA_ORIGINAL_FILE")
-    private String qna_original_file;
+    private String qnaOriginalFile;
     @Column(name="QNA_RENAME_FILE")
-    private String qna_rename_file;
+    private String qnaRename_File;
     @Column(name="QNA_PRIVATE")
-    private String qna_private;
+    private String qnaPrivate;
     @Column(name="QNA_REF")
-    private long qna_ref;
+    private long qnaRef;
 
 
 }

@@ -1,8 +1,5 @@
 package com.crud.btt.cs.entity;
 
-import com.crud.btt.cs.model.dto.NoticeDto;
-import com.crud.btt.map.entity.HobbyEntity;
-import com.crud.btt.map.model.dto.HobbyDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

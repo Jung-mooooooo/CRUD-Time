@@ -6,8 +6,6 @@ import lombok.*;
 import java.util.Date;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Builder
 @AllArgsConstructor
@@ -24,14 +22,14 @@ public class QnAListDto {
     private long qna_ref;
 
     public QnAListDto(QnAEntity qnaEntity){
-        this.qna_no = qnaEntity.getQna_no();
-        this.create_at = qnaEntity.getCreate_at();
-        this.qna_title = qnaEntity.getQna_title();
-        this.qna_readcount = qnaEntity.getQna_readcount();
-        this.admin_code = qnaEntity.getAdmin_code();
-        this.user_code = qnaEntity.getUser_code();
-        this.qna_private = qnaEntity.getQna_private();
-        this.qna_ref = qnaEntity.getQna_ref();
+        this.qna_no = qnaEntity.getQnaNo();
+        this.create_at = qnaEntity.getCreateAt();
+        this.qna_title = qnaEntity.getQnaTitle();
+        this.qna_readcount = qnaEntity.getQnaReadCount();
+        this.admin_code = qnaEntity.getAdminCode();
+        this.user_code = qnaEntity.getUserCode();
+        this.qna_private = qnaEntity.getQnaPrivate();
+        this.qna_ref = qnaEntity.getQnaRef();
 
     }
 }

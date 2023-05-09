@@ -5,7 +5,7 @@ import com.crud.btt.cs.entity.QnAEntity;
 import lombok.*;
 
 import java.util.Date;
-
+@Data
 @Getter
 @Builder
 @AllArgsConstructor
@@ -24,11 +24,11 @@ public class QnADto {
     private long qna_ref;
 
     public QnADto(QnAEntity qnaEntity){
-        this.qna_title = qnaEntity.getQna_title();
-        this.qna_content = qnaEntity.getQna_content();
-        this.qna_readcount = qnaEntity.getQna_readcount();
-        this.create_at = qnaEntity.getCreate_at();
-        this.qna_original_file = qnaEntity.getQna_original_file();
-        this.qna_rename_file = qnaEntity.getQna_rename_file();
+        this.qna_title = qnaEntity.getQnaTitle();
+        this.qna_content = qnaEntity.getQnaContent();
+        this.qna_readcount = qnaEntity.getQnaReadCount();
+        this.create_at = qnaEntity.getCreateAt();
+        this.qna_original_file = qnaEntity.getQnaOriginalFile();
+        this.qna_rename_file = qnaEntity.getQnaRename_File();
     }
 }

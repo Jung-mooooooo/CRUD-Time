@@ -39,7 +39,6 @@ public interface QnARepository extends JpaRepository<QnAEntity, Long>{
     // @Query(value = "SELECT * FROM QNA q WHERE q.QNA_NO = q.REF_NO ORDER BY q.QNA_NO DESC", nativeQuery = true)
     // @Query(value = "SELECT * FROM com.crud.btt.cs.entity.QNA WHERE QNA.QNA_NO = QNA.REF_NO ORDER BY QNA.QNA_NO DESC", nativeQuery = true)
     List<QnAEntity> findSameBtwTwoColumn();
-
     QnAEntity findByRefNoAndQnaNoNot(Long qna_no_to_ref, Long qna_no_to_no);
     /*
     find ->      select         select *

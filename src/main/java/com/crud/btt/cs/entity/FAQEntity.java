@@ -18,19 +18,19 @@ public class FAQEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="FAQ_NO")
-    private long faq_no;
+    private long faqNo;
     @Column(name="CREATE_AT")
-    private Date create_at;
+    private Date createAt;
     @Column(name="FAQ_TITLE")
-    private String faq_title;
+    private String faqTitle;
     @Column(name="FAQ_CONTENT")
-    private String faq_content;
+    private String faqContent;
     @Column(name="ADMIN_CODE")
-    private long admin_code;
+    private long adminCode;
     @Column(name="FAQ_READCOUNT")
-    private int faq_readcount;
+    private int faqReadCount;
     @Column(name="FAQ_CAT")
-    private String faq_cat;
+    private String faqCat;
 
 
 }

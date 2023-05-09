@@ -22,18 +22,18 @@ public class FAQController {
     private final FAQService faqService;
 
     //FAQ 목록 출력
-    @GetMapping("/admin/AdminFAQ")
-    public Header<List<FAQDto>> FAQList(@RequestParam(required = false) String keyword
-            , @RequestParam(required = false) String keyValue
-            , @PageableDefault(sort = {"FAQ_no"}) Pageable pageable
-    ){
-        /*
-        검색을 안할때 ( 전체 ) : null ( required ), keyword = "" or null, keyValue = "" or null
-        검색을 할때           : keyword, keyValue
-        */
-        SearchCondition searchCondition = new SearchCondition(keyword,keyValue);
-        return faqService.getFAQList(pageable,searchCondition);
-    }
+//    @GetMapping("/admin/AdminFAQ")
+//    public Header<List<FAQDto>> FAQList(@RequestParam(required = false) String keyword
+//            , @RequestParam(required = false) String keyValue
+//            , @PageableDefault(sort = {"FAQ_no"}) Pageable pageable
+//    ){
+//        /*
+//        검색을 안할때 ( 전체 ) : null ( required ), keyword = "" or null, keyValue = "" or null
+//        검색을 할때           : keyword, keyValue
+//        */
+//        SearchCondition searchCondition = new SearchCondition(keyword,keyValue);
+//        return faqService.getFAQList(pageable,searchCondition);
+//    }
 
     //FAQ 상세보기
     @GetMapping("/admin/AdminFAQDetail/{id}")
@@ -43,7 +43,7 @@ public class FAQController {
 
 
     //FAQ 글 작성
-    @PostMapping("/admin/AdminFAQ/{id}")
+    @PostMapping("/admin/AdminFAQWrite/{id}")
     public FAQDto faqCreate(@RequestBody FAQDto FAQDto){
         return faqService.faqCreate(FAQDto);
     }

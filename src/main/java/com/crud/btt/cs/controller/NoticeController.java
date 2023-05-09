@@ -21,18 +21,18 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     //공지사항 목록 출력
-    @GetMapping("/admin/AdminNotice")
-    public Header<List<NoticeDto>> NoticeList(@RequestParam(required = false) String keyword
-                                              ,@RequestParam(required = false) String keyValue
-                                                ,@PageableDefault(sort = {"notice_no"}) Pageable pageable
-    ){
-        /*
-        검색을 안할때 ( 전체 ) : null ( required ), keyword = "" or null, keyValue = "" or null
-        검색을 할때           : keyword, keyValue
-        */
-        SearchCondition searchCondition = new SearchCondition(keyword,keyValue);
-        return noticeService.getNoticeList(pageable,searchCondition);
-    }
+//    @GetMapping("/admin/AdminNotice")
+//    public Header<List<NoticeDto>> NoticeList(@RequestParam(required = false) String keyword
+//                                              ,@RequestParam(required = false) String keyValue
+//                                                ,@PageableDefault(sort = {"notice_no"}) Pageable pageable
+//    ){
+//        /*
+//        검색을 안할때 ( 전체 ) : null ( required ), keyword = "" or null, keyValue = "" or null
+//        검색을 할때           : keyword, keyValue
+//        */
+//        SearchCondition searchCondition = new SearchCondition(keyword,keyValue);
+//        return noticeService.getNoticeList(pageable,searchCondition);
+//    }
     
     //공지사항 상세보기
    @GetMapping("/admin/AdminNoticeDetail/{id}")
@@ -42,7 +42,7 @@ public class NoticeController {
 
 
     //공지사항 글 작성
-    @PostMapping("/admin/AdminNotice/{id}")
+    @PostMapping("/admin/AdminNoticeWrite/{id}")
     public NoticeDto noticeCreate(@RequestBody NoticeDto noticeDto){
         return noticeService.noticeCreate(noticeDto);
     }

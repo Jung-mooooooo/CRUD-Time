@@ -21,26 +21,21 @@ public class NoticeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="NOTICE_NO")
-    private long notice_no;
+    private long noticeNo;
     @Column(name="CREATE_AT")
-    private Date create_at;
+    private Date createAt;
     @Column(name="NOTICE_TITLE")
-    private String notice_title;
+    private String noticeTitle;
     @Column(name="NOTICE_CONTENT")
-    private String notice_content;
+    private String noticeContent;
     @Column(name="NOTICE_READCOUNT")
-    private int notice_readcount;
+    private int noticeReadCount;
     @Column(name="ADMIN_CODE")
-    private long admin_code;
+    private long adminCode;
     @Column(name="NOTICE_ORIGINAL_FILE")
-    private String notice_original_file;
+    private String noticeOriginalFile;
     @Column(name="NOTICE_RENAME_FILE")
-    private String notice_rename_file;
+    private String noticeRenameFile;
 
-
-//    public NoticeEntity setNotice_no(Long notice_no){
-//        this.notice_no = notice_no;
-//        return this;
-//    }
 
 }
