@@ -17,6 +17,7 @@ import java.util.Date;
 public class QnAEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "qna_sequence", sequenceName = "your_sequence_name", allocationSize = 1)
     @Column(name="QNA_NO")
     private long qna_no;
     @Column(name="CREATE_AT")

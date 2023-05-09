@@ -9,6 +9,6 @@ public interface FAQRepository extends JpaRepository<FAQEntity, Long> {
 
     long deleteByFAQNo(Long faq_no);
 
-    Page<FAQEntity> findByFAQTitleOrFAQContent(Pageable pageable, String keyword);
+//    Page<FAQEntity> findByFAQTitleOrFAQContent(Pageable pageable, String keyword);
 
 }
