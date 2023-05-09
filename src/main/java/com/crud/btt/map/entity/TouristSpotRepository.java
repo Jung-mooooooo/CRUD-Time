@@ -10,4 +10,6 @@ public interface TouristSpotRepository extends JpaRepository<TouristSpotEntity, 
     Page<TouristSpotEntity> findAllByOrderByIdxDesc(Pageable pageable);
 
     Page<TouristSpotEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition);
+
+    Page<TouristSpotEntity> findAllByCategoryIsAndNameLike(String category, String name);
 }
