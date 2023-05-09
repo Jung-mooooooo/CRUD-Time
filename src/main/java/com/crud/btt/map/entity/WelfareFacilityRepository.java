@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WelfareFacilityRepository extends JpaRepository<WelfareFacilityEntity, Long> {
 
-    Page<WelfareFacilityEntity> findAllByOrderByIdxDesc(Pageable pageable);
+//    Page<WelfareFacilityEntity> findAllByOrderByIdxDesc(Pageable pageable);
 
-    Page<WelfareFacilityEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition);
+//    Page<WelfareFacilityEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition);
 
-    Page<WelfareFacilityEntity> findAllByCategoryIsAndNameLike(String category, String name);
+//    Page<WelfareFacilityEntity> findAllByCategoryIsAndNameLike(String category, String name);
 }
