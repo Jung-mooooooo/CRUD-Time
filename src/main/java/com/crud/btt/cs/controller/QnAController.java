@@ -51,7 +51,7 @@ public class QnAController {
 
     //QNA 글 수정
     @PatchMapping("/admin/AdminQnADetail/{id}")
-    public QnAUpdateDto qnaUpdate(@RequestBody QnAUpdateDto qnaUpdateDto){
+        public QnAUpdateDto qnaUpdate(@RequestBody QnAUpdateDto qnaUpdateDto){
         return qnaService.qnaUpdate(qnaUpdateDto);
     }
 

@@ -18,7 +18,7 @@ public interface NoticeRepository extends JpaRepository<NoticeEntity, Long> {
     long deleteByNoticeNo(Long noticeNo);
     // = where notice_no = { notice_no }
 
-    Page<NoticeEntity> findByNoticeTitleOrNoticeContent(Pageable pageable, String keyword);
+    //Page<NoticeEntity> findByNoticeTitleOrNoticeContent(Pageable pageable, String keyword);
 
     //Page<NoticeEntity> findByCategoryAndNoticeTitleOrNoticeContent(Pageable pageable, String Categroy, String keyword);
 
