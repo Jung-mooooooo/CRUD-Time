@@ -19,16 +19,16 @@ public class SpEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_CODE")
-    private Long user_code;
+    private Long userCode;
     @Column(name = "DEVICE_ID")
-    private String device_id;
+    private String deviceId;
     @Column(name = "USER_NAME")
-    private String user_name;
+    private String userName;
     @Column(name = "USER_AUTH")
-    private String user_auth;
+    private String userAuth;
     @Column(name = "PHONE")
     private String phone;
     @Column(name = "ENROLL_DATE")
-    private Date enroll_date;
+    private Date enrollDate;
 
 }
