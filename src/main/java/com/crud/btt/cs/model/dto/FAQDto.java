@@ -1,10 +1,9 @@
 package com.crud.btt.cs.model.dto;
 
 import com.crud.btt.cs.entity.FAQEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.crud.btt.cs.entity.NoticeEntity;
+import lombok.*;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 
 import java.util.Date;
 @Data

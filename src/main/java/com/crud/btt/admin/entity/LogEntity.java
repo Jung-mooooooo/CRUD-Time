@@ -18,12 +18,12 @@ public class LogEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LOG_NO")
-    private long log_no;
+    private long logNo;
     @Column(name = "USER_CODE")
-    private long user_code;
+    private long userCode;
     @Column(name = "VISIT_IP")
-    private long visit_ip;
+    private long visitIp;
     @Column(name = "VISIT_TIME")
-    private long visit_time;
+    private long visitTime;
 
 }

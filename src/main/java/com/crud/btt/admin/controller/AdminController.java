@@ -38,31 +38,31 @@ private static final Logger logger = LoggerFactory.getLogger(AdminController.cla
     }
 
 
-//
-//    //감정현황 조회
-//    public String userEmotionCount(HttpServletResponse response) {
-//        return null;
-//    }
-//
-//
-//    //회원 ip 메소드
-//    public String getClientIP(HttpServletRequest request){
-//        String ip = request.getHeader("X-FORWARDED-FOR");
-//        if(ip == null || ip.length() == 0){
-//            ip = request.getHeader("Proxy-Client-IP");
-//        }
-//        if(ip == null || ip.length() == 0){
-//            ip = request.getHeader("WL-Proxy-Client-IP");
-//        }
-//        if(ip == null || ip.length() == 0){
-//            ip = request.getRemoteAddr();
-//        }
-//
-//        return ip;
-//    }
-//
-//    //접속자 수 조회
-//    public String visitUserCount(HttpServletResponse response) {
+    //감정현황 조회
+    public String userEmotionCount(HttpServletResponse response) {
+        return null;
+    }
+
+
+    //회원 ip 메소드
+    public String getClientIP(HttpServletRequest request){
+        String ip = request.getHeader("X-FORWARDED-FOR");
+        if(ip == null || ip.length() == 0){
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0){
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0){
+            ip = request.getRemoteAddr();
+        }
+
+        return ip;
+    }
+
+    //접속자 수 조회
+    public String visitUserCount(HttpServletResponse response) {
+
 //        // 오늘 접속자 수
 //        String visitorsT = Integer.toString(adminService.visitCount());
 //
@@ -95,14 +95,17 @@ private static final Logger logger = LoggerFactory.getLogger(AdminController.cla
 //        logger.info("adminBox.do 실행");
 //
 //        return job.toJSONString();
-//
-//    }
-//
-//
-//
-//
-//    //음성인식 사용자 수 조회
-//    public String visitSpecialUserCount(HttpServletResponse response) {
+
+        return null;
+
+    }
+
+
+
+
+    //음성인식 사용자 수 조회
+    public String visitSpecialUserCount(HttpServletResponse response) {
+
 //        // 오늘 접속자 수
 //        String visitorsT = Integer.toString(adminService.spVisitCount());
 //
@@ -134,8 +137,11 @@ private static final Logger logger = LoggerFactory.getLogger(AdminController.cla
 //        logger.info("adminBox.do 실행");
 //
 //        return job.toJSONString();
-//
-//    }
+
+        return null;
+
+    }
+
 
     //일주일간 이용이 없는 사용자 리스트 조회
     public String notForWeekUser(){

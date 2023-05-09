@@ -12,4 +12,6 @@ public interface TouristSpotRepository extends JpaRepository<TouristSpotEntity, 
     Page<TouristSpotEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition);
 
     Page<TouristSpotEntity> findAllByCategoryIsAndNameLike(String category, String name);
+
+    Long deleteByTsNo(Long tsNo);
 }

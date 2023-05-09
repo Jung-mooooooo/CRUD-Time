@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -37,50 +39,50 @@ public class AdminService {
 
 
     //감정현황 조회
-    public int emotionCount(){
-        return emotionRepository.CountEmotion();
+    public Long emotionCount(){
+        return emotionRepository.countAllByEmotionNo();
     }
 
 
     //접속자 수 조회
-    public int visitCount() {
-        return logRepository.logCount();
+    public Long visitCount() {
+        return logRepository.countAllByLogNo();
     }
 
     //월 접속자 수 조회
-    public int visitCountMonth() {
-        return logRepository.logMonthCount();
+    public Long visitCountMonth() {
+        return logRepository.countAllByLogNoBetweenAndVisitTime();
     }
 
     //월 평균 접속자 수 조회
     public int visitCountAvg() {
-        return logRepository.logAvgCount();
+        return 0;
     }
 
     //접속자 로그테이블에 저장하기
-    public int findLog(LogEntity logEntity) {
-        return logRepository.findLog(logEntity);
-    }
+//    public int insertLog(LogEntity logEntity) {
+//        return logRepository.findLog(logEntity);
+//    }
 
 
     //음성인식 사용자 수 조회
-    public int spVisitCount(){
-        return spLogRepository.selectSpLogCount();
+    public Long spVisitCount(){
+        return spLogRepository.countAllByLogNo();
     }
 
     //음성인식 이번달 사용자 수 조회
-    public int spVisitCountMonth(){
-        return spLogRepository.selectSpMonthCount();
+    public Long spVisitCountMonth(){
+        return spLogRepository.countAllByLogNoBetweenAndLoginDate();
     }
 
     //음성인식 월평균 사용자 수 조회
     public int spVisitCountAvg(){
-        return spLogRepository.selectSpAvgCount();
+        return 0;
     }
 
     //일주일간 이용이 없는 사용자 리스트 조회
-    public ArrayList<SpLogEntity> selectNotForWeek(){
-        return spLogRepository.selectNotForWeek();
+    public Page<SpLogEntity> selectNotForWeek(){
+        return spLogRepository.findAllByOrOrderByLogNoDesc();
     }
 
 

@@ -29,9 +29,9 @@ public class TouristSpotService {
         Page<TouristSpotEntity> welfareFacilityEntities = touristSpotRepository.findAllBySearchCondition(pageable, searchCondition);
         for (TouristSpotEntity entity : welfareFacilityEntities) {
             TouristSpotDto dto = TouristSpotDto.builder()
-                    .ts_no(entity.getTs_no())
-                    .ts_name(entity.getTs_name())
-                    .ts_cat(entity.getTs_cat())
+                    .tsNo(entity.getTsNo())
+                    .tsName(entity.getTsName())
+                    .tsCat(entity.getTsCat())
                     .address(entity.getAddress())
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())
@@ -65,9 +65,9 @@ public class TouristSpotService {
         Page<TouristSpotEntity> welfareFacilityEntities = touristSpotRepository.findAllBySearchCondition(pageable, searchCondition);
         for (TouristSpotEntity entity : welfareFacilityEntities) {
             TouristSpotDto dto = TouristSpotDto.builder()
-                    .ts_no(entity.getTs_no())
-                    .ts_name(entity.getTs_name())
-                    .ts_cat(entity.getTs_cat())
+                    .tsNo(entity.getTsNo())
+                    .tsName(entity.getTsName())
+                    .tsCat(entity.getTsCat())
                     .address(entity.getAddress())
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())
@@ -95,9 +95,9 @@ public class TouristSpotService {
         Page<TouristSpotEntity> welfareFacilityEntities = touristSpotRepository.findAllBySearchCondition(pageable, searchCondition);
         for (TouristSpotEntity entity : welfareFacilityEntities) {
             TouristSpotDto dto = TouristSpotDto.builder()
-                    .ts_no(entity.getTs_no())
-                    .ts_name(entity.getTs_name())
-                    .ts_cat(entity.getTs_cat())
+                    .tsNo(entity.getTsNo())
+                    .tsName(entity.getTsName())
+                    .tsCat(entity.getTsCat())
                     .address(entity.getAddress())
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())
@@ -125,16 +125,15 @@ public class TouristSpotService {
         Page<TouristSpotEntity> welfareFacilityEntities = touristSpotRepository.findAllBySearchCondition(pageable, searchCondition);
         for (TouristSpotEntity entity : welfareFacilityEntities) {
             TouristSpotDto dto = TouristSpotDto.builder()
-                    .ts_no(entity.getTs_no())
-                    .ts_name(entity.getTs_name())
-                    .ts_cat(entity.getTs_cat())
+                    .tsNo(entity.getTsNo())
+                    .tsName(entity.getTsName())
+                    .tsCat(entity.getTsCat())
                     .address(entity.getAddress())
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())
                     .latitude(entity.getLatitude())
                     .logitude(entity.getLogitude())
                     .build();
-
             list.add(dto);
         }
 
@@ -155,9 +154,9 @@ public class TouristSpotService {
         Page<TouristSpotEntity> welfareFacilityEntities = touristSpotRepository.findAllBySearchCondition(pageable, searchCondition);
         for (TouristSpotEntity entity : welfareFacilityEntities) {
             TouristSpotDto dto = TouristSpotDto.builder()
-                    .ts_no(entity.getTs_no())
-                    .ts_name(entity.getTs_name())
-                    .ts_cat(entity.getTs_cat())
+                    .tsNo(entity.getTsNo())
+                    .tsName(entity.getTsName())
+                    .tsCat(entity.getTsCat())
                     .address(entity.getAddress())
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())
@@ -185,9 +184,9 @@ public class TouristSpotService {
         Page<TouristSpotEntity> welfareFacilityEntities = touristSpotRepository.findAllBySearchCondition(pageable, searchCondition);
         for (TouristSpotEntity entity : welfareFacilityEntities) {
             TouristSpotDto dto = TouristSpotDto.builder()
-                    .ts_no(entity.getTs_no())
-                    .ts_name(entity.getTs_name())
-                    .ts_cat(entity.getTs_cat())
+                    .tsNo(entity.getTsNo())
+                    .tsName(entity.getTsName())
+                    .tsCat(entity.getTsCat())
                     .address(entity.getAddress())
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())
@@ -215,9 +214,9 @@ public class TouristSpotService {
         Page<TouristSpotEntity> welfareFacilityEntities = touristSpotRepository.findAllBySearchCondition(pageable, searchCondition);
         for (TouristSpotEntity entity : welfareFacilityEntities) {
             TouristSpotDto dto = TouristSpotDto.builder()
-                    .ts_no(entity.getTs_no())
-                    .ts_name(entity.getTs_name())
-                    .ts_cat(entity.getTs_cat())
+                    .tsNo(entity.getTsNo())
+                    .tsName(entity.getTsName())
+                    .tsCat(entity.getTsCat())
                     .address(entity.getAddress())
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())
@@ -245,9 +244,9 @@ public class TouristSpotService {
         Page<TouristSpotEntity> welfareFacilityEntities = touristSpotRepository.findAllBySearchCondition(pageable, searchCondition);
         for (TouristSpotEntity entity : welfareFacilityEntities) {
             TouristSpotDto dto = TouristSpotDto.builder()
-                    .ts_no(entity.getTs_no())
-                    .ts_name(entity.getTs_name())
-                    .ts_cat(entity.getTs_cat())
+                    .tsNo(entity.getTsNo())
+                    .tsName(entity.getTsName())
+                    .tsCat(entity.getTsCat())
                     .address(entity.getAddress())
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())

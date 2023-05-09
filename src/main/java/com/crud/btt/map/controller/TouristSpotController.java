@@ -24,14 +24,15 @@ public class TouristSpotController {
 
     //페이지 단위 목록 조회
     @GetMapping("/touristspot/list")
-    public Header<List<TouristSpotDto>> getTouristSpotList(@PageableDefault(sort = {"idx"}) Pageable pageable, SearchCondition searchCondition){
+    public Header<List<TouristSpotDto>> getTouristSpotList(@PageableDefault(sort = {"idx"}) Pageable pageable,
+                                                           SearchCondition searchCondition){
         return touristSpotService.getTouristSpotList(pageable, searchCondition);
     }
 
     //카테고리별 키워드 검색
     @GetMapping("/touristspot/searchlist")
     public Header<List<TouristSpotDto>> getSearchList(@PageableDefault(sort = {"idx"}) Pageable pageable,
-                                                SearchCondition searchCondition){
+                                                      SearchCondition searchCondition){
         return touristSpotService.getSearchList(pageable, searchCondition);
     }
 

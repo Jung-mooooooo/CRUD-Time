@@ -13,9 +13,9 @@ import java.util.Date;
 @Builder
 public class EmotionDto {
 
-    private long emotion_no;
-    private String emotion_cat;
-    private Date emotion_date;
-    private long user_code;
+    private long emotionNo;
+    private String emotionCat;
+    private Date emotionDate;
+    private long userCode;
 
 }

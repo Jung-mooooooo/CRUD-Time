@@ -4,12 +4,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LogRepository extends JpaRepository<LogEntity, Long> {
 
-    int logCount();
+    //접속자 수
+    Long countAllByLogNo();
 
-    int findLog(LogEntity logEntity);
+    //월 접속자
+    Long countAllByLogNoBetweenAndVisitTime();
 
-    int logMonthCount();
-
-    int logAvgCount();
+    //월 평균 접속자 수
 
 }

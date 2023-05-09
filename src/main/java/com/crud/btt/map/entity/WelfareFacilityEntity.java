@@ -18,11 +18,11 @@ public class WelfareFacilityEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "WF_NO")
-    private long wf_no;
+    private long wfNo;
     @Column(name = "WF_NAME")
-    private String wf_name;
+    private String wfName;
     @Column(name = "WF_CAT")
-    private String wf_cat;
+    private String wfCat;
     @Column(name = "ADDRESS")
     private String address;
     @Column(name = "ADDRESS2")

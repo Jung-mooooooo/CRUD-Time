@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class WelfareFacilityDto {
 
-    private long wf_no;
-    private String wf_name;
-    private String wf_cat;
+    private long wfNo;
+    private String wfName;
+    private String wfCat;
     private String address;
     private String address2;
     private String phone;

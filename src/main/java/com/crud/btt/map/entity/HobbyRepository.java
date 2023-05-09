@@ -14,4 +14,6 @@ public interface HobbyRepository extends JpaRepository<HobbyEntity, Long> {
     Page<HobbyEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition);
 
     Page<HobbyEntity> findAllByCategoryIsAndNameLike(String category, String name);
+
+    Long deleteByHobbyNo(Long hobbyNo);
 }

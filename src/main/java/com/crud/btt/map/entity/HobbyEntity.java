@@ -18,11 +18,11 @@ public class HobbyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "HOBBY_NO")
-    private long hobby_no;
+    private long hobbyNo;
     @Column(name = "HOBBY_NAME")
-    private String hobby_name;
+    private String hobbyName;
     @Column(name = "HOBBY_CAT")
-    private String hobby_cat;
+    private String hobbyCat;
     @Column(name = "ADDRESS")
     private String address;
     @Column(name = "ADDRESS2")
