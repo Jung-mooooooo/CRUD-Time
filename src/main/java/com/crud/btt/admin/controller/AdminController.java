@@ -22,22 +22,22 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class AdminController {
-    private final AdminService adminService;
-private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+//    private final AdminService adminService;
+//private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
 
     //chatlist 출력용
-    @GetMapping("counseling/chattinglist")
-    public Header<List<ChatLogDto>> ChatLogList(@PageableDefault(sort = {"log_no"}) Pageable pageable,
-                                                SearchCondition searchCondition) {
-        return adminService.getChatLogList(pageable, searchCondition);
-    }
-
-    //chatlog table insert
-    @PostMapping
-    public ChatLogEntity create(@RequestBody ChatLogDto chatLogDto) {
-        return adminService.create(chatLogDto);
-    }
+//    @GetMapping("counseling/chattinglist")
+//    public Header<List<ChatLogDto>> ChatLogList(@PageableDefault(sort = {"log_no"}) Pageable pageable,
+//                                                SearchCondition searchCondition) {
+//        return adminService.getChatLogList(pageable, searchCondition);
+//    }
+//
+//    //chatlog table insert
+//    @PostMapping
+//    public ChatLogEntity create(@RequestBody ChatLogDto chatLogDto) {
+//        return adminService.create(chatLogDto);
+//    }
 
 
     //감정현황 조회
@@ -146,13 +146,13 @@ private static final Logger logger = LoggerFactory.getLogger(AdminController.cla
 
 
     //일주일간 이용이 없는 사용자 리스트 조회
-    public String notForWeekUser(){
-        return null;
-    }
+//    public String notForWeekUser(){
+//        return null;
+//    }
 
     //chatlog table delete
-    @DeleteMapping
-    public void delete(@PathVariable Long log_no){
-        adminService.delete(log_no);
-    }
+//    @DeleteMapping
+//    public void delete(@PathVariable Long log_no){
+//        adminService.delete(log_no);
+//    }
 }

@@ -21,211 +21,212 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class HobbyService {
-    private final HobbyRepository hobbyRepository;
 
-    //지도 목록 조회(페이징 처리)
-    public Header<List<HobbyDto>> getHobbyList(Pageable pageable, SearchCondition searchCondition){
-        List<HobbyDto> list = new ArrayList<>();
-
-        Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
-        for (HobbyEntity entity : hobbyEntities) {
-            HobbyDto dto = HobbyDto.builder()
-                    .hobbyNo(entity.getHobbyNo())
-                    .hobbyName(entity.getHobbyName())
-                    .hobbyCat(entity.getHobbyCat())
-                    .address(entity.getAddress())
-                    .address2(entity.getAddress2())
-                    .phone(entity.getPhone())
-                    .latitude(entity.getLatitude())
-                    .logitude(entity.getLogitude())
-                    .build();
-
-            list.add(dto);
-        }
-
-        Pagination pagination = new Pagination(
-                (int) hobbyEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
-                , 10
-        );
-
-        return Header.OK(list, pagination);
-    }
-
-    //카테고리별 키워드 검색
-    public Header<List<HobbyDto>> getSearchList(Pageable pageable, SearchCondition searchCondition) {
-        return null;
-    }
-
-
-
-    //카테고리(음악)별 리스트 조회
-    public Header<List<HobbyDto>> getMusicList(Pageable pageable, SearchCondition searchCondition){
-        List<HobbyDto> list = new ArrayList<>();
-
-        Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
-        for (HobbyEntity entity : hobbyEntities) {
-            HobbyDto dto = HobbyDto.builder()
-                    .hobbyNo(entity.getHobbyNo())
-                    .hobbyName(entity.getHobbyName())
-                    .hobbyCat(entity.getHobbyCat())
-                    .address(entity.getAddress())
-                    .address2(entity.getAddress2())
-                    .phone(entity.getPhone())
-                    .latitude(entity.getLatitude())
-                    .logitude(entity.getLogitude())
-                    .build();
-
-            list.add(dto);
-        }
-
-        Pagination pagination = new Pagination(
-                (int) hobbyEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
-                , 10
-        );
-
-        return Header.OK(list, pagination);
-    }
-
-    //카테고리(미술)별 리스트 조회
-    public Header<List<HobbyDto>> getArtList(Pageable pageable, SearchCondition searchCondition){
-        List<HobbyDto> list = new ArrayList<>();
-
-        Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
-        for (HobbyEntity entity : hobbyEntities) {
-            HobbyDto dto = HobbyDto.builder()
-                    .hobbyNo(entity.getHobbyNo())
-                    .hobbyName(entity.getHobbyName())
-                    .hobbyCat(entity.getHobbyCat())
-                    .address(entity.getAddress())
-                    .address2(entity.getAddress2())
-                    .phone(entity.getPhone())
-                    .latitude(entity.getLatitude())
-                    .logitude(entity.getLogitude())
-                    .build();
-
-            list.add(dto);
-        }
-
-        Pagination pagination = new Pagination(
-                (int) hobbyEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
-                , 10
-        );
-
-        return Header.OK(list, pagination);
-    }
-
-    //카테고리(무용)별 리스트 조회
-    public Header<List<HobbyDto>> getDanceList(Pageable pageable, SearchCondition searchCondition){
-        List<HobbyDto> list = new ArrayList<>();
-
-        Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
-        for (HobbyEntity entity : hobbyEntities) {
-            HobbyDto dto = HobbyDto.builder()
-                    .hobbyNo(entity.getHobbyNo())
-                    .hobbyName(entity.getHobbyName())
-                    .hobbyCat(entity.getHobbyCat())
-                    .address(entity.getAddress())
-                    .address2(entity.getAddress2())
-                    .phone(entity.getPhone())
-                    .latitude(entity.getLatitude())
-                    .logitude(entity.getLogitude())
-                    .build();
-
-            list.add(dto);
-        }
-
-        Pagination pagination = new Pagination(
-                (int) hobbyEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
-                , 10
-        );
-
-        return Header.OK(list, pagination);
-    }
-
-    //카테고리(언어)별 리스트 조회
-    public Header<List<HobbyDto>> getLanguageList(Pageable pageable, SearchCondition searchCondition){
-        List<HobbyDto> list = new ArrayList<>();
-
-        Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
-        for (HobbyEntity entity : hobbyEntities) {
-            HobbyDto dto = HobbyDto.builder()
-                    .hobbyNo(entity.getHobbyNo())
-                    .hobbyName(entity.getHobbyName())
-                    .hobbyCat(entity.getHobbyCat())
-                    .address(entity.getAddress())
-                    .address2(entity.getAddress2())
-                    .phone(entity.getPhone())
-                    .latitude(entity.getLatitude())
-                    .logitude(entity.getLogitude())
-                    .build();
-
-            list.add(dto);
-        }
-
-        Pagination pagination = new Pagination(
-                (int) hobbyEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
-                , 10
-        );
-
-        return Header.OK(list, pagination);
-    }
-
-    //카테고리(미디어)별 리스트 조회
-    public Header<List<HobbyDto>> getMediaList(Pageable pageable, SearchCondition searchCondition){
-        List<HobbyDto> list = new ArrayList<>();
-
-        Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
-        for (HobbyEntity entity : hobbyEntities) {
-            HobbyDto dto = HobbyDto.builder()
-                    .hobbyNo(entity.getHobbyNo())
-                    .hobbyName(entity.getHobbyName())
-                    .hobbyCat(entity.getHobbyCat())
-                    .address(entity.getAddress())
-                    .address2(entity.getAddress2())
-                    .phone(entity.getPhone())
-                    .latitude(entity.getLatitude())
-                    .logitude(entity.getLogitude())
-                    .build();
-
-            list.add(dto);
-        }
-
-        Pagination pagination = new Pagination(
-                (int) hobbyEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
-                , 10
-        );
-
-        return Header.OK(list, pagination);
-    }
-
-
-    //등록
-    public HobbyEntity create(HobbyDto hobbyDto){
-        HobbyEntity entity = HobbyEntity.builder().build();
-
-        return hobbyRepository.save(entity);
-    }
-
-    //수정
-    public HobbyEntity update(HobbyDto hobbyDto){
-        HobbyEntity entity = HobbyEntity.builder().build();
-
-        return hobbyRepository.save(entity);
-    }
-
-    //삭제
-    public void delete(Long hobby_no){}
+//    private final HobbyRepository hobbyRepository;
+//
+//    //지도 목록 조회(페이징 처리)
+//    public Header<List<HobbyDto>> getHobbyList(Pageable pageable, SearchCondition searchCondition){
+//        List<HobbyDto> list = new ArrayList<>();
+//
+//        Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
+//        for (HobbyEntity entity : hobbyEntities) {
+//            HobbyDto dto = HobbyDto.builder()
+//                    .hobby_no(entity.getHobby_no())
+//                    .hobby_name(entity.getHobby_name())
+//                    .hobby_cat(entity.getHobby_cat())
+//                    .address(entity.getAddress())
+//                    .address2(entity.getAddress2())
+//                    .phone(entity.getPhone())
+//                    .latitude(entity.getLatitude())
+//                    .logitude(entity.getLogitude())
+//                    .build();
+//
+//            list.add(dto);
+//        }
+//
+//        Pagination pagination = new Pagination(
+//                (int) hobbyEntities.getTotalElements()
+//                , pageable.getPageNumber() + 1
+//                , pageable.getPageSize()
+//                , 10
+//        );
+//
+//        return Header.OK(list, pagination);
+//    }
+//
+//    //카테고리별 키워드 검색
+//    public Header<List<HobbyDto>> getSearchList(Pageable pageable, SearchCondition searchCondition) {
+//        return null;
+//    }
+//
+//
+//    //카테고리(음악)별 리스트 조회
+//    public Header<List<HobbyDto>> getMusicList(Pageable pageable, SearchCondition searchCondition){
+//        List<HobbyDto> list = new ArrayList<>();
+//
+//        Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
+//        for (HobbyEntity entity : hobbyEntities) {
+//            HobbyDto dto = HobbyDto.builder()
+//                    .hobby_no(entity.getHobby_no())
+//                    .hobby_name(entity.getHobby_name())
+//                    .hobby_cat(entity.getHobby_cat())
+//                    .address(entity.getAddress())
+//                    .address2(entity.getAddress2())
+//                    .phone(entity.getPhone())
+//                    .latitude(entity.getLatitude())
+//                    .logitude(entity.getLogitude())
+//                    .build();
+//
+//            list.add(dto);
+//        }
+//
+//        Pagination pagination = new Pagination(
+//                (int) hobbyEntities.getTotalElements()
+//                , pageable.getPageNumber() + 1
+//                , pageable.getPageSize()
+//                , 10
+//        );
+//
+//        return Header.OK(list, pagination);
+//    }
+//
+//    //카테고리(미술)별 리스트 조회
+//    public Header<List<HobbyDto>> getArtList(Pageable pageable, SearchCondition searchCondition){
+//        List<HobbyDto> list = new ArrayList<>();
+//
+//        Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
+//        for (HobbyEntity entity : hobbyEntities) {
+//            HobbyDto dto = HobbyDto.builder()
+//                    .hobby_no(entity.getHobby_no())
+//                    .hobby_name(entity.getHobby_name())
+//                    .hobby_cat(entity.getHobby_cat())
+//                    .address(entity.getAddress())
+//                    .address2(entity.getAddress2())
+//                    .phone(entity.getPhone())
+//                    .latitude(entity.getLatitude())
+//                    .logitude(entity.getLogitude())
+//                    .build();
+//
+//            list.add(dto);
+//        }
+//
+//        Pagination pagination = new Pagination(
+//                (int) hobbyEntities.getTotalElements()
+//                , pageable.getPageNumber() + 1
+//                , pageable.getPageSize()
+//                , 10
+//        );
+//
+//        return Header.OK(list, pagination);
+//    }
+//
+//    //카테고리(무용)별 리스트 조회
+//    public Header<List<HobbyDto>> getDanceList(Pageable pageable, SearchCondition searchCondition){
+//        List<HobbyDto> list = new ArrayList<>();
+//
+//        Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
+//        for (HobbyEntity entity : hobbyEntities) {
+//            HobbyDto dto = HobbyDto.builder()
+//                    .hobby_no(entity.getHobby_no())
+//                    .hobby_name(entity.getHobby_name())
+//                    .hobby_cat(entity.getHobby_cat())
+//                    .address(entity.getAddress())
+//                    .address2(entity.getAddress2())
+//                    .phone(entity.getPhone())
+//                    .latitude(entity.getLatitude())
+//                    .logitude(entity.getLogitude())
+//                    .build();
+//
+//            list.add(dto);
+//        }
+//
+//        Pagination pagination = new Pagination(
+//                (int) hobbyEntities.getTotalElements()
+//                , pageable.getPageNumber() + 1
+//                , pageable.getPageSize()
+//                , 10
+//        );
+//
+//        return Header.OK(list, pagination);
+//    }
+//
+//    //카테고리(언어)별 리스트 조회
+//    public Header<List<HobbyDto>> getLanguageList(Pageable pageable, SearchCondition searchCondition){
+//        List<HobbyDto> list = new ArrayList<>();
+//
+//        Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
+//        for (HobbyEntity entity : hobbyEntities) {
+//            HobbyDto dto = HobbyDto.builder()
+//                    .hobby_no(entity.getHobby_no())
+//                    .hobby_name(entity.getHobby_name())
+//                    .hobby_cat(entity.getHobby_cat())
+//                    .address(entity.getAddress())
+//                    .address2(entity.getAddress2())
+//                    .phone(entity.getPhone())
+//                    .latitude(entity.getLatitude())
+//                    .logitude(entity.getLogitude())
+//                    .build();
+//
+//            list.add(dto);
+//        }
+//
+//        Pagination pagination = new Pagination(
+//                (int) hobbyEntities.getTotalElements()
+//                , pageable.getPageNumber() + 1
+//                , pageable.getPageSize()
+//                , 10
+//        );
+//
+//        return Header.OK(list, pagination);
+//    }
+//
+//    //카테고리(미디어)별 리스트 조회
+//    public Header<List<HobbyDto>> getMediaList(Pageable pageable, SearchCondition searchCondition){
+//        List<HobbyDto> list = new ArrayList<>();
+//
+//        Page<HobbyEntity> hobbyEntities = hobbyRepository.findAllBySearchCondition(pageable, searchCondition);
+//        for (HobbyEntity entity : hobbyEntities) {
+//            HobbyDto dto = HobbyDto.builder()
+//                    .hobby_no(entity.getHobby_no())
+//                    .hobby_name(entity.getHobby_name())
+//                    .hobby_cat(entity.getHobby_cat())
+//                    .address(entity.getAddress())
+//                    .address2(entity.getAddress2())
+//                    .phone(entity.getPhone())
+//                    .latitude(entity.getLatitude())
+//                    .logitude(entity.getLogitude())
+//                    .build();
+//
+//            list.add(dto);
+//        }
+//
+//        Pagination pagination = new Pagination(
+//                (int) hobbyEntities.getTotalElements()
+//                , pageable.getPageNumber() + 1
+//                , pageable.getPageSize()
+//                , 10
+//        );
+//
+//        return Header.OK(list, pagination);
+//    }
+//
+//
+//    //등록
+//    public HobbyEntity create(HobbyDto hobbyDto){
+//        HobbyEntity entity = HobbyEntity.builder().build();
+//
+//        return hobbyRepository.save(entity);
+//    }
+//
+//    //수정
+//    public HobbyEntity update(HobbyDto hobbyDto){
+//        HobbyEntity entity = HobbyEntity.builder().build();
+//
+//        return hobbyRepository.save(entity);
+//    }
+//
+//    //삭제
+//    public void delete(Long hobby_no){}
+//
 
 }

@@ -1,6 +1,7 @@
 package com.crud.btt.common.security;
 
 import com.crud.btt.member.model.service.MemberService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @EnableWebSecurity //security 활성화 어노테이션
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -25,15 +26,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void  configure(HttpSecurity http) throws  Exception {
         http.authorizeRequests()    //접근에 대한 인증 설정
-                .antMatchers("/member/login", "/member/enroll", "/").permitAll()    //누구나 접근 가능
-                .antMatchers("/login").hasRole("MEMBER")    //member, admin만 접근가능
+                .antMatchers("/loginhome","/member/login", "/member/enroll","/").permitAll()    //누구나 접근 가능
+                .antMatchers("/mypage", "/mypage/popupU", "/mypage/popupD").hasRole("MEMBER")    //member, admin만 접근가능
                 .antMatchers("/admin").hasRole("ADMIN") //amdin만 접근가능
                 .anyRequest().authenticated()   //권한의종류 관계없이 권한 있어야 접근가능
 
                 .and()
                 .formLogin()    //로그인 관한 설정
                 .loginPage("/member/login")    //로그인 페이지 링크
-                .defaultSuccessUrl("/login")     //로그인 성공 후 리다이렉트 주소
+                .defaultSuccessUrl("/mypage")     //로그인 성공 후 리다이렉트 주소
 
                 .and()
                 .logout()   //logout 관련 설정

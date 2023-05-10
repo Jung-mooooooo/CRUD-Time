@@ -1,9 +1,10 @@
 //package com.crud.btt.cs.entity;
 //
 //import com.crud.btt.common.SearchCondition;
-//import com.querydsl.core.types.Predicate;
-//import com.querydsl.jpa.impl.JPAQuery;
-//import com.querydsl.jpa.impl.JPAQueryFactory;
+////import com.querydsl.core.types.Predicate;
+////import com.querydsl.jpa.impl.JPAQuery;
+////import com.querydsl.jpa.impl.JPAQueryFactory;
+
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.data.domain.Page;
 //import org.springframework.data.domain.PageImpl;

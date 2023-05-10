@@ -1,22 +1,22 @@
-
 //package com.crud.btt.cs.entity;
 //
 //import com.crud.btt.common.SearchCondition;
-//import com.crud.btt.cs.model.dto.NoticeDto;
 //import com.querydsl.core.types.Predicate;
+//import com.querydsl.jpa.impl.JPAQuery;
+
 //import com.querydsl.jpa.impl.JPAQueryFactory;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.data.domain.Page;
 //import org.springframework.data.domain.PageImpl;
 //import org.springframework.data.domain.Pageable;
-//import org.springframework.data.jpa.repository.query.JpaCountQueryCreator;
-//import com.querydsl.jpa.impl.JPAQuery;
+
 //import org.springframework.util.StringUtils;
-//
-//import static com.crud.btt.cs.entity.QNoticeEntity.noticeEntity;
 //
 //import java.util.List;
 //
+//import static com.crud.btt.cs.entity.QNoticeEntity.noticeEntity;
+//
+
 //public class NoticeRepositoryCustom {
 //    @Autowired JPAQueryFactory queryFactory;
 //    public Page<NoticeEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition){
@@ -79,4 +79,3 @@
 //
 //    }
 //}
-
