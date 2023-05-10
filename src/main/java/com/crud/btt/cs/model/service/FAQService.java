@@ -33,6 +33,9 @@
 //    FAQRepositoryCustom faqRepositoryCustom;
 //
 
+
+
+    //목록보기
 //    public Header<List<FAQDto>> getFAQList(Pageable pageable, SearchCondition searchCondition) {
 //        List<FAQDto> dtos = new ArrayList<>();
 //

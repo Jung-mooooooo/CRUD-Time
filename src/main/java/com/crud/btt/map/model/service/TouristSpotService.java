@@ -20,7 +20,6 @@ import java.util.List;
 @Service
 public class TouristSpotService {
 
-
 //    private final TouristSpotRepository touristSpotRepository;
 //
 //    //지도 목록 조회(페이징 처리)
@@ -30,9 +29,9 @@ public class TouristSpotService {
 //        Page<TouristSpotEntity> welfareFacilityEntities = touristSpotRepository.findAllBySearchCondition(pageable, searchCondition);
 //        for (TouristSpotEntity entity : welfareFacilityEntities) {
 //            TouristSpotDto dto = TouristSpotDto.builder()
-//                    .ts_no(entity.getTs_no())
-//                    .ts_name(entity.getTs_name())
-//                    .ts_cat(entity.getTs_cat())
+//                    .tsNo(entity.getTsNo())
+//                    .tsName(entity.getTsName())
+//                    .tsCat(entity.getTsCat())
 //                    .address(entity.getAddress())
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
@@ -66,9 +65,9 @@ public class TouristSpotService {
 //        Page<TouristSpotEntity> welfareFacilityEntities = touristSpotRepository.findAllBySearchCondition(pageable, searchCondition);
 //        for (TouristSpotEntity entity : welfareFacilityEntities) {
 //            TouristSpotDto dto = TouristSpotDto.builder()
-//                    .ts_no(entity.getTs_no())
-//                    .ts_name(entity.getTs_name())
-//                    .ts_cat(entity.getTs_cat())
+//                    .tsNo(entity.getTsNo())
+//                    .tsName(entity.getTsName())
+//                    .tsCat(entity.getTsCat())
 //                    .address(entity.getAddress())
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
@@ -96,9 +95,9 @@ public class TouristSpotService {
 //        Page<TouristSpotEntity> welfareFacilityEntities = touristSpotRepository.findAllBySearchCondition(pageable, searchCondition);
 //        for (TouristSpotEntity entity : welfareFacilityEntities) {
 //            TouristSpotDto dto = TouristSpotDto.builder()
-//                    .ts_no(entity.getTs_no())
-//                    .ts_name(entity.getTs_name())
-//                    .ts_cat(entity.getTs_cat())
+//                    .tsNo(entity.getTsNo())
+//                    .tsName(entity.getTsName())
+//                    .tsCat(entity.getTsCat())
 //                    .address(entity.getAddress())
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
@@ -126,20 +125,24 @@ public class TouristSpotService {
 //        Page<TouristSpotEntity> welfareFacilityEntities = touristSpotRepository.findAllBySearchCondition(pageable, searchCondition);
 //        for (TouristSpotEntity entity : welfareFacilityEntities) {
 //            TouristSpotDto dto = TouristSpotDto.builder()
-//                    .ts_no(entity.getTs_no())
-//                    .ts_name(entity.getTs_name())
-//                    .ts_cat(entity.getTs_cat())
+//                    .tsNo(entity.getTsNo())
+//                    .tsName(entity.getTsName())
+//                    .tsCat(entity.getTsCat())
 //                    .address(entity.getAddress())
 //                    .address2(entity.getAddress2())
-//                    .phone(entity.getPhone())
-//                    .latitude(entity.getLatitude())
 //                    .logitude(entity.getLogitude())
 //                    .build();
-//
 //            list.add(dto);
 //        }
 //
 //        Pagination pagination = new Pagination(
+
+//            TouristSpotDto dto = TouristSpotDto.builder()
+//
+//
+//}
+//                    .phone(entity.getPhone())
+//                    .latitude(entity.getLatitude())
 //                (int) welfareFacilityEntities.getTotalElements()
 //                , pageable.getPageNumber() + 1
 //                , pageable.getPageSize()
@@ -155,10 +158,9 @@ public class TouristSpotService {
 //
 //        Page<TouristSpotEntity> welfareFacilityEntities = touristSpotRepository.findAllBySearchCondition(pageable, searchCondition);
 //        for (TouristSpotEntity entity : welfareFacilityEntities) {
-//            TouristSpotDto dto = TouristSpotDto.builder()
-//                    .ts_no(entity.getTs_no())
-//                    .ts_name(entity.getTs_name())
-//                    .ts_cat(entity.getTs_cat())
+//                    .tsNo(entity.getTsNo())
+//                    .tsName(entity.getTsName())
+//                    .tsCat(entity.getTsCat())
 //                    .address(entity.getAddress())
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
@@ -186,9 +188,9 @@ public class TouristSpotService {
 //        Page<TouristSpotEntity> welfareFacilityEntities = touristSpotRepository.findAllBySearchCondition(pageable, searchCondition);
 //        for (TouristSpotEntity entity : welfareFacilityEntities) {
 //            TouristSpotDto dto = TouristSpotDto.builder()
-//                    .ts_no(entity.getTs_no())
-//                    .ts_name(entity.getTs_name())
-//                    .ts_cat(entity.getTs_cat())
+//                    .tsNo(entity.getTsNo())
+//                    .tsName(entity.getTsName())
+//                    .tsCat(entity.getTsCat())
 //                    .address(entity.getAddress())
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
@@ -216,9 +218,9 @@ public class TouristSpotService {
 //        Page<TouristSpotEntity> welfareFacilityEntities = touristSpotRepository.findAllBySearchCondition(pageable, searchCondition);
 //        for (TouristSpotEntity entity : welfareFacilityEntities) {
 //            TouristSpotDto dto = TouristSpotDto.builder()
-//                    .ts_no(entity.getTs_no())
-//                    .ts_name(entity.getTs_name())
-//                    .ts_cat(entity.getTs_cat())
+//                    .tsNo(entity.getTsNo())
+//                    .tsName(entity.getTsName())
+//                    .tsCat(entity.getTsCat())
 //                    .address(entity.getAddress())
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
@@ -246,9 +248,9 @@ public class TouristSpotService {
 //        Page<TouristSpotEntity> welfareFacilityEntities = touristSpotRepository.findAllBySearchCondition(pageable, searchCondition);
 //        for (TouristSpotEntity entity : welfareFacilityEntities) {
 //            TouristSpotDto dto = TouristSpotDto.builder()
-//                    .ts_no(entity.getTs_no())
-//                    .ts_name(entity.getTs_name())
-//                    .ts_cat(entity.getTs_cat())
+//                    .tsNo(entity.getTsNo())
+//                    .tsName(entity.getTsName())
+//                    .tsCat(entity.getTsCat())
 //                    .address(entity.getAddress())
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
@@ -289,3 +291,4 @@ public class TouristSpotService {
 
 
 }
+

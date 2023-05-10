@@ -33,6 +33,8 @@
 //    NoticeRepositoryCustom noticeRepositoryCustom;
 //
 
+
+    //목록보기
 //    public Header<List<NoticeDto>> getNoticeList(Pageable pageable, SearchCondition searchCondition) {
 //        List<NoticeDto> dtos = new ArrayList<>();
 //
@@ -110,23 +112,24 @@
 //        */
 //
 //        NoticeEntity noticeEntity = NoticeEntity.builder()
-//                                        .notice_title(noticeDto.getNotice_title())
-//                                        .notice_content(noticeDto.getNotice_content())
-//                                        .create_at(noticeDto.getCreate_at())
-//                                        .notice_readcount(noticeDto.getNotice_readcount())
-//                                        .notice_original_file(noticeDto.getNotice_original_file())
-//                                        .notice_rename_file(noticeDto.getNotice_rename_file()).build();
+
+//                .noticeTitle(noticeDto.getNotice_title())
+//                .noticeContent(noticeDto.getNotice_content())
+//                .createAt(noticeDto.getCreate_at())
+//                .noticeReadCount(noticeDto.getNotice_readcount())
+//                .noticeOriginalFile(noticeDto.getNotice_original_file())
+//                .noticeRenameFile(noticeDto.getNotice_rename_file()).build();
 //
 //        noticeEntity = noticeRepository.save(noticeEntity);
 //        // return new NoticeDto(noticeRepository.save(new NoticeEntity(noticeDto)));
 //      return NoticeDto.builder()
-//              .notice_no(noticeEntity.getNotice_no())
-//              .notice_title(noticeEntity.getNotice_title())
-//              .notice_content(noticeEntity.getNotice_content())
-//              .create_at(noticeEntity.getCreate_at())
-//              .notice_readcount(noticeEntity.getNotice_readcount())
-//              .notice_original_file(noticeEntity.getNotice_original_file())
-//              .notice_rename_file(noticeEntity.getNotice_rename_file())
+//              .notice_no(noticeEntity.getNoticeNo())
+//              .notice_title(noticeEntity.getNoticeTitle())
+//              .notice_content(noticeEntity.getNoticeContent())
+//              .create_at(noticeEntity.getCreateAt())
+//              .notice_readcount(noticeEntity.getNoticeReadCount())
+//              .notice_original_file(noticeEntity.getNoticeOriginalFile())
+//              .notice_rename_file(noticeEntity.getNoticeRenameFile())
 //              .build();
 //    }
 //
@@ -157,12 +160,12 @@
 //            e.printStackTrace();
 //        }
 //
-//        NoticeEntity noticeEntity = NoticeEntity.builder().notice_no(noticeUpdateDto.getNotice_no())
-//                .notice_title(noticeUpdateDto.getNotice_title())
-//                .notice_content(noticeUpdateDto.getNotice_content())
-//                .create_at(now)
-//                .notice_original_file(noticeUpdateDto.getNotice_original_file())
-//                .notice_rename_file(noticeUpdateDto.getNotice_rename_file())
+//        NoticeEntity noticeEntity = NoticeEntity.builder().noticeNo(noticeUpdateDto.getNotice_no())
+//                .noticeTitle(noticeUpdateDto.getNotice_title())
+//                .noticeContent(noticeUpdateDto.getNotice_content())
+//                .createAt(now)
+//                .noticeOriginalFile(noticeUpdateDto.getNotice_original_file())
+//                .noticeRenameFile(noticeUpdateDto.getNotice_rename_file())
 //                .build();
 //        /*
 //        NoticeEntity noticeEntity1 = noticeRepository.findByNoticeNo(noticeUpdateDto.getNotice_no());
@@ -191,4 +194,3 @@
 //
 //
 //}
-

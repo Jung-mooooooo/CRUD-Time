@@ -30,9 +30,9 @@ public class WelfareFacilityService {
 //        Page<WelfareFacilityEntity> welfareFacilityEntities = welfareFacilityRepository.findAllBySearchCondition(pageable, searchCondition);
 //        for (WelfareFacilityEntity entity : welfareFacilityEntities) {
 //            WelfareFacilityDto dto = WelfareFacilityDto.builder()
-//                    .wf_no(entity.getWf_no())
-//                    .wf_name(entity.getWf_name())
-//                    .wf_cat(entity.getWf_cat())
+//                    .wfNo(entity.getWfNo())
+//                    .wfName(entity.getWfName())
+//                    .wfCat(entity.getWfCat())
 //                    .address(entity.getAddress())
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
@@ -66,16 +66,15 @@ public class WelfareFacilityService {
 //        Page<WelfareFacilityEntity> welfareFacilityEntities = welfareFacilityRepository.findAllBySearchCondition(pageable, searchCondition);
 //        for (WelfareFacilityEntity entity : welfareFacilityEntities) {
 //            WelfareFacilityDto dto = WelfareFacilityDto.builder()
-//                    .wf_no(entity.getWf_no())
-//                    .wf_name(entity.getWf_name())
-//                    .wf_cat(entity.getWf_cat())
+//                    .wfNo(entity.getWfNo())
+//                    .wfName(entity.getWfName())
+//                    .wfCat(entity.getWfCat())
 //                    .address(entity.getAddress())
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
 //                    .latitude(entity.getLatitude())
 //                    .logitude(entity.getLogitude())
 //                    .build();
-//
 //            list.add(dto);
 //        }
 //
@@ -96,9 +95,9 @@ public class WelfareFacilityService {
 //        Page<WelfareFacilityEntity> welfareFacilityEntities = welfareFacilityRepository.findAllBySearchCondition(pageable, searchCondition);
 //        for (WelfareFacilityEntity entity : welfareFacilityEntities) {
 //            WelfareFacilityDto dto = WelfareFacilityDto.builder()
-//                    .wf_no(entity.getWf_no())
-//                    .wf_name(entity.getWf_name())
-//                    .wf_cat(entity.getWf_cat())
+//                    .wfNo(entity.getWfNo())
+//                    .wfName(entity.getWfName())
+//                    .wfCat(entity.getWfCat())
 //                    .address(entity.getAddress())
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())

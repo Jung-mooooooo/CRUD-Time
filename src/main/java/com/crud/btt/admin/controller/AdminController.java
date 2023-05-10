@@ -22,7 +22,9 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class AdminController {
+
 //    private final AdminService adminService;
+
 //private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
 
@@ -32,8 +34,10 @@ public class AdminController {
 //                                                SearchCondition searchCondition) {
 //        return adminService.getChatLogList(pageable, searchCondition);
 //    }
+
 //
 //    //chatlog table insert
+
 //    @PostMapping
 //    public ChatLogEntity create(@RequestBody ChatLogDto chatLogDto) {
 //        return adminService.create(chatLogDto);
@@ -41,9 +45,9 @@ public class AdminController {
 
 
     //감정현황 조회
-    public String userEmotionCount(HttpServletResponse response) {
-        return null;
-    }
+//    public String userEmotionCount(HttpServletResponse response) {
+//        return null;
+//    }
 
 
     //회원 ip 메소드

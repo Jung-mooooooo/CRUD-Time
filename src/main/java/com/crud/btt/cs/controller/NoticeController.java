@@ -35,8 +35,10 @@
 //        return noticeService.getNoticeList(pageable,searchCondition);
 //    }
 
+
 //
 //    //공지사항 상세보기
+
 //   @GetMapping("/admin/AdminNoticeDetail/{id}")
 //    public NoticeDto getNotice(@PathVariable Long notice_no) {
 //        return noticeService.getNotice(notice_no);
@@ -44,7 +46,8 @@
 //
 //
 //    //공지사항 글 작성
-//    @PostMapping("/admin/AdminNotice/{id}")
+//    @PostMapping("/admin/AdminNoticeWrite/{id}")
+
 //    public NoticeDto noticeCreate(@RequestBody NoticeDto noticeDto){
 //        return noticeService.noticeCreate(noticeDto);
 //    }
@@ -60,6 +63,7 @@
 //    public Long  noticeDelete(@PathVariable Long notice_no){
 //        return noticeService.noticeDelete(notice_no);
 //    }
+
 //
 //
 //

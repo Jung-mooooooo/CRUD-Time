@@ -33,6 +33,7 @@ public interface QnARepository extends JpaRepository<QnAEntity, Long>{
 //    QnAEntity findByQnANo(Long qnaNo);
 //
 //    long deleteByQnANo(Long qnaNo);
+
 //
 //   //Page<QnAEntity> findByQnATitleOrQnAContent(Pageable pageable, String keyword);
 //
@@ -42,6 +43,7 @@ public interface QnARepository extends JpaRepository<QnAEntity, Long>{
 //    List<QnAEntity> findSameBtwTwoColumn();
 //
 //    QnAEntity findByRefNoAndQnaNoNot(Long qna_no_to_ref, Long qna_no_to_no);
+
 
     /*
     find ->      select         select *

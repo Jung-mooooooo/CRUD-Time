@@ -21,6 +21,7 @@ public class AdminService {
 //    private final EmotionRepository emotionRepository;
 //    private final LogRepository logRepository;
 //    private final SpLogRepository spLogRepository;
+
 //
 ////    private final ChatLogRepository chatLogRepository;
 ////    private final ChatLogRepositoryCustom chatLogRepositoryCustom;
@@ -87,6 +88,7 @@ public class AdminService {
 //
 //
 //
+
 //    private final ChatLogRepository chatLogRepository;
 //    private final ChatLogRepositoryCustom chatLogRepositoryCustom;
 //
@@ -106,6 +108,7 @@ public class AdminService {
 //                .build();
 //        return chatLogRepository.save(entity);
 //    }
+
 //
 //    //삭제 => 3개월 이후 삭제
 //    public void delete(Long log_no) {
@@ -113,4 +116,5 @@ public class AdminService {
 //                -> new RuntimeException("해당 logNO을 찾을 수 없습니다."));
 //        chatLogRepository.delete(entity);
 //    }
+
 }
