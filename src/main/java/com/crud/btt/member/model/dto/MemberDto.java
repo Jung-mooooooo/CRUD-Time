@@ -1,5 +1,6 @@
 package com.crud.btt.member.model.dto;
 
+import com.crud.btt.member.entity.MemberEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,4 +26,13 @@ public class MemberDto {
     private String permit;      //회원체크
     private Date enrollDate;   //가입일
 
+    public MemberEntity toEntity() {
+        return MemberEntity.builder()
+                .userId(userId)
+                .userPw(userPw)
+                .userName(userName)
+                .phone(phone)
+                .email(email)
+                .build();
+    }
 }

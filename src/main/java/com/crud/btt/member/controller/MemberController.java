@@ -2,6 +2,7 @@ package com.crud.btt.member.controller;
 
 import com.crud.btt.member.model.dto.MemberDto;
 import com.crud.btt.member.model.service.MemberService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Slf4j
-@RequiredArgsConstructor
+@AllArgsConstructor
 @CrossOrigin
 @RestController
 public class MemberController {
@@ -44,18 +45,25 @@ public class MemberController {
 //    }
 
     //로그인 처리용
-    @GetMapping("/login")
-    public void login(){
-//        LOG.info("GET successfully called on /login resource");
-    }
+//    @GetMapping("/member/login")
+//    public void login(){
+//        System.out.println("123");
+////        LOG.info("GET successfully called on /login resource");
+//    }
 
     //회원가입
-    @PostMapping("/member/enroll")
-    public String saveMember(@RequestBody MemberDto memberDto) throws Exception{
-        memberService.saveMember(memberDto);
-        return "OK";
+//    @PostMapping("/member/enroll")
+//    public String saveMember(@RequestBody MemberDto memberDto) throws Exception{
+//        memberService.saveMember(memberDto);
+//        return "OK";
+//    }
+    @PostMapping("/user/signup")
+    public String execSignup(MemberDto memberDto) {
+        System.out.println("ㅇㅇㅇㅇ");
+        System.out.println(memberDto.toString());
+        memberService.save(memberDto);
+        return "redirect:/member/login";
     }
-
 
     //아이디찾기
 //    @GetMapping("/member/find/id")

@@ -22,22 +22,28 @@ public class AdminService {
 //    private final LogRepository logRepository;
 //    private final SpLogRepository spLogRepository;
 
+
+//    private final ChatLogRepository chatLogRepository;
+//    private final ChatLogRepositoryCustom chatLogRepositoryCustom;
 //
-////    private final ChatLogRepository chatLogRepository;
-////    private final ChatLogRepositoryCustom chatLogRepositoryCustom;
-////
-////    public ChatLogEntity create(ChatLogDto chatLogDto) {
-////        ChatLogEntity entity = ChatLogEntity.builder()
-////                .user_code1(chatLogDto.getUser_code1())
-////                .user_code2(chatLogDto.getUser_code2())
-////                .access_time(chatLogDto.getAccess_time())
-////                .entrance(chatLogDto.getEntrance())
-////                .link(chatLogDto.getLink())
-////                .build();
-////        return chatLogRepository.save(entity);
-////    }
+//    //리스트 출력
+//    public Header<List<ChatLogDto>> getChatLogList(Pageable pageable, SearchCondition searchCondition) {
+//        return null;
+//    }
 //
-//
+//    //등록
+//    public ChatLogEntity create(ChatLogDto chatLogDto) {
+//        ChatLogEntity entity = ChatLogEntity.builder()
+//                .userCode1(chatLogDto.getUserCode1())
+//                .userCode2(chatLogDto.getUserCode2())
+//                .accessTime(chatLogDto.getAccessTime())
+//                .entrance(chatLogDto.getEntrance())
+//                .link(chatLogDto.getLink())
+//                .build();
+//        return chatLogRepository.save(entity);
+//    }
+
+
 //
 //    //감정현황 조회
 //    public Long emotionCount(){
@@ -88,7 +94,6 @@ public class AdminService {
 //
 //
 //
-
 //    private final ChatLogRepository chatLogRepository;
 //    private final ChatLogRepositoryCustom chatLogRepositoryCustom;
 //
@@ -108,7 +113,6 @@ public class AdminService {
 //                .build();
 //        return chatLogRepository.save(entity);
 //    }
-
 //
 //    //삭제 => 3개월 이후 삭제
 //    public void delete(Long log_no) {
@@ -116,5 +120,4 @@ public class AdminService {
 //                -> new RuntimeException("해당 logNO을 찾을 수 없습니다."));
 //        chatLogRepository.delete(entity);
 //    }
-
 }

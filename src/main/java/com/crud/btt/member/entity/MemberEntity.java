@@ -49,6 +49,16 @@ public class MemberEntity implements UserDetails {
     @Column(name="enroll_date")
     private Date enrollDate;   //가입일
 
+
+
+    //update를 위한
+    public MemberEntity update(String userPw, String phone, String email){
+        this.userPw = userPw;
+        this.phone = phone;
+        this.email = email;
+        return  this;
+    }
+
     //사용자의 권한을 콜렉션 형태로 반환
     //클래스 자료형은 GrantedAuthority 구현
     @Override
