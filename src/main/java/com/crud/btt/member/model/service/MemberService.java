@@ -5,16 +5,18 @@ import com.crud.btt.member.entity.MemberRepository;
 import com.crud.btt.member.entity.QuitEntity;
 import com.crud.btt.member.entity.QuitRepository;
 import com.crud.btt.member.model.dto.MemberDto;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
 @Slf4j
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
 public class MemberService implements UserDetailsService {
 
@@ -65,9 +67,28 @@ public class MemberService implements UserDetailsService {
     }
 
     //회원가입
-    @Transactional
-    public void saveMember(MemberDto memberDto) throws Exception{
+//    @Transactional
+//    public void saveMember(MemberDto memberDto) throws Exception{
+//    }
+//    public MemberEntity joinUser(MemberDto memberDto){
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        memberDto.setUserPw(passwordEncoder.encode(memberDto.getUserPw()));
+//        return memberRepository.save(memberDto.toEntity());
+//    }
+    public Long save(MemberDto memberDto){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        memberDto.setUserPw(passwordEncoder.encode(memberDto.getUserPw()));
+
+        return memberRepository.save(MemberEntity.builder()
+                .userId(memberDto.getUserId())
+                .userPw(memberDto.getUserPw())
+                .userName(memberDto.getUserName())
+                .phone(memberDto.getPhone())
+                .email(memberDto.getEmail())
+                .build()
+        ).getUserCode();
     }
+
 
     //아이디찾기
 //    public Optional<Member> findById(Long id) {
@@ -122,4 +143,6 @@ public class MemberService implements UserDetailsService {
     public MemberEntity loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
     }
+
+
 }
