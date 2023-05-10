@@ -12,11 +12,11 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class AdminDto {
-    private long admin_code;
-    private String admin_id;
-    private String admin_pwd;
-    private String admin_name;
+    private long adminCode;
+    private String adminId;
+    private String adminPwd;
+    private String adminName;
     private String phone;
     private String email;
-    private Date enroll_date;
+    private Date enrollDate;
 }
