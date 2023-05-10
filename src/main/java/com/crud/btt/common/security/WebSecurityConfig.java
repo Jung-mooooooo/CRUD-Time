@@ -1,6 +1,7 @@
 package com.crud.btt.common.security;
 
 import com.crud.btt.member.model.service.MemberService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @EnableWebSecurity //security 활성화 어노테이션
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {

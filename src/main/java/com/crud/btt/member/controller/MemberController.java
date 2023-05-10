@@ -58,10 +58,10 @@ public class MemberController {
 
 
     //아이디찾기
-    @GetMapping("/member/find/id")
-    public ResponseEntity<String> findId(String email){
-        return null;
-    }
+//    @GetMapping("/member/find/id")
+//    public ResponseEntity<String> findId(String email){
+//        return null;
+//    }
 
     //비밀번호찾기
     @GetMapping("/member/find/id")

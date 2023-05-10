@@ -1,16 +1,17 @@
 package com.crud.btt.cs.controller;
 
+import com.crud.btt.cs.model.dto.FAQDto;
+import com.crud.btt.cs.model.dto.FAQUpdateDto;
 import com.crud.btt.cs.model.service.FAQService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @CrossOrigin
 @RestController
 public class FAQController {
 
-    private final FAQService faqService;
+//    private final FAQService faqService;
 
     //FAQ 목록 출력
 //    @GetMapping("/admin/AdminFAQ")
@@ -33,23 +34,23 @@ public class FAQController {
 //    }
 
 
-    //FAQ 글 작성
-    @PostMapping("/admin/AdminFAQWrite/{id}")
-    public FAQDto faqCreate(@RequestBody FAQDto FAQDto){
-        return faqService.faqCreate(FAQDto);
-    }
-
-    //FAQ 글 수정
-    @PatchMapping("/admin/AdminFAQDetail/{id}")
-    public FAQUpdateDto faqUpdate(@RequestBody FAQUpdateDto FAQUpdateDto){
-        return faqService.faqUpdate(FAQUpdateDto);
-    }
-
-    //FAQ 글 삭제
-    @DeleteMapping("/admin/AdminFAQDetail/{id}")
-    public Long  faqDelete(@PathVariable Long FAQ_no){
-        return faqService.faqDelete(FAQ_no);
-    }
+//    //FAQ 글 작성
+//    @PostMapping("/admin/AdminFAQWrite/{id}")
+//    public FAQDto faqCreate(@RequestBody FAQDto FAQDto){
+//        return faqService.faqCreate(FAQDto);
+//    }
+//
+//    //FAQ 글 수정
+//    @PatchMapping("/admin/AdminFAQDetail/{id}")
+//    public FAQUpdateDto faqUpdate(@RequestBody FAQUpdateDto FAQUpdateDto){
+//        return faqService.faqUpdate(FAQUpdateDto);
+//    }
+//
+//    //FAQ 글 삭제
+//    @DeleteMapping("/admin/AdminFAQDetail/{id}")
+//    public Long  faqDelete(@PathVariable Long FAQ_no){
+//        return faqService.faqDelete(FAQ_no);
+//    }
 
 
 

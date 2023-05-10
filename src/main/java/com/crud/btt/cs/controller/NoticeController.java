@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 public class NoticeController {
 
-    private final NoticeService noticeService;
+//    private final NoticeService noticeService;
 
     //공지사항 목록 출력
 //    @GetMapping("/admin/AdminNotice")
@@ -35,29 +35,29 @@ public class NoticeController {
 //    }
     
     //공지사항 상세보기
-   @GetMapping("/admin/AdminNoticeDetail/{id}")
-    public NoticeDto getNotice(@PathVariable Long notice_no) {
-        return noticeService.getNotice(notice_no);
-    }
-
-
-    //공지사항 글 작성
-    @PostMapping("/admin/AdminNoticeWrite/{id}")
-    public NoticeDto noticeCreate(@RequestBody NoticeDto noticeDto){
-        return noticeService.noticeCreate(noticeDto);
-    }
-
-    //공지사항 글 수정
-    @PatchMapping("/admin/AdminNoticeDetail/{id}")
-    public NoticeUpdateDto noticeUpdate(@RequestBody NoticeUpdateDto noticeUpdateDto){
-        return noticeService.noticeUpdate(noticeUpdateDto);
-    }
-
-    //공지사항 글 삭제
-    @DeleteMapping("/admin/AdminNoticeDetail/{id}")
-    public Long  noticeDelete(@PathVariable Long notice_no){
-        return noticeService.noticeDelete(notice_no);
-    }
+//   @GetMapping("/admin/AdminNoticeDetail/{id}")
+//    public NoticeDto getNotice(@PathVariable Long notice_no) {
+//        return noticeService.getNotice(notice_no);
+//    }
+//
+//
+//    //공지사항 글 작성
+//    @PostMapping("/admin/AdminNoticeWrite/{id}")
+//    public NoticeDto noticeCreate(@RequestBody NoticeDto noticeDto){
+//        return noticeService.noticeCreate(noticeDto);
+//    }
+//
+//    //공지사항 글 수정
+//    @PatchMapping("/admin/AdminNoticeDetail/{id}")
+//    public NoticeUpdateDto noticeUpdate(@RequestBody NoticeUpdateDto noticeUpdateDto){
+//        return noticeService.noticeUpdate(noticeUpdateDto);
+//    }
+//
+//    //공지사항 글 삭제
+//    @DeleteMapping("/admin/AdminNoticeDetail/{id}")
+//    public Long  noticeDelete(@PathVariable Long notice_no){
+//        return noticeService.noticeDelete(notice_no);
+//    }
 
 
 
