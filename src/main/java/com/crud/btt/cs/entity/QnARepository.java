@@ -3,7 +3,9 @@ package com.crud.btt.cs.entity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -23,27 +25,33 @@ public interface QnARepository extends JpaRepository<QnAEntity, Long>{
     */
 
 
-//    @Query(value = "value = INSERT INTO QNA (qna_no, create_at, qna_title, qna_content, qna_readcount, admin_code, user_code, qna_original_file, qna_rename_file, qna_private, qna_ref)" +
+//    @Query(value = "NSERT INTO QNA (qna_no, create_at, qna_title, qna_content, qna_readcount, admin_code, user_code, qna_original_file, qna_rename_file, qna_private, qna_ref)" +
 //            "VALUES (qna_sequence_name.nextval, current_timestamp, :qna_title, :qna_content, :qna_readcount, :admin_code, :user_code, :qna_original_file, :qna_rename_file, :qna_private, qna_sequence_name.currval)"
 //            ,nativeQuery = true)
-//    QnAEntity saveQuestion(QnAEntity qnAEntity);
-//
-//    Page<QnAEntity> findAllByOrderByIdxDesc(Pageable pageable);
-//
-//    QnAEntity findByQnANo(Long qnaNo);
-//
-//    long deleteByQnANo(Long qnaNo);
+//    QnAEntity saveQuestion(QnAEntity qnaEntity);
 
-//
-//   //Page<QnAEntity> findByQnATitleOrQnAContent(Pageable pageable, String keyword);
-//
-//    @Query(value = "SELECT * FROM QNA WHERE QNA.QNA_NO = QNA.REF_NO ORDER BY QNA.QNA_NO DESC", nativeQuery = true)
-//    // @Query(value = "SELECT * FROM QNA q WHERE q.QNA_NO = q.REF_NO ORDER BY q.QNA_NO DESC", nativeQuery = true)
-//    // @Query(value = "SELECT * FROM com.crud.btt.cs.entity.QNA WHERE QNA.QNA_NO = QNA.REF_NO ORDER BY QNA.QNA_NO DESC", nativeQuery = true)
-//    List<QnAEntity> findSameBtwTwoColumn();
-//
-//    QnAEntity findByRefNoAndQnaNoNot(Long qna_no_to_ref, Long qna_no_to_no);
 
+    @Modifying
+    @Query(value = "INSERT INTO QNA (qna_no, create_at, qna_title, qna_content, qna_readcount, admin_code, user_code, qna_original_file, qna_rename_file, qna_private, qna_ref)" +
+            " VALUES (qna_sequence_name.nextval, current_timestamp, :#{#qnaEntity.qnaTitle}, :#{#qnaEntity.qnaContent}, :#{#qnaEntity.qnaReadCount}, :#{#qnaEntity.adminCode}, :#{#qnaEntity.userCode}, :#{#qnaEntity.qnaOriginalFile}, :#{#qnaEntity.qnaRenameFile}, :#{#qnaEntity.qnaPrivate}, qna_sequence_name.currval)",
+            nativeQuery = true)
+    QnAEntity saveQuestion(@Param("qnaEntity") QnAEntity qnaEntity);
+
+
+    Page<QnAEntity> findAllByOrderByQnaNoDesc(Pageable pageable);
+
+    QnAEntity findByQnaNo(Long qnaNo);
+
+    long deleteByQnaNo(Long qnaNo);
+
+   //Page<QnAEntity> findByQnATitleOrQnAContent(Pageable pageable, String keyword);
+
+    @Query(value = "SELECT * FROM QNA WHERE QNA.QNA_NO = QNA.REF_NO ORDER BY QNA.QNA_NO DESC", nativeQuery = true)
+    // @Query(value = "SELECT * FROM QNA q WHERE q.QNA_NO = q.REF_NO ORDER BY q.QNA_NO DESC", nativeQuery = true)
+    // @Query(value = "SELECT * FROM com.crud.btt.cs.entity.QNA WHERE QNA.QNA_NO = QNA.REF_NO ORDER BY QNA.QNA_NO DESC", nativeQuery = true)
+    List<QnAEntity> findSameBtwTwoColumn();
+
+    QnAEntity findByQnaRefAndQnaNoNot(Long qna_no_to_ref, Long qna_no_to_no);
 
     /*
     find ->      select         select *

@@ -1,106 +1,105 @@
 
-//package com.crud.btt.cs.model.service;
-//
-//import com.crud.btt.common.Header;
-//import com.crud.btt.common.Pagination;
-//import com.crud.btt.common.SearchCondition;
-//import com.crud.btt.cs.entity.QnAEntity;
-//import com.crud.btt.cs.entity.QnARepository;
-//import com.crud.btt.cs.entity.QnARepositoryCustom;
-//import com.crud.btt.cs.model.dto.QnADto;
-//import com.crud.btt.cs.model.dto.QnAListDto;
-//import com.crud.btt.cs.model.dto.QnAUpdateDto;
-//import lombok.RequiredArgsConstructor;
-//import lombok.extern.slf4j.Slf4j;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.Pageable;
-//import org.springframework.stereotype.Service;
-//
-//import java.text.ParseException;
-//import java.text.SimpleDateFormat;
-//import java.util.ArrayList;
-//import java.util.Date;
-//import java.util.List;
-//import java.util.TimeZone;
-//
-//@Slf4j
-//@RequiredArgsConstructor
-//@Service
-//public class QnAService {
-//    @Autowired
-//    QnARepository qnaRepository;
-//    QnARepositoryCustom qnaRepositoryCustom;
+package com.crud.btt.cs.model.service;
 
-//    //목록보기
-//    public Header<List<QnAListDto>> getQnAList(Pageable pageable, SearchCondition searchCondition) {
-//
-//        /*
-//        Page<QnAEntity> qnaEntities =
-//                qnaRepositoryCustom.findAllBySearchCondition(
-//                        pageable, searchCondition);
-//        */
-//
-//        // 결과 리스트 담을 객체
-//        // QnAListDto랑 QnADto는 다른 클래스(다른 객체임)
-//        List<QnAListDto> resultList = null;
-//
-//        // 질문글만 전체 가져왔음
-//        List<QnAEntity> qList = qnaRepository.findSameBtwTwoColumn();
-//
-//        // 질문글을 하나씩 꺼내서 Loop ( for )
-//        for(QnAEntity entity : qList){
-//            QnAEntity AnswerEntity = qnaRepository.findByRefNoAndQnaNoNot(entity.getQnaNo(), entity.getQnaNo());
-//            // 질문글의 질문글의 흐름이 있음, 질문글은 무조건 결과리스트에 포함
-//            // 답변글의 답변글의 흐름이 있음, 답변글은 있어야지만 결과리스트에 포함
-//            QnAListDto qnAListQuestion = new QnAListDto(entity);
-//            resultList.add(qnAListQuestion);
-//            // resultList.add(new QnAListDto(entity));
-//            if(AnswerEntity != null){
-//                QnAListDto qnAListAnswer = new QnAListDto(AnswerEntity);
-//                resultList.add(qnAListAnswer);
-//                // resultList.add(new QnAListDto(AnswerEntity));
-//            }
+import com.crud.btt.common.Header;
+import com.crud.btt.common.Pagination;
+import com.crud.btt.common.SearchCondition;
+import com.crud.btt.cs.entity.QnAEntity;
+import com.crud.btt.cs.entity.QnARepository;
+import com.crud.btt.cs.entity.QnARepositoryCustom;
+import com.crud.btt.cs.entity.QnARepositoryCustom;
+import com.crud.btt.cs.model.dto.QnADto;
+import com.crud.btt.cs.model.dto.QnAListDto;
+import com.crud.btt.cs.model.dto.QnAUpdateDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
+
+@Slf4j
+@RequiredArgsConstructor
+@Service
+public class QnAService {
+    @Autowired
+    QnARepository qnaRepository;
+    QnARepositoryCustom qnARepositoryCustom;
+    public Header<List<QnAListDto>> getQnAList(Pageable pageable, SearchCondition searchCondition) {
+
+        /*
+        Page<QnAEntity> qnaEntities =
+                qnaRepositoryCustom.findAllBySearchCondition(
+                        pageable, searchCondition);
+        */
+
+        // 결과 리스트 담을 객체
+        // QnAListDto랑 QnADto는 다른 클래스(다른 객체임)
+        List<QnAListDto> resultList = null;
+
+        // 질문글만 전체 가져왔음
+        List<QnAEntity> qList = qnaRepository.findSameBtwTwoColumn();
+
+        // 질문글을 하나씩 꺼내서 Loop ( for )
+        for(QnAEntity entity : qList){
+            QnAEntity AnswerEntity = qnaRepository.findByQnaRefAndQnaNoNot(entity.getQnaNo(), entity.getQnaNo());
+            // 질문글의 질문글의 흐름이 있음, 질문글은 무조건 결과리스트에 포함
+            // 답변글의 답변글의 흐름이 있음, 답변글은 있어야지만 결과리스트에 포함
+            QnAListDto qnAListQuestion = new QnAListDto(entity);
+            resultList.add(qnAListQuestion);
+            // resultList.add(new QnAListDto(entity));
+            if(AnswerEntity != null){
+                QnAListDto qnAListAnswer = new QnAListDto(AnswerEntity);
+                resultList.add(qnAListAnswer);
+                // resultList.add(new QnAListDto(AnswerEntity));
+            }
+        }
+
+        Pagination pagination = new Pagination(
+                resultList.size()
+                , pageable.getPageNumber() + 1
+                , pageable.getPageSize()
+                , 10
+        );
+
+        return Header.OK(resultList, pagination);
+    }
+
+    // 상세보기
+    public QnADto getQnA(Long qnaNo) {
+
+        // update set count = count +1;
+        QnAEntity qnaEntity = qnaRepository.findById(qnaNo).get();
+//        if(qnaEntity.getQna_private() != "Y" && 작성자 != 유저
+//            || 공개 != "Y" && 관리자 != 유저){
+//            return null;
 //        }
-//
-//        Pagination pagination = new Pagination(
-//                resultList.size()
-//                , pageable.getPageNumber() + 1
-//                , pageable.getPageSize()
-//                , 10
-//        );
-//
-//        return Header.OK(resultList, pagination);
-//    }
-//
-//    // 상세보기
-//    public QnADto getQnA(Long qnaNo) {
-//
-//        // update set count = count +1;
-//        QnAEntity qnaEntity = qnaRepository.findById(qnaNo).get();
-////        if(qnaEntity.getQna_private() != "Y" && 작성자 != 유저
-////            || 공개 != "Y" && 관리자 != 유저){
-////            return null;
-////        }
-//        qnaEntity.setQnaReadCount(qnaEntity.getQnaReadCount()+1);
-//        return new QnADto(qnaRepository.save(qnaEntity));
-//    }
-//
-//    public QnADto qnaCreate(QnADto qnaDto){
-//        TimeZone timeZone = TimeZone.getTimeZone("GMT+9");
-//        Date now = new Date();
-//
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
-//        formatter.setTimeZone(timeZone);
-//        String formattedDate = formatter.format(now);
-//
-//        try {
-//            now = formatter.parse(formattedDate);
-//        } catch( ParseException e ){
-//            e.printStackTrace();
-//        } catch( Exception e ){
-//            e.printStackTrace();
-//        }
+        qnaEntity.setQnaReadCount(qnaEntity.getQnaReadCount()+1);
+        return new QnADto(qnaRepository.save(qnaEntity));
+    }
+
+    public QnADto qnaCreate(QnADto qnaDto){
+        TimeZone timeZone = TimeZone.getTimeZone("GMT+9");
+        Date now = new Date();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+        formatter.setTimeZone(timeZone);
+        String formattedDate = formatter.format(now);
+
+        try {
+            now = formatter.parse(formattedDate);
+        } catch( ParseException e ){
+            e.printStackTrace();
+        } catch( Exception e ){
+            e.printStackTrace();
+        }
 
         /*
             객체를 만들건데, 그냥 new 생성자() 로 만드는 경우가 있고,
@@ -109,13 +108,13 @@
             그러면 너무 복잡 불필요하고 굳이?
             Qna 클래스에 builder 메소드에 Qna 객체를 만드는 코드를 짜놓은거.
         */
-//        QnAEntity qnaEntity = QnAEntity.builder()
-//                .qnaTitle(qnaDto.getQna_title())
-//                .qnaContent(qnaDto.getQna_content())
-//                .createAt(now)
-//                .qnaReadCount(qnaDto.getQna_readcount())
-//                .qnaOriginalFile(qnaDto.getQna_original_file())
-//                .qnaRename_File(qnaDto.getQna_rename_file()).build();
+        QnAEntity qnaEntity = QnAEntity.builder()
+                .qnaTitle(qnaDto.getQna_title())
+                .qnaContent(qnaDto.getQna_content())
+                .createAt(now)
+                .qnaReadCount(qnaDto.getQna_readcount())
+                .qnaOriginalFile(qnaDto.getQna_original_file())
+                .qnaRename_File(qnaDto.getQna_rename_file()).build();
 
         /*
             화면에서 qnaDto 를 받음.
@@ -134,62 +133,61 @@
             DB에서 시퀀스로 글번호를 만들꺼니까, 축약해놓은 글번호, 글제목, 참조번호 세가지 컬럼중에 더 채워넣을게 없음.
 
         */
-//        if(qnaEntity.getQnaRef() > 0){
-//            qnaEntity = qnaRepository.save(qnaEntity);
-//        }else {
-//            qnaEntity = qnaRepository.saveQuestion(qnaEntity);
-//        }
-//
-//        return QnADto.builder()
-//                .qna_no(qnaEntity.getQnaNo())
-//                .qna_title(qnaEntity.getQnaTitle())
-//                .qna_content(qnaEntity.getQnaContent())
-//                .create_at(qnaEntity.getCreateAt())
-//                .qna_readcount(qnaEntity.getQnaReadCount())
-//                .qna_original_file(qnaEntity.getQnaOriginalFile())
-//                .qna_rename_file(qnaEntity.getQnaRename_File())
-//                .build();
-//    }
-//
-//    //수정
-//    public QnAUpdateDto qnaUpdate(QnAUpdateDto qnaUpdateDto){
-//
-//        if(qnaRepository.findByQnANo(qnaUpdateDto.getQna_no()) == null){
-//            return new QnAUpdateDto("F");
-//        }
-//
-//        TimeZone timeZone = TimeZone.getTimeZone("GMT+9");
-//        Date now = new Date();
-//
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
-//        formatter.setTimeZone(timeZone);
-//        String formattedDate = formatter.format(now);
-//
-//        try {
-//            now = formatter.parse(formattedDate);
-//        } catch( ParseException e ){
-//            e.printStackTrace();
-//        } catch( Exception e ){
-//            e.printStackTrace();
-//        }
-//
-//        QnAEntity qnaEntity = QnAEntity.builder().qnaNo(qnaUpdateDto.getQna_no())
-//                .qnaTitle(qnaUpdateDto.getQna_title())
-//                .qnaContent(qnaUpdateDto.getQna_content())
-//                .createAt(now)
-//                .qnaOriginalFile(qnaUpdateDto.getQna_original_file())
-//                .qnaRename_File(qnaUpdateDto.getQna_rename_file())
-//                .build();
-//
-//        return new QnAUpdateDto(qnaRepository.save(qnaEntity));
-//    }
-//
-//    //삭제 (삭제는 반환타입이 Long, 값은 삭제된 행 )
-//    public Long qnaDelete(Long qna_no){
-//
-//        return qnaRepository.deleteByQnANo(qna_no);
-//
-//    }
-//
-//}
+        if(qnaEntity.getQnaRef() > 0){
+            qnaEntity = qnaRepository.save(qnaEntity);
+        }else {
+            qnaEntity = qnaRepository.saveQuestion(qnaEntity);
+        }
 
+        return QnADto.builder()
+                .qna_no(qnaEntity.getQnaNo())
+                .qna_title(qnaEntity.getQnaTitle())
+                .qna_content(qnaEntity.getQnaContent())
+                .create_at(qnaEntity.getCreateAt())
+                .qna_readcount(qnaEntity.getQnaReadCount())
+                .qna_original_file(qnaEntity.getQnaOriginalFile())
+                .qna_rename_file(qnaEntity.getQnaRename_File())
+                .build();
+    }
+
+    //수정
+    public QnAUpdateDto qnaUpdate(QnAUpdateDto qnaUpdateDto){
+
+        if(qnaRepository.findByQnaNo(qnaUpdateDto.getQna_no()) == null){
+            return new QnAUpdateDto("F");
+        }
+
+        TimeZone timeZone = TimeZone.getTimeZone("GMT+9");
+        Date now = new Date();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+        formatter.setTimeZone(timeZone);
+        String formattedDate = formatter.format(now);
+
+        try {
+            now = formatter.parse(formattedDate);
+        } catch( ParseException e ){
+            e.printStackTrace();
+        } catch( Exception e ){
+            e.printStackTrace();
+        }
+
+        QnAEntity qnaEntity = QnAEntity.builder().qnaNo(qnaUpdateDto.getQna_no())
+                .qnaTitle(qnaUpdateDto.getQna_title())
+                .qnaContent(qnaUpdateDto.getQna_content())
+                .createAt(now)
+                .qnaOriginalFile(qnaUpdateDto.getQna_original_file())
+                .qnaRename_File(qnaUpdateDto.getQna_rename_file())
+                .build();
+
+        return new QnAUpdateDto(qnaRepository.save(qnaEntity));
+    }
+
+    //삭제 (삭제는 반환타입이 Long, 값은 삭제된 행 )
+    public Long qnaDelete(Long qna_no){
+
+        return qnaRepository.deleteByQnaNo(qna_no);
+
+    }
+
+}

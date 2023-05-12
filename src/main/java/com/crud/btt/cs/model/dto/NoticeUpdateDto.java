@@ -12,23 +12,23 @@ import java.util.Date;
 @NoArgsConstructor
 public class NoticeUpdateDto {
 
-    private long notice_no;
-    private Date create_at;
-    private String notice_title;
-    private String notice_content;
-    private String notice_original_file;
-    private String notice_rename_file;
+    private long noticeNo;
+    private Date createAt;
+    private String noticeTitle;
+    private String noticeContent;
+    private String noticeOriginalFile;
+    private String noticeRenameFile;
 
     public NoticeUpdateDto(NoticeEntity noticeEntity){
-        this.notice_no = noticeEntity.getNoticeNo();
-        this.notice_title = noticeEntity.getNoticeTitle();
-        this.notice_content = noticeEntity.getNoticeContent();
-        this.create_at = noticeEntity.getCreateAt();
-        this.notice_original_file = noticeEntity.getNoticeOriginalFile();
-        this.notice_rename_file = noticeEntity.getNoticeRenameFile();
+        this.noticeNo = noticeEntity.getNoticeNo();
+        this.noticeTitle = noticeEntity.getNoticeTitle();
+        this.noticeContent = noticeEntity.getNoticeContent();
+        this.createAt = noticeEntity.getCreateAt();
+        this.noticeOriginalFile = noticeEntity.getNoticeOriginalFile();
+        this.noticeRenameFile = noticeEntity.getNoticeRenameFile();
     }
 
     public NoticeUpdateDto(String fail_msg){
-        this.notice_title = fail_msg;
+        this.noticeTitle = fail_msg;
     }
 }
