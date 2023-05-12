@@ -1,6 +1,8 @@
 package com.crud.btt.sp.controller;
 
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -8,14 +10,16 @@ import java.util.Properties;
 
 public class Speech {
 
-    public String vtos(String user_code) {
+    public static String vtos(String path) {
+
+
 
         Properties prop = new Properties();
         System.out.println(System.getProperty("user.dir"));
 
 
         try {
-            File file = new File(System.getProperty("user.dir")+"/src/main/resources/properties/ncloud.properties");
+            File file = new File(System.getProperty("user.dir") + "/src/main/resources/properties/ncloud.properties");
             prop.load(new FileInputStream(file));
 
         } catch (Exception e) {
@@ -26,8 +30,16 @@ public class Speech {
         String clientSecret = prop.getProperty("clientSecret");     // Application Client Secret";
 
         try {
-            String imgFile = System.getProperty("user.dir")+"/src/main/webapp/resources/voice/"+user_code+".mp3";
-            File voiceFile = new File(imgFile);
+
+//            String imgFile = System.getProperty("user.dir")+"/src/main/webapp/resources/voice/002.ogg";
+//            File voiceFile = new File(imgFile);
+
+
+            File voiceFile = new File(path);
+//            mf.transferTo(voiceFile);
+
+
+//            System.out.println(voiceFile.toString());
 
             String language = "Kor";        // 언어 코드 ( Kor, Jpn, Eng, Chn )
             String apiURL = "https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=" + language;
@@ -41,8 +53,11 @@ public class Speech {
             conn.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
             conn.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
 
+
             OutputStream outputStream = conn.getOutputStream();
             FileInputStream inputStream = new FileInputStream(voiceFile);
+
+
             byte[] buffer = new byte[4096];
             int bytesRead = -1;
             while ((bytesRead = inputStream.read(buffer)) != -1) {
@@ -75,5 +90,6 @@ public class Speech {
             System.out.println(e);
         }
         return null;
+
     }
 }
