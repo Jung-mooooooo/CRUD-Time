@@ -17,6 +17,6 @@ public class TouristSpotDto {
     private String address2;
     private String phone;
     private String latitude;
-    private String logitude;
+    private String longitude;
 
 }

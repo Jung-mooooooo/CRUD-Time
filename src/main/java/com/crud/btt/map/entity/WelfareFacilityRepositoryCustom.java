@@ -29,7 +29,7 @@ public class WelfareFacilityRepositoryCustom {
         List<WelfareFacilityEntity> results = query.where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(welfareFacilityEntity.wfNo.desc())
+                .orderBy(welfareFacilityEntity.wfNo.asc())
                 .fetch();
 
         return new PageImpl<>(results, pageable, total);

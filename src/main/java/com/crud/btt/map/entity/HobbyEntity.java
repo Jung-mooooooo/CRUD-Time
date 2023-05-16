@@ -31,6 +31,6 @@ public class HobbyEntity {
     private String phone;
     @Column(name = "LATITUDE")
     private String latitude;
-    @Column(name = "LOGITUDE")
-    private String logitude;
+    @Column(name = "LONGITUDE")
+    private String longitude;
 }

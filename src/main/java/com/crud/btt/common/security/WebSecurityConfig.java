@@ -2,7 +2,6 @@ package com.crud.btt.common.security;
 
 import com.crud.btt.member.model.service.MemberService;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,8 +39,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void  configure(HttpSecurity http) throws  Exception {
         http.authorizeRequests()    //접근에 대한 인증 설정
 //                .antMatchers("/","/user/signup","/loginhome","/member/login", "/member/enroll").permitAll()    //누구나 접근 가능
-                .antMatchers("/mypage", "/mypage/popupU", "/mypage/popupD").hasRole("MEMBER")    //member, admin만 접근가능
-                .antMatchers("/admin").hasRole("ADMIN") //amdin만 접근가능
+//                .antMatchers("/mypage", "/mypage/popupU", "/mypage/popupD").hasRole("MEMBER")    //member, admin만 접근가능
+//                .antMatchers("/admin").hasRole("ADMIN") //amdin만 접근가능
                 .anyRequest().permitAll()   //권한의종류 관계없이 권한 있어야 접근가능
 
                 .and()
@@ -62,8 +61,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .ignoringAntMatchers("/admin/**")
                 .ignoringAntMatchers("/video_board/**")
 
-//                .and()
-//                .csrf().disable()
+                .and()
+                .csrf().disable()
 
 //                .and()
 //                .exceptionHandling()

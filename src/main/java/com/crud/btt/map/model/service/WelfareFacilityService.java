@@ -38,7 +38,7 @@ public class WelfareFacilityService {
                     .address2(entity.getAddress2())
                     .phone(entity.getPhone())
                     .latitude(entity.getLatitude())
-                    .logitude(entity.getLogitude())
+                    .longitude(entity.getLongitude())
                     .build();
 
             list.add(dto);
@@ -74,7 +74,7 @@ public class WelfareFacilityService {
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
 //                    .latitude(entity.getLatitude())
-//                    .logitude(entity.getLogitude())
+//                    .longitude(entity.getLongitude())
 //                    .build();
 //            list.add(dto);
 //        }
@@ -103,7 +103,7 @@ public class WelfareFacilityService {
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
 //                    .latitude(entity.getLatitude())
-//                    .logitude(entity.getLogitude())
+//                    .longitude(entity.getLongitude())
 //                    .build();
 //
 //            list.add(dto);

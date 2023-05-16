@@ -15,7 +15,12 @@ import javax.persistence.*;
 @Entity
 public class WelfareFacilityEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_wf_gen")
+    @SequenceGenerator(
+            name = "seq_wf_gen",
+            sequenceName = "SEQ_WELFARE_FACILITY",
+            allocationSize = 1
+    )
     @Column(name = "WF_NO")
     private long wfNo;
     @Column(name = "WF_NAME")
@@ -30,6 +35,7 @@ public class WelfareFacilityEntity {
     private String phone;
     @Column(name = "LATITUDE")
     private String latitude;
-    @Column(name = "LOGITUDE")
-    private String logitude;
+    @Column(name = "LONGITUDE")
+    private String longitude;
+
 }

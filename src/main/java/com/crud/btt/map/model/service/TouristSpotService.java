@@ -36,7 +36,7 @@ public class TouristSpotService {
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
 //                    .latitude(entity.getLatitude())
-//                    .logitude(entity.getLogitude())
+//                    .longitude(entity.getLongitude())
 //                    .build();
 //
 //            list.add(dto);
@@ -72,7 +72,7 @@ public class TouristSpotService {
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
 //                    .latitude(entity.getLatitude())
-//                    .logitude(entity.getLogitude())
+//                    .longitude(entity.getLongitude())
 //                    .build();
 //
 //            list.add(dto);
@@ -102,7 +102,7 @@ public class TouristSpotService {
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
 //                    .latitude(entity.getLatitude())
-//                    .logitude(entity.getLogitude())
+//                    .longitude(entity.getLongitude())
 //                    .build();
 //
 //            list.add(dto);
@@ -130,7 +130,7 @@ public class TouristSpotService {
 //                    .tsCat(entity.getTsCat())
 //                    .address(entity.getAddress())
 //                    .address2(entity.getAddress2())
-//                    .logitude(entity.getLogitude())
+//                    .longitude(entity.getLongitude())
 //                    .build();
 //            list.add(dto);
 //        }
@@ -165,7 +165,7 @@ public class TouristSpotService {
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
 //                    .latitude(entity.getLatitude())
-//                    .logitude(entity.getLogitude())
+//                    .longitude(entity.getLongitude())
 //                    .build();
 //
 //            list.add(dto);
@@ -195,7 +195,7 @@ public class TouristSpotService {
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
 //                    .latitude(entity.getLatitude())
-//                    .logitude(entity.getLogitude())
+//                    .longitude(entity.getLongitude())
 //                    .build();
 //
 //            list.add(dto);
@@ -225,7 +225,7 @@ public class TouristSpotService {
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
 //                    .latitude(entity.getLatitude())
-//                    .logitude(entity.getLogitude())
+//                    .longitude(entity.getLongitude())
 //                    .build();
 //
 //            list.add(dto);
@@ -255,7 +255,7 @@ public class TouristSpotService {
 //                    .address2(entity.getAddress2())
 //                    .phone(entity.getPhone())
 //                    .latitude(entity.getLatitude())
-//                    .logitude(entity.getLogitude())
+//                    .longitude(entity.getLongitude())
 //                    .build();
 //
 //            list.add(dto);

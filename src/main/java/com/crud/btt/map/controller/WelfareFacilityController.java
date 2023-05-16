@@ -23,7 +23,7 @@ public class WelfareFacilityController {
     private final WelfareFacilityService welfareFacilityService;
 
     //페이지 단위 목록 조회
-    @GetMapping("/welfarefacility/list")
+    @GetMapping("/welfarefacility/welfarefacilitylist")
     public Header<List<WelfareFacilityDto>> getWelfareFacilityList(@PageableDefault(sort = {"wfNo"}) Pageable pageable, SearchCondition searchCondition){
 
         return welfareFacilityService.getWelfareFacilityList(pageable, searchCondition);
@@ -51,16 +51,19 @@ public class WelfareFacilityController {
 //    }
 //
 //    //등록
+//    @PostMapping("/")
 //    public WelfareFacilityEntity create(@RequestBody WelfareFacilityDto welfareFacilityDto){
 //        return welfareFacilityService.create(welfareFacilityDto);
 //    }
 //
 //    //수정
+    //@PatchMapping("/")
 //    public WelfareFacilityEntity update(@RequestBody WelfareFacilityDto welfareFacilityDto){
 //        return welfareFacilityService.update(welfareFacilityDto);
 //    }
 //
 //    //삭제
+    //@DeleteMapping("/")
 //    public void delete (@PathVariable Long wf_no){
 //        welfareFacilityService.delete(wf_no);
 //    }

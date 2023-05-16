@@ -24,7 +24,7 @@
 //    private final TouristSpotService touristSpotService;
 //
 //    //페이지 단위 목록 조회
-//    @GetMapping("/touristspot/list")
+//    @GetMapping("/welfareProgram/touristSpotMap")
 //    public Header<List<TouristSpotDto>> getTouristSpotList(@PageableDefault(sort = {"idx"}) Pageable pageable, SearchCondition searchCondition){
 //        return touristSpotService.getTouristSpotList(pageable, searchCondition);
 //    }

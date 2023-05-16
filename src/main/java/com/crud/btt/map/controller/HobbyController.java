@@ -22,7 +22,7 @@
 //    private final HobbyService hobbyService;
 //
 //    //페이지 단위 목록 조회
-//    @GetMapping("/hobby/list")
+//    @GetMapping("/welfareProgram/hobbyMap")
 //    public Header<List<HobbyDto>> getHobbyList(@PageableDefault(sort = {"idx"}) Pageable pageable, SearchCondition searchCondition){
 //        return hobbyService.getHobbyList(pageable, searchCondition);
 //    }
