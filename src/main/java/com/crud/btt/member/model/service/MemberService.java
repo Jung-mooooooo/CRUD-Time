@@ -6,17 +6,20 @@ import com.crud.btt.member.entity.QuitEntity;
 import com.crud.btt.member.entity.QuitRepository;
 import com.crud.btt.member.model.dto.MemberDto;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @AllArgsConstructor
+@Transactional
 @Service
 public class MemberService implements UserDetailsService {
 
@@ -25,23 +28,23 @@ public class MemberService implements UserDetailsService {
     private static final String FROM_ADDRESS = "본인의 이메일 주소를 입력하세요!";
 
     //user info 가져오기. 존재여부 확인
-    public MemberDto getMember(Long userCode) {
-        MemberEntity entity = memberRepository.findById(userCode).orElseThrow(()
-                -> new RuntimeException("해당 회원을 찾을 수 없습니다."));
-        return MemberDto.builder()
-                .userCode(entity.getUserCode())
-                .userId(entity.getUserId())
-                .userPw(entity.getUserPw())
-                .userName(entity.getUsername())
-                .phone(entity.getPhone())
-                .email(entity.getEmail())
-                .kakaoId(entity.getKakaoId())
-                .naverId(entity.getNaverId())
-                .googleId(entity.getGoogleId())
-                .permit(entity.getPermit())
-                .enrollDate(entity.getEnrollDate())
-                .build();
-    }
+//    public MemberDto getMember(Long userCode) {
+//        MemberEntity entity = memberRepository.findById(userCode).orElseThrow(()
+//                -> new RuntimeException("해당 회원을 찾을 수 없습니다."));
+//        return MemberDto.builder()
+//                .userCode(entity.getUserCode())
+//                .userId(entity.getUserId())
+//                .userPw(entity.getUserPw())
+//                .userName(entity.getUsername())
+//                .phone(entity.getPhone())
+//                .email(entity.getEmail())
+//                .kakaoId(entity.getKakaoId())
+//                .naverId(entity.getNaverId())
+//                .googleId(entity.getGoogleId())
+//                .permit(entity.getPermit())
+//                .enrollDate(entity.getEnrollDate()
+//                .build();
+//    }
 
     //회원 탈퇴
     public void delete(Long userCode) {
@@ -53,28 +56,41 @@ public class MemberService implements UserDetailsService {
 
     public QuitEntity create(MemberDto memberDto) {
         QuitEntity entity = QuitEntity.builder()
-                .userCode(memberDto.getUserCode())
-                .userId(memberDto.getUserId())
-                .userPw(memberDto.getUserPw())
-                .userName(memberDto.getUserName())
-                .phone(memberDto.getPhone())
-                .email(memberDto.getEmail())
-                .kakaoId(memberDto.getKakaoId())
-                .naverId(memberDto.getNaverId())
-                .googleId(memberDto.getGoogleId())
+                .quitUserCode(memberDto.getUserCode())
+                .quitUserId(memberDto.getUserId())
+                .quitUserPw(memberDto.getUserPw())
+                .quitUserName(memberDto.getUserName())
+                .quitPhone(memberDto.getPhone())
+                .quitEmail(memberDto.getEmail())
+                .quitKakaoId(memberDto.getKakaoId())
+                .quitNaverId(memberDto.getNaverId())
+                .quitGoogleId(memberDto.getGoogleId())
                 .build();
         return quitRepository.save(entity); //quit 쿼리문 생성
     }
 
+    //id, phone, email 중복체크
+    @Transactional(readOnly = true)
+    public boolean checkUserIdDuplication(String userId) {
+        boolean userIdDuplicate = memberRepository.existsByUserId(userId);
+        return userIdDuplicate;
+    }
+
+    @Transactional(readOnly = true)
+    public boolean checkPhoneDuplication(String phone) {
+        boolean userPhoneDuplicate = memberRepository.existsByPhone(phone);
+        return userPhoneDuplicate;
+    }
+
+    @Transactional(readOnly = true)
+    public boolean checkEmailDuplication(String email) {
+        boolean emailDuplicate = memberRepository.existsByEmail(email);
+        return emailDuplicate;
+    }
+
+
+
     //회원가입
-//    @Transactional
-//    public void saveMember(MemberDto memberDto) throws Exception{
-//    }
-//    public MemberEntity joinUser(MemberDto memberDto){
-//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        memberDto.setUserPw(passwordEncoder.encode(memberDto.getUserPw()));
-//        return memberRepository.save(memberDto.toEntity());
-//    }
     public Long save(MemberDto memberDto){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDto.setUserPw(passwordEncoder.encode(memberDto.getUserPw()));
@@ -85,6 +101,7 @@ public class MemberService implements UserDetailsService {
                 .userName(memberDto.getUserName())
                 .phone(memberDto.getPhone())
                 .email(memberDto.getEmail())
+                .enrollDate(LocalDateTime.now())
                 .build()
         ).getUserCode();
     }

@@ -13,15 +13,15 @@ import java.util.Date;
 @Builder
 public class QuitDto {
 
-    private Long quit_user_code;     //탈퇴회원코드
-    private String quit_user_id;     //탈퇴유저아이디
-    private String quit_user_pw;     //탈퇴유저패스워드
-    private String quit_user_name;   //탈퇴유저이름
-    private String quit_phone;       //탈퇴전화번호
-    private String quit_email;       //탈퇴이메일
-    private String quit_kakao_id;    //탈퇴카카오로그인
-    private String quit_naver_id;    //탈퇴네이버로그인
-    private String quit_google_id;   //탈퇴구글로그인
-    private String quit_permit;      //탈퇴회원체크
-    private Date quit_date;          //탈퇴일
+    private Long quitUserCode;     //탈퇴회원코드
+    private String quitUserId;     //탈퇴유저아이디
+    private String quitUserPw;     //탈퇴유저패스워드
+    private String quitUserName;   //탈퇴유저이름
+    private String quitPhone;       //탈퇴전화번호
+    private String quitEmail;       //탈퇴이메일
+    private String quitKakaoId;    //탈퇴카카오로그인
+    private String quitNaverId;    //탈퇴네이버로그인
+    private String quitGoogleId;   //탈퇴구글로그인
+    private String quitPermit;      //탈퇴회원체크
+    private Date quitDate;          //탈퇴일
 }

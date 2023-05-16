@@ -1,53 +1,55 @@
 package com.crud.btt.member.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+
+
+@JsonIgnoreProperties(value="hibernateLazyInitializer")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Table(name = "MEMBER")
 @Entity
+//@DynamicInsert
 public class MemberEntity implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @SequenceGenerator(name = "memberSequence",
-//            sequenceName = "member_seq",
-//            allocationSize = 1)
-    @Column(name="user_code")
+    @SequenceGenerator(name = "SEQ_MEMBER",
+            sequenceName = "SEQ_MEMBER",
+            allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MEMBER")
+    @Column(name="USER_CODE")
     private Long userCode;     //회원코드
-    @Column(name="user_id")
+    @Column(name="USER_ID")
     private String userId;     //유저아이디
-    @Column(name="user_pw")
+    @Column(name="USER_PW")
     private String userPw;     //유저패스워드
-    @Column(name="user_name")
+    @Column(name="USER_NAME")
     private String userName;   //유저이름
-    @Column(name="phone")
+    @Column(name="PHONE")
     private String phone;       //전화번호
-    @Column(name="email")
+    @Column(name="EMAIL")
     private String email;       //이메일
-    @Column(name="kakao_id")
+    @Column(name="KAKAO_ID")
     private String kakaoId;    //카카오로그인
-    @Column(name="naver_id")
+    @Column(name="NAVER_ID")
     private String naverId;    //네이버로그인
-    @Column(name="google_id")
+    @Column(name="GOOGLE_ID")
     private String googleId;   //구글로그인
-    @Column(name="permit")
+    @Column(name="PERMIT")
     private String permit;      //회원체크
-    @Column(name="enroll_date")
-    private Date enrollDate;   //가입일
+    @Column(name="ENROLL_DATE")
+    private LocalDateTime enrollDate;   //가입일
 
 
 
@@ -106,6 +108,13 @@ public class MemberEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;    //=> 사용가능
+    }
+
+
+
+    @PrePersist
+    public void perPersist(){
+
     }
 }
 

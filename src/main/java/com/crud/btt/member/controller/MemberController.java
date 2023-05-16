@@ -2,12 +2,25 @@ package com.crud.btt.member.controller;
 
 import com.crud.btt.member.model.dto.MemberDto;
 import com.crud.btt.member.model.service.MemberService;
+import com.crud.btt.member.validator.CheckEmailValidator;
+import com.crud.btt.member.validator.CheckPhoneValidator;
+import com.crud.btt.member.validator.CheckUserIdValidator;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Slf4j
@@ -17,6 +30,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MemberController {
 
     private final MemberService memberService;
+
+    //중복 체크 유효성 검사를 위한 멤버
+    private final CheckUserIdValidator checkUserIdValidator;
+    private final CheckPhoneValidator checkPhoneValidator;
+    private final CheckEmailValidator checkEmailValidator;
+
+    //커스텀 유효성 검증 => vue로 error message 전달
+    @InitBinder
+    public void validatorBinder(WebDataBinder binder){
+        binder.addValidators(checkUserIdValidator);
+        binder.addValidators(checkPhoneValidator);
+        binder.addValidators(checkEmailValidator);
+
+    }
+
 
     //해당 회원 존재 여부 확인 및 정보 출력용
 //    @GetMapping("/member/{userCode}") //mapping은 임의로 작성한것.
@@ -51,18 +79,52 @@ public class MemberController {
 ////        LOG.info("GET successfully called on /login resource");
 //    }
 
+
+    //id 중복체크
+    @GetMapping("/member/enroll/userId/{userId}")
+    public ResponseEntity<Boolean> checkUserIdDuplicate(@RequestBody @Validated MemberDto memberDto, BindingResult bindingResult) {
+      return ResponseEntity.ok(memberService.checkUserIdDuplication(memberDto.getUserId()));
+//        if(bindingResult.hasErrors()){
+//
+//        }
+    }
+    //phone 중복체크
+    @PostMapping("/member/enroll/phone/{phone}")
+    public ResponseEntity<Boolean> checkPhoneDuplicate(@RequestBody @Validated MemberDto memberDto, BindingResult bindingResult) {
+        return ResponseEntity.ok(memberService.checkPhoneDuplication(memberDto.getPhone()));
+    }
+
+    //email 중복체크
+    @PostMapping("/member/enroll/email/{email}")
+    public ResponseEntity<Boolean> checkEmailDuplicate(@RequestBody @Validated MemberDto memberDto, BindingResult bindingResult) {
+        return ResponseEntity.ok(memberService.checkEmailDuplication(memberDto.getEmail()));
+    }
+
+
     //회원가입
-//    @PostMapping("/member/enroll")
-//    public String saveMember(@RequestBody MemberDto memberDto) throws Exception{
-//        memberService.saveMember(memberDto);
-//        return "OK";
-//    }
-    @PostMapping("/user/signup")
-    public String execSignup(MemberDto memberDto) {
-        System.out.println("ㅇㅇㅇㅇ");
-        System.out.println(memberDto.toString());
+    @PostMapping("/enroll")
+    public String execSignup(@RequestBody @Validated MemberDto memberDto, BindingResult bindingResult, Model model) {
+        //검증
+        if (bindingResult.hasErrors()){
+            //회원가입 실패시 입력 데이터 값 유지
+            model.addAttribute("memberDto", memberDto);
+
+            //유효성 검사 불통 필드와 메세지 핸들링
+            Map<String,String> errorMap = new HashMap<>();
+
+            for(FieldError error : bindingResult.getFieldErrors()) {
+                errorMap.put("valid_" + error.getField(), error.getDefaultMessage());
+                log.info("error message : " + error.getDefaultMessage());
+            }
+
+            //회원가입 페이지로 리턴
+            return new JSONObject(errorMap).toString();
+        }
+
         memberService.save(memberDto);
-        return "redirect:/member/login";
+        System.out.println(memberDto.toString());
+        System.out.println(String.valueOf(new ResponseEntity<>(memberDto, HttpStatus.OK)));
+        return String.valueOf(new ResponseEntity<>(memberDto, HttpStatus.OK));
     }
 
     //아이디찾기
