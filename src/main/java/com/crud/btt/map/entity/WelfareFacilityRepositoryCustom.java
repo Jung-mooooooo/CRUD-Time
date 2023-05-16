@@ -1,23 +1,23 @@
 package com.crud.btt.map.entity;
 
-import com.crud.btt.common.SearchCondition;
-import com.google.api.gax.paging.Page;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
-import org.mockito.internal.util.StringUtil;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
+//import com.crud.btt.common.SearchCondition;
+//import com.google.api.gax.paging.Page;
+//import com.querydsl.core.types.dsl.BooleanExpression;
+//import com.querydsl.jpa.impl.JPAQuery;
+//import com.querydsl.jpa.impl.JPAQueryFactory;
+//import lombok.RequiredArgsConstructor;
+//import org.mockito.internal.util.StringUtil;
+//import org.springframework.data.domain.PageImpl;
+//import org.springframework.data.domain.Pageable;
+//import org.springframework.stereotype.Repository;
+//import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 //import static com.crud.btt.map.entity.QWelfareFacilityEntity.welfareFacilityEntity;
 
-@RequiredArgsConstructor
-@Repository
+//@RequiredArgsConstructor
+//@Repository
 public class WelfareFacilityRepositoryCustom {
 //    private final JPAQueryFactory queryFactory;
 
