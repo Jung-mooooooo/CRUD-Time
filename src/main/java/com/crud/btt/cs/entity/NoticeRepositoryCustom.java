@@ -1,81 +1,85 @@
-//package com.crud.btt.cs.entity;
-//
-//import com.crud.btt.common.SearchCondition;
-//import com.querydsl.core.types.Predicate;
-//import com.querydsl.jpa.impl.JPAQuery;
+package com.crud.btt.cs.entity;
 
-//import com.querydsl.jpa.impl.JPAQueryFactory;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.PageImpl;
-//import org.springframework.data.domain.Pageable;
+import com.crud.btt.common.SearchCondition;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
-//import org.springframework.util.StringUtils;
-//
-//import java.util.List;
-//
-//import static com.crud.btt.cs.entity.QNoticeEntity.noticeEntity;
-//
+import java.util.List;
 
-//public class NoticeRepositoryCustom {
-//    @Autowired JPAQueryFactory queryFactory;
-//    public Page<NoticeEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition){
-///*
-//        JPAQuery<BoardEntity> query = queryFactory.selectFrom(boardEntity)
-//                .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()));
-//
-//        long total = query.stream().count();   //여기서 전체 카운트 후 아래에서 조건작업
-//
-//        List<BoardEntity> results = query
-//                .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()))
-//                .offset(pageable.getOffset())
-//                .limit(pageable.getPa   geSize())
-//                .orderBy(boardEntity.idx.desc())
-//                .fetch();
-//
-//        return new PageImpl<>(results, pageable, total);
-//*/
-//        JPAQuery<NoticeEntity> query = queryFactory.selectFrom(noticeEntity)
-//                .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()));
-//
-//        long total = query.stream().count();
-//
-//        List<NoticeEntity> results = query
-//                .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()))
-//                .offset(pageable.getOffset())
-//                .limit(pageable.getPageSize())
-//                .orderBy(noticeEntity.notice_no.desc())
-//                .fetch();
-//        return new PageImpl<>(results, pageable, total);
-//    }
-//
+import static com.crud.btt.cs.entity.QNoticeEntity.noticeEntity;
+
+@Repository
+//@ComponentScan(basePackages = "com.crud.btt.cs.entity")
+public class NoticeRepositoryCustom {
+    private final JPAQueryFactory queryFactory;
+
+    @Autowired
+    public NoticeRepositoryCustom(JPAQueryFactory queryFactory) {
+        this.queryFactory = queryFactory;
+    }
+    public Page<NoticeEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition){
+/*
+        JPAQuery<BoardEntity> query = queryFactory.selectFrom(boardEntity)
+                .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()));
+
+        long total = query.stream().count();   //여기서 전체 카운트 후 아래에서 조건작업
+
+        List<BoardEntity> results = query
+                .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPa   geSize())
+                .orderBy(boardEntity.idx.desc())
+                .fetch();
+
+        return new PageImpl<>(results, pageable, total);
+*/
+        JPAQuery<NoticeEntity> query = queryFactory.selectFrom(noticeEntity)
+                .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()));
+
+        long total = query.stream().count();
+
+        List<NoticeEntity> results = query
+                .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(noticeEntity.noticeNo.desc())
+                .fetch();
+        return new PageImpl<>(results, pageable, total);
+    }
+
 //    private Predicate searchKeywords(String sk, String sv) {
-//        /*
-//        if("author".equals(sk)) {
-//            if(StringUtils.hasLength(sv)) {
-//                return boardEntity.author.contains(sv);
-//            }
-//        } else if ("title".equals(sk)) {
-//            if(StringUtils.hasLength(sv)) {
-//                return boardEntity.title.contains(sv);
-//            }
-//        } else if ("contents".equals(sk)) {
-//            if(StringUtils.hasLength(sv)) {
-//                return boardEntity.contents.contains(sv);
-//            }
-//        }
-//        */
 //
-//        if("notice_title".equals(sk)){
+//        if("noticeTitle".equals(sk)){
 //            if(StringUtils.hasLength(sv)){
-//                return noticeEntity.notice_title.contains(sv);
+//                return noticeEntity.noticeTitle.contains(sv);
 //            }
-//        } else if ("notice_content".equals(sk)) {
+//        } else if ("noticeContent".equals(sk)) {
 //            if(StringUtils.hasLength(sv)){
-//                return noticeEntity.notice_content.contains(sv);
+//                return noticeEntity.noticeContent.contains(sv);
 //            }
 //        }
 //        return null;
 //
 //    }
-//}
+
+    private BooleanExpression searchKeywords(String sk, String sv) {
+        if ("noticeTitle".equals(sk)) {
+            if (StringUtils.hasLength(sv)) {
+                return noticeEntity.noticeTitle.contains(sv);
+            }
+        } else if ("noticeContent".equals(sk)) {
+            if (StringUtils.hasLength(sv)) {
+                return noticeEntity.noticeContent.contains(sv);
+            }
+        }
+        //return Expressions.asBoolean(true).isTrue(); // 빈 조건식 반환
+            return null;
+    }
+}

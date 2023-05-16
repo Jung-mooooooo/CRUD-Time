@@ -16,7 +16,7 @@ import java.util.Date;
 @Entity
 public class NoticeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="NOTICE_NO")
     private long noticeNo;
     @Column(name="CREATE_AT")

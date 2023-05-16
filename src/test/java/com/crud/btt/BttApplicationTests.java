@@ -6,8 +6,7 @@ import com.crud.btt.map.entity.WelfareFacilityRepositoryCustom;
 import com.crud.btt.map.model.dto.WelfareFacilityDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+//import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,23 +23,24 @@ class BttApplicationTests {
 
 	@Test
 	void contextLoads() {
-		List<WelfareFacilityDto> list = new ArrayList<>();
+		// List<WelfareFacilityDto> list = new ArrayList<>();
 
-		Page<WelfareFacilityEntity> welfareFacilityEntities = welfareFacilityRepositoryCustom.findAllBySearchCondition(pageable);
-		for (WelfareFacilityEntity entity : welfareFacilityEntities) {
-            WelfareFacilityDto dto = WelfareFacilityDto.builder()
-                    .wfNo(entity.getWfNo())
-                    .wfName(entity.getWfName())
-                    .wfCat(entity.getWfCat())
-                    .address(entity.getAddress())
-                    .address2(entity.getAddress2())
-                    .phone(entity.getPhone())
-                    .latitude(entity.getLatitude())
-                    .logitude(entity.getLogitude())
-                    .build();
-            list.add(dto);
-        }
-		System.out.println(list);
+		// Page<WelfareFacilityEntity> welfareFacilityEntities = welfareFacilityRepositoryCustom.findAllBySearchCondition(pageable);
+		// for (WelfareFacilityEntity entity : welfareFacilityEntities) {
+        //     WelfareFacilityDto dto = WelfareFacilityDto.builder()
+        //             .wfNo(entity.getWfNo())
+        //             .wfName(entity.getWfName())
+        //             .wfCat(entity.getWfCat())
+        //             .address(entity.getAddress())
+        //             .address2(entity.getAddress2())
+        //             .phone(entity.getPhone())
+        //             .latitude(entity.getLatitude())
+        //             .logitude(entity.getLogitude())
+        //             .build();
+        //     list.add(dto);
+        // }
+		// System.out.println(list);
+
 	}
 
 }
