@@ -14,7 +14,7 @@ public class TTS {
     /**
      * Demonstrates using the Text-to-Speech API.
      */
-    public static void tts(String user_id, String text) throws Exception {
+    public static void tts(Long user_code, String text) throws Exception {
         // Instantiates a client
         try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
             // Set the text input to be synthesized
@@ -43,9 +43,9 @@ public class TTS {
             ByteString audioContents = response.getAudioContent();
 
             // Write the response to the output file.
-            try (OutputStream out = new FileOutputStream(new File("./src/main/webapp/resources/voice/"+user_id+".mp3"))) {
+            try (OutputStream out = new FileOutputStream(new File(System.getProperty("user.dir") + "/src/main/resources/voice/"+user_code+".mp3"))) {
                 out.write(audioContents.toByteArray());
-                System.out.println("Audio content written to file \""+user_id+".mp3\"");
+                System.out.println("Audio content written to file \""+user_code+".mp3\"");
             }
         }
     }
