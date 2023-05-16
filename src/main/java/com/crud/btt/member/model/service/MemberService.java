@@ -5,66 +5,90 @@ import com.crud.btt.member.entity.MemberRepository;
 import com.crud.btt.member.entity.QuitEntity;
 import com.crud.btt.member.entity.QuitRepository;
 import com.crud.btt.member.model.dto.MemberDto;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
 
 @Slf4j
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
-public class MemberService {
+public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
     private final QuitRepository quitRepository;
     private static final String FROM_ADDRESS = "본인의 이메일 주소를 입력하세요!";
 
     //user info 가져오기. 존재여부 확인
-    public MemberDto getMember(Long user_code) {
-        MemberEntity entity = memberRepository.findById(user_code).orElseThrow(()
+    public MemberDto getMember(Long userCode) {
+        MemberEntity entity = memberRepository.findById(userCode).orElseThrow(()
                 -> new RuntimeException("해당 회원을 찾을 수 없습니다."));
         return MemberDto.builder()
-                .user_code(entity.getUser_code())
-                .user_id(entity.getUser_id())
-                .user_pw(entity.getUser_pw())
-                .user_name(entity.getUser_name())
+                .userCode(entity.getUserCode())
+                .userId(entity.getUserId())
+                .userPw(entity.getUserPw())
+                .userName(entity.getUsername())
                 .phone(entity.getPhone())
                 .email(entity.getEmail())
-                .kakao_id(entity.getKakao_id())
-                .naver_id(entity.getNaver_id())
-                .google_id(entity.getGoogle_id())
+                .kakaoId(entity.getKakaoId())
+                .naverId(entity.getNaverId())
+                .googleId(entity.getGoogleId())
                 .permit(entity.getPermit())
-                .enroll_date(entity.getEnroll_date())
+                .enrollDate(entity.getEnrollDate())
                 .build();
     }
 
     //회원 탈퇴
-    public void delete(Long user_code) {
-        MemberEntity entity = memberRepository.findById(user_code).orElseThrow(()
+    public void delete(Long userCode) {
+        MemberEntity entity = memberRepository.findById(userCode).orElseThrow(()
                 -> new RuntimeException("해당 회원을 찾을 수 없습니다."));
         memberRepository.delete(entity);
     }
 
 
-    public MemberDto create(MemberDto memberDto) {
+    public QuitEntity create(MemberDto memberDto) {
         QuitEntity entity = QuitEntity.builder()
-                .quit_user_code(memberDto.getUser_code())
-                .quit_user_id(memberDto.getUser_id())
-                .quit_user_pw(memberDto.getUser_pw())
-                .quit_user_name(memberDto.getUser_name())
-                .quit_phone(memberDto.getPhone())
-                .quit_email(memberDto.getEmail())
-                .quit_kakao_id(memberDto.getKakao_id())
-                .quit_naver_id(memberDto.getNaver_id())
-                .quit_google_id(memberDto.getGoogle_id())
+                .userCode(memberDto.getUserCode())
+                .userId(memberDto.getUserId())
+                .userPw(memberDto.getUserPw())
+                .userName(memberDto.getUserName())
+                .phone(memberDto.getPhone())
+                .email(memberDto.getEmail())
+                .kakaoId(memberDto.getKakaoId())
+                .naverId(memberDto.getNaverId())
+                .googleId(memberDto.getGoogleId())
                 .build();
         return quitRepository.save(entity); //quit 쿼리문 생성
     }
 
     //회원가입
-    @Transactional
-    public void saveMember(MemberDto memberDto) throws Exception{
+//    @Transactional
+//    public void saveMember(MemberDto memberDto) throws Exception{
+//    }
+//    public MemberEntity joinUser(MemberDto memberDto){
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        memberDto.setUserPw(passwordEncoder.encode(memberDto.getUserPw()));
+//        return memberRepository.save(memberDto.toEntity());
+//    }
+    public Long save(MemberDto memberDto){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        memberDto.setUserPw(passwordEncoder.encode(memberDto.getUserPw()));
+
+        return memberRepository.save(MemberEntity.builder()
+                .userId(memberDto.getUserId())
+                .userPw(memberDto.getUserPw())
+                .userName(memberDto.getUserName())
+                .phone(memberDto.getPhone())
+                .email(memberDto.getEmail())
+                .build()
+        ).getUserCode();
     }
+
 
     //아이디찾기
 //    public Optional<Member> findById(Long id) {
@@ -107,5 +131,18 @@ public class MemberService {
 //        return str;
         return null;
     }
+
+    /**
+     * Spring Security 필수 메소드 구현
+     *
+     * @param //email 이메일
+     * @return UserDetails
+     * @throws //UsernameNotFoundException 유저가 없을 때 예외 발생
+     */
+    @Override   //기본 반환 타입 : Member
+    public MemberEntity loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
+    }
+
 
 }

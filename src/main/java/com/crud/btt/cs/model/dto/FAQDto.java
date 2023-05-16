@@ -9,7 +9,6 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Builder
 public class FAQDto {
     private long faq_no;

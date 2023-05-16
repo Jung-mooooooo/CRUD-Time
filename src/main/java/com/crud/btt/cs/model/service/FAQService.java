@@ -1,3 +1,4 @@
+
 package com.crud.btt.cs.model.service;
 
 import com.crud.btt.cs.entity.FAQEntity;
@@ -22,6 +23,9 @@ public class FAQService {
     @Autowired
     FAQRepository faqRepository;
     //FAQRepositoryCustom faqRepositoryCustom;
+
+
+
 
     //목록보기
 //    public Header<List<FAQDto>> getFAQList(Pageable pageable, SearchCondition searchCondition) {
@@ -52,18 +56,19 @@ public class FAQService {
 //
 //        return Header.OK(dtos, pagination);
 //    }
+//
+//    // 상세보기
+//    public FAQDto getFAQ(Long faqNo) {
+//
+//        // update set count = count +1;
+//        FAQEntity faqEntity = faqRepository.findById(faqNo).get();
+//
+//        faqEntity.setFaq_readcount(faqEntity.getFaq_readcount()+1);
+//
+//        return new FAQDto(faqRepository.save(faqEntity));
+//    }
 
-    // 상세보기
-    public FAQDto getFAQ(Long faqNo) {
-
-        // update set count = count +1;
-        FAQEntity faqEntity = faqRepository.findById(faqNo).get();
-
-        faqEntity.setFaqReadCount(faqEntity.getFaqReadCount()+1);
-
-        return new FAQDto(faqRepository.save(faqEntity));
-    }
-
+    //작성
     public FAQDto faqCreate(FAQDto faqDto){
 
         FAQEntity faqEntity = FAQEntity.builder()
@@ -122,3 +127,4 @@ public class FAQService {
 
 
 }
+

@@ -18,11 +18,11 @@ public class TouristSpotEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TS_NO")
-    private long ts_no;
+    private long tsNo;
     @Column(name = "TS_NAME")
-    private String ts_name;
+    private String tsName;
     @Column(name = "TS_CAT")
-    private String ts_cat;
+    private String tsCat;
     @Column(name = "ADDRESS")
     private String address;
     @Column(name = "ADDRESS2")

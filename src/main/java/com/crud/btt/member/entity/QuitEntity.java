@@ -1,6 +1,5 @@
 package com.crud.btt.member.entity;
 
-import com.crud.btt.member.model.dto.MemberDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,25 +18,25 @@ public class QuitEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="quit_user_code")
-    private Long quit_user_code;     //탈퇴회원코드
+    private Long userCode;     //탈퇴회원코드
     @Column(name="quit_user_id")
-    private String quit_user_id;     //탈퇴유저아이디
+    private String userId;     //탈퇴유저아이디
     @Column(name="quit_user_pw")
-    private String quit_user_pw;     //탈퇴유저패스워드
+    private String userPw;     //탈퇴유저패스워드
     @Column(name="quit_user_name")
-    private String quit_user_name;   //탈퇴유저이름
+    private String userName;   //탈퇴유저이름
     @Column(name="quit_phone")
-    private String quit_phone;       //탈퇴전화번호
+    private String phone;       //탈퇴전화번호
     @Column(name="quit_email")
-    private String quit_email;       //탈퇴이메일
+    private String email;       //탈퇴이메일
     @Column(name="quit_kakao_id")
-    private String quit_kakao_id;    //탈퇴카카오로그인
+    private String kakaoId;    //탈퇴카카오로그인
     @Column(name="quit_naver_id")
-    private String quit_naver_id;    //탈퇴네이버로그인
+    private String naverId;    //탈퇴네이버로그인
     @Column(name="quit_google_id")
-    private String quit_google_id;   //탈퇴구글로그인
+    private String googleId;   //탈퇴구글로그인
     @Column(name="quit_permit")
-    private String quit_permit;      //탈퇴회원체크
+    private String permit;      //탈퇴회원체크
     @Column(name="quit_date")
-    private Date quit_date;          //탈퇴일
+    private Date quitDate;          //탈퇴일
 }

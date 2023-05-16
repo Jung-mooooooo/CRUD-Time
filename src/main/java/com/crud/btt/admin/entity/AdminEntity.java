@@ -19,17 +19,17 @@ public class AdminEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ADMIN_CODE")
-    private long admin_code;
+    private long adminCode;
     @Column(name="ADMIN_ID")
-    private String admin_id;
+    private String adminId;
     @Column(name="ADMIN_PWD")
-    private String admin_pwd;
+    private String adminPwd;
     @Column(name="ADMIN_NAME")
-    private String admin_name;
+    private String adminName;
     @Column(name="PHONE")
     private String phone;
     @Column(name="EMAIL")
     private String email;
     @Column(name="ENROLL_DATE")
-    private Date enroll_date;
+    private Date enrollDate;
 }

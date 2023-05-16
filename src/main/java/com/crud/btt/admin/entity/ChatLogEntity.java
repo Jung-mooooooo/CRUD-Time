@@ -21,13 +21,13 @@ public class ChatLogEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LOG_NO")
-    private long log_no;        //로그순번
+    private long logNo;        //로그순번
     @Column(name = "USER_CODE1")
-    private long user_code1;    //유저코드1
+    private long userCode1;    //유저코드1
     @Column(name = "USER_CODE2")
-    private long user_code2;    //유저코드2
+    private long userCode2;    //유저코드2
     @Column(name = "ACCESS_TIME")
-    private Date access_time;   //접속시간
+    private Date accessTime;   //접속시간
     @Column(name = "ENTRANCE")
     private String entrance;    //입장체크(Y/N)
     @Column(name = "LINK")

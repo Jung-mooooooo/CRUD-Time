@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +16,7 @@ import java.util.TimeZone;
 @Entity
 public class NoticeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="NOTICE_NO")
     private long noticeNo;
     @Column(name="CREATE_AT")

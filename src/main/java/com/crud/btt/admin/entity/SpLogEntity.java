@@ -19,10 +19,10 @@ public class SpLogEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LOG_NO")
-    private Long log_no;
+    private Long logNo;
     @Column(name = "USER_CODE")
-    private Long user_code;
+    private Long userCode;
     @Column(name = "LOGIN_DATE")
-    private LocalDateTime login_date;
+    private LocalDateTime loginDate;
 
 }

@@ -1,15 +1,17 @@
 package com.crud.btt.cs.model.dto;
 
 import com.crud.btt.cs.entity.FAQEntity;
-import com.crud.btt.cs.entity.NoticeEntity;
 import lombok.AllArgsConstructor;
-import lombok.*;
+
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+
+
 @Data
-@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
