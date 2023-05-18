@@ -30,7 +30,7 @@ public class NoticeController {
         검색을 안할때 ( 전체 ) : null ( required ), keyword = "" or null, keyValue = "" or null
         검색을 할때           : keyword, keyValue
         */
-
+        // logger.info(pageable.getPageSize()+"/"+pageable.getPageNumber());
         logger.info("=====================값 확인==================" + noticeService.getNoticeList(pageable,searchCondition));
 
         return noticeService.getNoticeList(pageable,searchCondition);

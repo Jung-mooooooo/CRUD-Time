@@ -1,32 +1,36 @@
 package com.crud.btt.cs.model.dto;
 
 import com.crud.btt.cs.entity.QnAEntity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class QnADto {
+public class QnAListDto {
+
     private long qnaNo;
     private Date createAt;
     private String qnaTitle;
-    private String qnaContent;
     private int qnaReadCount;
     private long adminCode;
     private long userCode;
-    private String qnaOriginalFile;
-    private String qnaRenameFile;
     private String qnaPrivate;
     private long qnaRef;
 
-    public QnADto(QnAEntity qnaEntity){
+    public QnAListDto(QnAEntity qnaEntity){
+        this.qnaNo = qnaEntity.getQnaNo();
         this.qnaTitle = qnaEntity.getQnaTitle();
-        this.qnaContent = qnaEntity.getQnaContent();
         this.qnaReadCount = qnaEntity.getQnaReadCount();
         this.createAt = qnaEntity.getCreateAt();
-        this.qnaOriginalFile = qnaEntity.getQnaOriginalFile();
-        this.qnaRenameFile = qnaEntity.getQnaRenameFile();
+        this.adminCode = qnaEntity.getAdminCode();
+        this.userCode = qnaEntity.getUserCode();
+        this.qnaRef = qnaEntity.getQnaRef();
+
     }
+
 }

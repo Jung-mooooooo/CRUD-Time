@@ -1,88 +1,82 @@
-//package com.crud.btt.cs.model.service;
-//
-//import com.crud.btt.common.Header;
-//import com.crud.btt.common.Pagination;
-//import com.crud.btt.common.SearchCondition;
-//import com.crud.btt.cs.entity.QnAEntity;
-//import com.crud.btt.cs.entity.QnARepository;
-////import com.crud.btt.cs.entity.QnARepositoryCustom;
-//import com.crud.btt.cs.model.dto.QnADto;
-//import com.crud.btt.cs.model.dto.QnAListDto;
-//import com.crud.btt.cs.model.dto.QnAUpdateDto;
-//import lombok.RequiredArgsConstructor;
-//import lombok.extern.slf4j.Slf4j;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.Pageable;
-//import org.springframework.stereotype.Service;
-//
-//import java.text.ParseException;
-//import java.text.SimpleDateFormat;
-//import java.util.ArrayList;
-//import java.util.Date;
-//import java.util.List;
-//import java.util.TimeZone;
-//
-//@Slf4j
-//@RequiredArgsConstructor
-//@Service
-//public class QnAService {
-//    @Autowired
-//    QnARepository qnaRepository;
-//    //QnARepositoryCustom qnaRepositoryCustom;
-//
-//    //목록보기
-//    public Header<List<QnAListDto>> getQnAList(Pageable pageable, SearchCondition searchCondition) {
-//
-//        /*
-//        Page<QnAEntity> qnaEntities =
-//                qnaRepositoryCustom.findAllBySearchCondition(
-//                        pageable, searchCondition);
-//        */
-//
-//        // 결과 리스트 담을 객체
-//        // QnAListDto랑 QnADto는 다른 클래스(다른 객체임)
-//        List<QnAListDto> resultList = null;
-//
-//        // 질문글만 전체 가져왔음
-//        List<QnAEntity> qList = qnaRepository.findSameBtwTwoColumn();
-//
-//        // 질문글을 하나씩 꺼내서 Loop ( for )
-//        for(QnAEntity entity : qList){
-//            QnAEntity AnswerEntity = qnaRepository.findByRefNoAndQnaNoNot(entity.getQnANo(), entity.getQnANo());
-//            // 질문글의 질문글의 흐름이 있음, 질문글은 무조건 결과리스트에 포함
-//            // 답변글의 답변글의 흐름이 있음, 답변글은 있어야지만 결과리스트에 포함
-//            QnAListDto qnAListQuestion = new QnAListDto(entity);
-//            resultList.add(qnAListQuestion);
-//            // resultList.add(new QnAListDto(entity));
-//            if(AnswerEntity != null){
-//                QnAListDto qnAListAnswer = new QnAListDto(AnswerEntity);
-//                resultList.add(qnAListAnswer);
-//                // resultList.add(new QnAListDto(AnswerEntity));
-//            }
-//        }
-//
-//        Pagination pagination = new Pagination(
-//                resultList.size()
-//                , pageable.getPageNumber() + 1
-//                , pageable.getPageSize()
-//                , 10
-//        );
-//
-//        return Header.OK(resultList, pagination);
-//    }
-//
-//    // 상세보기
+package com.crud.btt.cs.model.service;
+
+import com.crud.btt.common.Header;
+import com.crud.btt.common.Pagination;
+import com.crud.btt.common.SearchCondition;
+import com.crud.btt.cs.controller.QnAController;
+import com.crud.btt.cs.entity.QnAEntity;
+import com.crud.btt.cs.entity.QnARepository;
+import com.crud.btt.cs.entity.QnARepositoryCustom;
+import com.crud.btt.cs.model.dto.QnAListDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Slf4j
+@RequiredArgsConstructor
+@Service
+public class QnAService {
+    @Autowired
+    QnARepository qnARepository;
+    QnARepositoryCustom qnARepositoryCustom;
+    private static final Logger logger = LoggerFactory.getLogger(QnAController.class);
+
+    //목록보기
+    public Header<List<QnAListDto>> getQnAList(Pageable pageable, SearchCondition searchCondition) {
+
+        // 결과 리스트 담을 객체
+        // QnAListDto랑 QnADto는 다른 클래스(다른 객체임)
+        List<QnAListDto> resultList = new ArrayList<>();
+
+        // 질문글만 전체 가져왔음(qnaNO == qnaRef)
+        List<QnAEntity> qList = qnARepository.findSameBtwTwoColumn();
+
+        // 질문글을 하나씩 꺼내서 Loop ( for )
+        for(QnAEntity entity : qList){
+            logger.info("=============entity=============" + entity);
+            QnAEntity AnswerEntity = qnARepository.findByQnaNo(entity.getQnaNo());
+            // 질문글의 질문글의 흐름이 있음, 질문글은 무조건 결과리스트에 포함
+            // 답변글의 답변글의 흐름이 있음, 답변글은 있어야지만 결과리스트에 포함
+            QnAListDto qnAListQuestion = new QnAListDto(entity);
+            resultList.add(qnAListQuestion);
+            // resultList.add(new QnAListDto(entity));
+            logger.info("=============resultList=============" + resultList);
+
+            if(AnswerEntity.getQnaNo() != AnswerEntity.getQnaRef()){
+                QnAListDto qnAListAnswer = new QnAListDto(AnswerEntity);
+                logger.info("=============qnAListAnswer=============" + qnAListAnswer);
+                resultList.add(qnAListAnswer);
+                // resultList.add(new QnAListDto(AnswerEntity));
+            }
+        }
+
+        Pagination pagination = new Pagination(
+                resultList.size()
+                , pageable.getPageNumber() + 1
+                , pageable.getPageSize()
+                , 10
+        );
+        return Header.OK(resultList, pagination);
+    }
+
+    // 상세보기
 //    public QnADto getQnA(Long qnaNo) {
 //
 //        // update set count = count +1;
-//        QnAEntity qnaEntity = qnaRepository.findById(qnaNo).get();
+//        QnAEntity qnaEntity = qnARepository.findById(qnaNo).get();
 ////        if(qnaEntity.getQna_private() != "Y" && 작성자 != 유저
 ////            || 공개 != "Y" && 관리자 != 유저){
 ////            return null;
 ////        }
 //        qnaEntity.setQnaReadCount(qnaEntity.getQnaReadCount()+1);
-//        return new QnADto(qnaRepository.save(qnaEntity));
+//        return new QnADto(qnARepository.save(qnaEntity));
 //    }
 //
 //    public QnADto qnaCreate(QnADto qnaDto){
@@ -134,9 +128,9 @@
 //
 //        */
 //        if(qnaEntity.getQnaRef() > 0){
-//            qnaEntity = qnaRepository.save(qnaEntity);
+//            qnaEntity = qnARepository.save(qnaEntity);
 //        }else {
-//            qnaEntity = qnaRepository.saveQuestion(qnaEntity);
+//            qnaEntity = qnARepository.saveQuestion(qnaEntity);
 //        }
 //
 //        return QnADto.builder()
@@ -153,7 +147,7 @@
 //    //수정
 //    public QnAUpdateDto qnaUpdate(QnAUpdateDto qnaUpdateDto){
 //
-//        if(qnaRepository.findByQnANo(qnaUpdateDto.getQna_no()) == null){
+//        if(qnARepository.findByQnANo(qnaUpdateDto.getQna_no()) == null){
 //            return new QnAUpdateDto("F");
 //        }
 //
@@ -180,14 +174,14 @@
 //                .qnaRename_File(qnaUpdateDto.getQna_rename_file())
 //                .build();
 //
-//        return new QnAUpdateDto(qnaRepository.save(qnaEntity));
+//        return new QnAUpdateDto(qnARepository.save(qnaEntity));
 //    }
 //
 //    //삭제 (삭제는 반환타입이 Long, 값은 삭제된 행 )
 //    public Long qnaDelete(Long qna_no){
 //
-//        return qnaRepository.deleteByQnANo(qna_no);
+//        return qnARepository.deleteByQnANo(qna_no);
 //
 //    }
-//
-//}
+
+}
