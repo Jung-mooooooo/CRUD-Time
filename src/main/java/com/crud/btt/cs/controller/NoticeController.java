@@ -36,9 +36,6 @@ public class NoticeController {
         return noticeService.getNoticeList(pageable,searchCondition);
 
     }
-}
-//    }
-//
 //    //공지사항 상세보기
 ////   @GetMapping("/admin/AdminNoticeDetail/{id}")
 ////    public NoticeDto getNotice(@PathVariable Long notice_no) {
@@ -66,4 +63,4 @@ public class NoticeController {
 //
 //
 //
-//}
+}

@@ -4,8 +4,15 @@ import com.crud.btt.member.entity.*;
 import com.crud.btt.member.model.dto.MemberDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Random;
 
 @Slf4j
 @AllArgsConstructor
@@ -203,5 +212,35 @@ public class MemberService implements UserDetailsService {
                 .build();
     }
 
+    //회원가입 핸드폰 인증
+    public String autoPhoneNumber(String phone) throws CoolsmsException {
+        String api_key = "NCSAXYKAJ1BPSNRP";
+        String api_secret = "ZNSC1NPSRO0FCUH9RN5XWG7MAJPXU81Z";
+        Message coolsms = new Message(api_key, api_secret);
 
+        //인증번호 생성
+        Random random = new Random();
+        String code = "";   //인증번호
+
+        for(int i = 0; i < 4; i++){
+            String no = Integer.toString(random.nextInt(10));
+            code += no;
+        }
+
+        //체크
+        System.out.println("수신자 번호 :" + phone);
+        System.out.println("인증번호 : " + code);
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("to", phone);    //수신번호
+        params.put("from", "01042357723"); //발신번호
+        params.put("type", "sms");
+        params.put("text", "안녕하세요.\n" +
+                "Batter then Talk 입니다.\n" +
+                "회원 가입 인증번호입니다.\n" +
+                "[ " + code + " ]");
+
+        coolsms.send(params);
+        return code;
+    }
 }

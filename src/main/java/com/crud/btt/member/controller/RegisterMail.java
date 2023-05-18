@@ -8,23 +8,34 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+@PropertySource("classpath:email.properties")
+@Slf4j
+@RequiredArgsConstructor
 @Service
 public class RegisterMail implements MailServiceInter{
 
     @Autowired
     JavaMailSender emailsender; // Bean 등록해둔 MailConfig 를 emailsender 라는 이름으로 autowired
 
+    @Value("${AdminMail.id}")
+    private String id;
     private String ePw; // 인증번호
 
 
     // 메일 내용 작성
     @Override
     public MimeMessage createMessage(String to) throws MessagingException, UnsupportedEncodingException {
+        System.out.println("3번 크레이스 메세지");
+
 //		System.out.println("보내는 대상 : " + to);
 //		System.out.println("인증 번호 : " + ePw);
 
@@ -48,7 +59,7 @@ public class RegisterMail implements MailServiceInter{
         msgg += "</div>";
         message.setText(msgg, "utf-8", "html");// 내용, charset 타입, subtype
         // 보내는 사람의 이메일 주소, 보내는 사람 이름
-        message.setFrom(new InternetAddress("goodjobproject@naver.com", "GoodJob_Admin"));// 보내는 사람
+        message.setFrom(new InternetAddress(id, "베덴톡 관리자"));// 보내는 사람
 
         return message;
     }
@@ -87,6 +98,7 @@ public class RegisterMail implements MailServiceInter{
     // 그리고 bean 으로 등록해둔 javaMail 객체를 사용해서 이메일 send!!
     @Override
     public String sendSimpleMessage(String to) throws Exception {
+        System.out.println("4번 샌드메세지");
 
         ePw = createKey(); // 랜덤 인증번호 생성
 

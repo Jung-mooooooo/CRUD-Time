@@ -58,3 +58,4 @@ build
 /src/test/java/com/crud/btt/*.java
 /src/main/resources/application.yml
 /src/main/generated/
+/src/test/
