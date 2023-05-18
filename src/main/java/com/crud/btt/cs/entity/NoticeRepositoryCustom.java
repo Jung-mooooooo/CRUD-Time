@@ -52,32 +52,32 @@ public class NoticeRepositoryCustom {
         return new PageImpl<>(results, pageable, total);
     }
 
-//    private Predicate searchKeywords(String sk, String sv) {
+////    private Predicate searchKeywords(String sk, String sv) {
+////
+////        if("noticeTitle".equals(sk)){
+////            if(StringUtils.hasLength(sv)){
+////                return noticeEntity.noticeTitle.contains(sv);
+////            }
+////        } else if ("noticeContent".equals(sk)) {
+////            if(StringUtils.hasLength(sv)){
+////                return noticeEntity.noticeContent.contains(sv);
+////            }
+////        }
+////        return null;
+////
+////    }
 //
-//        if("noticeTitle".equals(sk)){
-//            if(StringUtils.hasLength(sv)){
+//    private BooleanExpression searchKeywords(String sk, String sv) {
+//        if ("noticeTitle".equals(sk)) {
+//            if (StringUtils.hasLength(sv)) {
 //                return noticeEntity.noticeTitle.contains(sv);
 //            }
 //        } else if ("noticeContent".equals(sk)) {
-//            if(StringUtils.hasLength(sv)){
+//            if (StringUtils.hasLength(sv)) {
 //                return noticeEntity.noticeContent.contains(sv);
 //            }
 //        }
-//        return null;
-//
+//        //return Expressions.asBoolean(true).isTrue(); // 빈 조건식 반환
+//            return null;
 //    }
-
-    private BooleanExpression searchKeywords(String sk, String sv) {
-        if ("noticeTitle".equals(sk)) {
-            if (StringUtils.hasLength(sv)) {
-                return noticeEntity.noticeTitle.contains(sv);
-            }
-        } else if ("noticeContent".equals(sk)) {
-            if (StringUtils.hasLength(sv)) {
-                return noticeEntity.noticeContent.contains(sv);
-            }
-        }
-        //return Expressions.asBoolean(true).isTrue(); // 빈 조건식 반환
-            return null;
-    }
 }

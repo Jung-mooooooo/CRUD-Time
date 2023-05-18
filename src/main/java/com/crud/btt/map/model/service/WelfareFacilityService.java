@@ -60,8 +60,9 @@ public class WelfareFacilityService {
 //    public Header<List<WelfareFacilityDto>> getSearchList(Pageable pageable, SearchCondition searchCondition) {
 //        return null;
 //    }
-//
-//
+
+
+
 //    //카테고리(병원)별 리스트 조회
     public Header<List<WelfareFacilityDto>> getHospitalList(Pageable pageable, SearchCondition searchCondition){
         List<WelfareFacilityDto> list = new ArrayList<>();
@@ -120,23 +121,23 @@ public class WelfareFacilityService {
 
         return Header.OK(list, pagination);
     }
-//
-//    //등록
-//    public WelfareFacilityEntity create(WelfareFacilityDto welfareFacilityDto){
-//        WelfareFacilityEntity entity = WelfareFacilityEntity.builder().build();
-//
-//        return welfareFacilityRepository.save(entity);
-//    }
-//
-//    //수정
-//    public WelfareFacilityEntity update(WelfareFacilityDto welfareFacilityDto){
-//        WelfareFacilityEntity entity = WelfareFacilityEntity.builder().build();
-//
-//        return welfareFacilityRepository.save(entity);
-//    }
-//
-//    //삭제
-//    public void delete (Long wf_no){}
 
+////
+////    //등록
+////    public WelfareFacilityEntity create(WelfareFacilityDto welfareFacilityDto){
+////        WelfareFacilityEntity entity = WelfareFacilityEntity.builder().build();
+////
+////        return welfareFacilityRepository.save(entity);
+////    }
+////
+////    //수정
+////    public WelfareFacilityEntity update(WelfareFacilityDto welfareFacilityDto){
+////        WelfareFacilityEntity entity = WelfareFacilityEntity.builder().build();
+////
+////        return welfareFacilityRepository.save(entity);
+////    }
+////
+////    //삭제
+////    public void delete (Long wf_no){}
 
 }

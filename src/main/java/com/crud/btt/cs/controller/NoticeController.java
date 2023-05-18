@@ -37,11 +37,6 @@ public class NoticeController {
 
     }
 }
-    
-    //공지사항 상세보기
-//   @GetMapping("/admin/AdminNoticeDetail/{id}")
-//    public NoticeDto getNotice(@PathVariable Long notice_no) {
-//        return noticeService.getNotice(notice_no);
 //    }
 //
 //    //공지사항 상세보기

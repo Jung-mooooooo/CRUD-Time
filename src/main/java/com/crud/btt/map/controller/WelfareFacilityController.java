@@ -51,27 +51,23 @@ public class WelfareFacilityController {
                                                                      SearchCondition searchCondition){
         return welfareFacilityService.getCounsellingCenterList(pageable, searchCondition);
     }
+////
+////    //등록
+////    @PostMapping("/")
+////    public WelfareFacilityEntity create(@RequestBody WelfareFacilityDto welfareFacilityDto){
+////        return welfareFacilityService.create(welfareFacilityDto);
+////    }
+////
+////    //수정
+//    //@PatchMapping("/")
+////    public WelfareFacilityEntity update(@RequestBody WelfareFacilityDto welfareFacilityDto){
+////        return welfareFacilityService.update(welfareFacilityDto);
+////    }
+////
+////    //삭제
+//    //@DeleteMapping("/")
+////    public void delete (@PathVariable Long wf_no){
+////        welfareFacilityService.delete(wf_no);
+////    }
 //
-//    //등록
-//    @PostMapping("/")
-//    public WelfareFacilityEntity create(@RequestBody WelfareFacilityDto welfareFacilityDto){
-//        return welfareFacilityService.create(welfareFacilityDto);
-//    }
-//
-//    //수정
-    //@PatchMapping("/")
-//    public WelfareFacilityEntity update(@RequestBody WelfareFacilityDto welfareFacilityDto){
-//        return welfareFacilityService.update(welfareFacilityDto);
-//    }
-//
-//    //삭제
-    //@DeleteMapping("/")
-//    public void delete (@PathVariable Long wf_no){
-//        welfareFacilityService.delete(wf_no);
-//    }
-
 }
-
-
-
-

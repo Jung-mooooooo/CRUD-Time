@@ -21,6 +21,7 @@ public class RegisterMail implements MailServiceInter{
 
     private String ePw; // 인증번호
 
+
     // 메일 내용 작성
     @Override
     public MimeMessage createMessage(String to) throws MessagingException, UnsupportedEncodingException {
