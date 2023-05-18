@@ -17,25 +17,10 @@ import java.util.List;
 
 import static com.crud.btt.map.entity.QWelfareFacilityEntity.welfareFacilityEntity;
 
-//@RequiredArgsConstructor
-//@Repository
+@RequiredArgsConstructor
+@Repository
 public class WelfareFacilityRepositoryCustom {
     private final JPAQueryFactory queryFactory;
-
-    public Page<WelfareFacilityEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition){
-        JPAQuery<WelfareFacilityEntity> query = queryFactory.selectFrom(welfareFacilityEntity)
-                .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()));
-
-        long total = query.stream().count();
-
-        List<WelfareFacilityEntity> results = query.where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .orderBy(welfareFacilityEntity.wfNo.asc())
-                .fetch();
-
-        return new PageImpl<>(results, pageable, total);
-    }
 
     private BooleanExpression searchKeywords(String sk, String sv){
         if("wfName".equals(sk)){
@@ -53,4 +38,58 @@ public class WelfareFacilityRepositoryCustom {
         }
         return null;
     }
+
+    //지도 목록 조회(페이징 처리)
+    public Page<WelfareFacilityEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition){
+        JPAQuery<WelfareFacilityEntity> query = queryFactory.selectFrom(welfareFacilityEntity)
+                .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()));
+
+        Long total = query.stream().count();
+
+        List<WelfareFacilityEntity> results = query.where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(welfareFacilityEntity.wfNo.asc())
+                .fetch();
+
+        return new PageImpl<>(results, pageable, total);
+    }
+
+
+    //카테고리(병원)별 리스트 조회
+    public Page<WelfareFacilityEntity> findAllByCategoryIsAndNameLikeHospital(Pageable pageable, SearchCondition searchCondition){
+        JPAQuery<WelfareFacilityEntity> query = queryFactory.selectFrom(welfareFacilityEntity)
+                .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()))
+                .where(welfareFacilityEntity.wfCat.eq("병원"));
+
+        Long total = query.stream().count();
+
+        List<WelfareFacilityEntity> results = query.where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(welfareFacilityEntity.wfNo.asc())
+                .fetch();
+
+        return new PageImpl<>(results, pageable, total);
+    }
+
+
+    //카테고리(상담센터)별 리스트 조회
+    public Page<WelfareFacilityEntity> findAllByCategoryIsAndNameLikeCounselling(Pageable pageable, SearchCondition searchCondition){
+        JPAQuery<WelfareFacilityEntity> query = queryFactory.selectFrom(welfareFacilityEntity)
+                .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()))
+                .where(welfareFacilityEntity.wfCat.eq("상담센터"));
+
+        Long total = query.stream().count();
+
+        List<WelfareFacilityEntity> results = query.where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(welfareFacilityEntity.wfNo.asc())
+                .fetch();
+
+        return new PageImpl<>(results, pageable, total);
+    }
+
+
 }

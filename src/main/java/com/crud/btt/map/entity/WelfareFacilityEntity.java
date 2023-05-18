@@ -22,7 +22,7 @@ public class WelfareFacilityEntity {
             allocationSize = 1
     )
     @Column(name = "WF_NO")
-    private long wfNo;
+    private Long wfNo;
     @Column(name = "WF_NAME")
     private String wfName;
     @Column(name = "WF_CAT")

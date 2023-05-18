@@ -1,8 +1,5 @@
 package com.crud.btt.map.entity;
 
-import com.crud.btt.common.SearchCondition;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WelfareFacilityRepository extends JpaRepository<WelfareFacilityEntity, Long> {
@@ -10,8 +7,6 @@ public interface WelfareFacilityRepository extends JpaRepository<WelfareFacility
 //    Page<WelfareFacilityEntity> findAllByOrderByIdxDesc(Pageable pageable);
 //
 //    Page<WelfareFacilityEntity> findWelfareFacilityEntitiesBy(Pageable pageable, SearchCondition searchCondition);
-//
-//    Page<WelfareFacilityEntity> findAllByCategoryIsAndNameLike(String category, String name);
 //
 //    Long deleteByWfNo(Long wfNo);
 }

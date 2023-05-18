@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +18,7 @@ public class AdminEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ADMIN_CODE")
-    private long adminCode;
+    private Long adminCode;
     @Column(name="ADMIN_ID")
     private String adminId;
     @Column(name="ADMIN_PWD")
