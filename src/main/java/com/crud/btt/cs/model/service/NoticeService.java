@@ -33,20 +33,6 @@ public class    NoticeService {
     public Header<List<NoticeDto>> getNoticeList(Pageable pageable, SearchCondition searchCondition) {
         List<NoticeDto> dtos = new ArrayList<>();
 
-        TimeZone timeZone = TimeZone.getTimeZone("GMT+9");
-        Date now = new Date();
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
-        formatter.setTimeZone(timeZone);
-        String formattedDate = formatter.format(now);
-
-        try {
-            now = formatter.parse(formattedDate);
-        } catch( ParseException e ){
-            e.printStackTrace();
-        } catch( Exception e ){
-            e.printStackTrace();
-        }
 
         Page<NoticeEntity> noticeEntities =
                 noticeRepositoryCustom.findAllBySearchCondition(
@@ -54,7 +40,7 @@ public class    NoticeService {
         for (NoticeEntity entity : noticeEntities) {
             NoticeDto dto = NoticeDto.builder()
                     .noticeNo(entity.getNoticeNo())
-                    .createAt(now)
+                    .createAt(entity.getCreateAt())
                     .noticeTitle(entity.getNoticeTitle())
                     .noticeContent(entity.getNoticeContent())
                     .noticeReadCount(entity.getNoticeReadCount())
@@ -144,7 +130,7 @@ public class    NoticeService {
     //수정
     public NoticeUpdateDto noticeUpdate(NoticeUpdateDto noticeUpdateDto){
 
-        if(noticeRepository.findByNoticeNo(noticeUpdateDto.getNotice_no()) == null){
+        if(noticeRepository.findByNoticeNo(noticeUpdateDto.getNoticeNo()) == null){
             return new NoticeUpdateDto("F");
         }
         /*
@@ -168,12 +154,12 @@ public class    NoticeService {
             e.printStackTrace();
         }
 
-        NoticeEntity noticeEntity = NoticeEntity.builder().noticeNo(noticeUpdateDto.getNotice_no())
-                .noticeTitle(noticeUpdateDto.getNotice_title())
-                .noticeContent(noticeUpdateDto.getNotice_content())
+        NoticeEntity noticeEntity = NoticeEntity.builder().noticeNo(noticeUpdateDto.getNoticeNo())
+                .noticeTitle(noticeUpdateDto.getNoticeTitle())
+                .noticeContent(noticeUpdateDto.getNoticeContent())
                 .createAt(now)
-                .noticeOriginalFile(noticeUpdateDto.getNotice_original_file())
-                .noticeRenameFile(noticeUpdateDto.getNotice_rename_file())
+                .noticeOriginalFile(noticeUpdateDto.getNoticeOriginalFile())
+                .noticeRenameFile(noticeUpdateDto.getNoticeRenameFile())
                 .build();
         /*
         NoticeEntity noticeEntity1 = noticeRepository.findByNoticeNo(noticeUpdateDto.getNotice_no());
