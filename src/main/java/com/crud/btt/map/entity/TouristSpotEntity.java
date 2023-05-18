@@ -18,7 +18,7 @@ public class TouristSpotEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TS_NO")
-    private long tsNo;
+    private Long tsNo;
     @Column(name = "TS_NAME")
     private String tsName;
     @Column(name = "TS_CAT")

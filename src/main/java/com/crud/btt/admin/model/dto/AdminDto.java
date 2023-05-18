@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class AdminDto {
-    private long adminCode;
+    private Long adminCode;
     private String adminId;
     private String adminPwd;
     private String adminName;

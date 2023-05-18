@@ -27,7 +27,6 @@ public class Pagination {
     //총 게시글 수
     int totalListCnt;
 
-
     //총 페이지 수
     int totalPageCnt;
 

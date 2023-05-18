@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class TouristSpotDto {
 
-    private long tsNo;
+    private Long tsNo;
     private String tsName;
     private String tsCat;
     private String address;

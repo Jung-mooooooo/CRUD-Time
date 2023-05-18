@@ -13,8 +13,8 @@ import java.util.Date;
 @Builder
 public class LogDto {
 
-    private long logNo;
-    private long userCode;
+    private Long logNo;
+    private Long userCode;
     private String visitIp;
     private Date visitTime;
 

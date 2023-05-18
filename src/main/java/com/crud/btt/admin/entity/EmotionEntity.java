@@ -18,12 +18,12 @@ public class EmotionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "EMOTION_NO")
-    private long emotionNo;
+    private Long emotionNo;
     @Column(name = "EMOTION_CAT")
-    private long emotionCat;
+    private Long emotionCat;
     @Column(name = "EMOTION_DATE")
-    private long emotionDate;
+    private Long emotionDate;
     @Column(name = "USER_CODE")
-    private long userCode;
+    private Long userCode;
 
 }

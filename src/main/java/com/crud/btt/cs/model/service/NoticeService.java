@@ -69,63 +69,63 @@ public class    NoticeService {
         */
         return Header.OK(dtos, pagination);
     }
-
-    // 상세보기
-//    public NoticeDto getNotice(Long noticeNo) {
+//    // 상세보기
+////    public NoticeDto getNotice(Long noticeNo) {
+////
+////        // update set count = count +1;
+////        NoticeEntity noticeEntity = noticeRepository.findById(noticeNo).get();
+////        /*
+////            글제목 : 제목입니다.
+////            조회수 : 1
+////            글내용 : 내용입니다.
+////        */
+////        noticeEntity.setNoticeReadCount(noticeEntity.getNoticeReadCount()+1);
+////        /*
+////            글제목 : 제목입니다.
+////            조회수 : 2            // setNotice_readcount(noticeEntity.getNotice_readcount() + 1 )
+////            글내용 : 내용입니다.                                    = 1
+////        */
+////
+////        return new NoticeDto(noticeRepository.save(noticeEntity));
+////    }
+////
+////    // 글작성
+////    // 1. 컨트롤러에서 Dto를 받아온다.
+////    // 2. Entity <- Dto, Entity를 Repository.save() 디비에 인서트를 한다.
+////    // 3. Dto <- Entity
+////    // 4. 컨트롤러로 Dto 리턴
+////    public NoticeDto noticeCreate(NoticeDto noticeDto){
+////        // noticeEntity <= noticeDto
+////        /*
+////        noticeEntity = noticeDto.getNotice_no(); // 안해도 됨
+////        noticeEntity.setNotice_title(noticeDto.getNotice_title());
+////        noticeEntity.setNotice_content(noticeDto.getNotice_content());
+////        noticeEntity.setCreate_at(noticeDto.getCreate_at());
+////        noticeEntity.setNotice_original_file(noticeDto.getNotice_original_file());
+////        noticeEntity.setNotice_rename_file(noticeDto.getNotice_rename_file());
+////        */
+////
+////        NoticeEntity noticeEntity = NoticeEntity.builder()
+////                .noticeTitle(noticeDto.getNotice_title())
+////                .noticeContent(noticeDto.getNotice_content())
+////                .createAt(noticeDto.getCreate_at())
+////                .noticeReadCount(noticeDto.getNotice_readcount())
+////                .noticeOriginalFile(noticeDto.getNotice_original_file())
+////                .noticeRenameFile(noticeDto.getNotice_rename_file()).build();
+////
+////        noticeEntity = noticeRepository.save(noticeEntity);
+////        // return new NoticeDto(noticeRepository.save(new NoticeEntity(noticeDto)));
+////      return NoticeDto.builder()
+////              .notice_no(noticeEntity.getNoticeNo())
+////              .notice_title(noticeEntity.getNoticeTitle())
+////              .notice_content(noticeEntity.getNoticeContent())
+////              .create_at(noticeEntity.getCreateAt())
+////              .notice_readcount(noticeEntity.getNoticeReadCount())
+////              .notice_original_file(noticeEntity.getNoticeOriginalFile())
+////              .notice_rename_file(noticeEntity.getNoticeRenameFile())
+////              .build();
+////    }
 //
-//        // update set count = count +1;
-//        NoticeEntity noticeEntity = noticeRepository.findById(noticeNo).get();
-//        /*
-//            글제목 : 제목입니다.
-//            조회수 : 1
-//            글내용 : 내용입니다.
-//        */
-//        noticeEntity.setNoticeReadCount(noticeEntity.getNoticeReadCount()+1);
-//        /*
-//            글제목 : 제목입니다.
-//            조회수 : 2            // setNotice_readcount(noticeEntity.getNotice_readcount() + 1 )
-//            글내용 : 내용입니다.                                    = 1
-//        */
-//
-//        return new NoticeDto(noticeRepository.save(noticeEntity));
-//    }
-//
-//    // 글작성
-//    // 1. 컨트롤러에서 Dto를 받아온다.
-//    // 2. Entity <- Dto, Entity를 Repository.save() 디비에 인서트를 한다.
-//    // 3. Dto <- Entity
-//    // 4. 컨트롤러로 Dto 리턴
-//    public NoticeDto noticeCreate(NoticeDto noticeDto){
-//        // noticeEntity <= noticeDto
-//        /*
-//        noticeEntity = noticeDto.getNotice_no(); // 안해도 됨
-//        noticeEntity.setNotice_title(noticeDto.getNotice_title());
-//        noticeEntity.setNotice_content(noticeDto.getNotice_content());
-//        noticeEntity.setCreate_at(noticeDto.getCreate_at());
-//        noticeEntity.setNotice_original_file(noticeDto.getNotice_original_file());
-//        noticeEntity.setNotice_rename_file(noticeDto.getNotice_rename_file());
-//        */
-//
-//        NoticeEntity noticeEntity = NoticeEntity.builder()
-//                .noticeTitle(noticeDto.getNotice_title())
-//                .noticeContent(noticeDto.getNotice_content())
-//                .createAt(noticeDto.getCreate_at())
-//                .noticeReadCount(noticeDto.getNotice_readcount())
-//                .noticeOriginalFile(noticeDto.getNotice_original_file())
-//                .noticeRenameFile(noticeDto.getNotice_rename_file()).build();
-//
-//        noticeEntity = noticeRepository.save(noticeEntity);
-//        // return new NoticeDto(noticeRepository.save(new NoticeEntity(noticeDto)));
-//      return NoticeDto.builder()
-//              .notice_no(noticeEntity.getNoticeNo())
-//              .notice_title(noticeEntity.getNoticeTitle())
-//              .notice_content(noticeEntity.getNoticeContent())
-//              .create_at(noticeEntity.getCreateAt())
-//              .notice_readcount(noticeEntity.getNoticeReadCount())
-//              .notice_original_file(noticeEntity.getNoticeOriginalFile())
-//              .notice_rename_file(noticeEntity.getNoticeRenameFile())
-//              .build();
-//    }
 
     //수정
     public NoticeUpdateDto noticeUpdate(NoticeUpdateDto noticeUpdateDto){

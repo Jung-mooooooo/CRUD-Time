@@ -51,6 +51,8 @@ public class WelfareFacilityService {
                 , 10
         );
 
+        log.info(pagination.toString());
+
         return Header.OK(list, pagination);
     }
 
@@ -61,63 +63,63 @@ public class WelfareFacilityService {
 //
 //
 //    //카테고리(병원)별 리스트 조회
-//    public Header<List<WelfareFacilityDto>> getHospitalList(Pageable pageable, SearchCondition searchCondition){
-//        List<WelfareFacilityDto> list = new ArrayList<>();
-//
-//        Page<WelfareFacilityEntity> welfareFacilityEntities = welfareFacilityRepository.findAllBySearchCondition(pageable, searchCondition);
-//        for (WelfareFacilityEntity entity : welfareFacilityEntities) {
-//            WelfareFacilityDto dto = WelfareFacilityDto.builder()
-//                    .wfNo(entity.getWfNo())
-//                    .wfName(entity.getWfName())
-//                    .wfCat(entity.getWfCat())
-//                    .address(entity.getAddress())
-//                    .address2(entity.getAddress2())
-//                    .phone(entity.getPhone())
-//                    .latitude(entity.getLatitude())
-//                    .longitude(entity.getLongitude())
-//                    .build();
-//            list.add(dto);
-//        }
-//
-//        Pagination pagination = new Pagination(
-//                (int) welfareFacilityEntities.getTotalElements()
-//                , pageable.getPageNumber() + 1
-//                , pageable.getPageSize()
-//                , 10
-//        );
-//
-//        return Header.OK(list, pagination);
-//    }
+    public Header<List<WelfareFacilityDto>> getHospitalList(Pageable pageable, SearchCondition searchCondition){
+        List<WelfareFacilityDto> list = new ArrayList<>();
+
+        Page<WelfareFacilityEntity> welfareFacilityEntities = welfareFacilityRepositoryCustom.findAllByCategoryIsAndNameLikeHospital(pageable, searchCondition);
+        for (WelfareFacilityEntity entity : welfareFacilityEntities) {
+            WelfareFacilityDto dto = WelfareFacilityDto.builder()
+                    .wfNo(entity.getWfNo())
+                    .wfName(entity.getWfName())
+                    .wfCat(entity.getWfCat())
+                    .address(entity.getAddress())
+                    .address2(entity.getAddress2())
+                    .phone(entity.getPhone())
+                    .latitude(entity.getLatitude())
+                    .longitude(entity.getLongitude())
+                    .build();
+            list.add(dto);
+        }
+
+        Pagination pagination = new Pagination(
+                (int) welfareFacilityEntities.getTotalElements()
+                , pageable.getPageNumber() + 1
+                , pageable.getPageSize()
+                , 10
+        );
+
+        return Header.OK(list, pagination);
+    }
 //
 //    //카테고리(상담센터)별 리스트 조회
-//    public Header<List<WelfareFacilityDto>> getCounsellingCenterList(Pageable pageable, SearchCondition searchCondition){
-//        List<WelfareFacilityDto> list = new ArrayList<>();
-//
-//        Page<WelfareFacilityEntity> welfareFacilityEntities = welfareFacilityRepository.findAllBySearchCondition(pageable, searchCondition);
-//        for (WelfareFacilityEntity entity : welfareFacilityEntities) {
-//            WelfareFacilityDto dto = WelfareFacilityDto.builder()
-//                    .wfNo(entity.getWfNo())
-//                    .wfName(entity.getWfName())
-//                    .wfCat(entity.getWfCat())
-//                    .address(entity.getAddress())
-//                    .address2(entity.getAddress2())
-//                    .phone(entity.getPhone())
-//                    .latitude(entity.getLatitude())
-//                    .longitude(entity.getLongitude())
-//                    .build();
-//
-//            list.add(dto);
-//        }
-//
-//        Pagination pagination = new Pagination(
-//                (int) welfareFacilityEntities.getTotalElements()
-//                , pageable.getPageNumber() + 1
-//                , pageable.getPageSize()
-//                , 10
-//        );
-//
-//        return Header.OK(list, pagination);
-//    }
+    public Header<List<WelfareFacilityDto>> getCounsellingCenterList(Pageable pageable, SearchCondition searchCondition){
+        List<WelfareFacilityDto> list = new ArrayList<>();
+
+        Page<WelfareFacilityEntity> welfareFacilityEntities = welfareFacilityRepositoryCustom.findAllByCategoryIsAndNameLikeCounselling(pageable, searchCondition);
+        for (WelfareFacilityEntity entity : welfareFacilityEntities) {
+            WelfareFacilityDto dto = WelfareFacilityDto.builder()
+                    .wfNo(entity.getWfNo())
+                    .wfName(entity.getWfName())
+                    .wfCat(entity.getWfCat())
+                    .address(entity.getAddress())
+                    .address2(entity.getAddress2())
+                    .phone(entity.getPhone())
+                    .latitude(entity.getLatitude())
+                    .longitude(entity.getLongitude())
+                    .build();
+
+            list.add(dto);
+        }
+
+        Pagination pagination = new Pagination(
+                (int) welfareFacilityEntities.getTotalElements()
+                , pageable.getPageNumber() + 1
+                , pageable.getPageSize()
+                , 10
+        );
+
+        return Header.OK(list, pagination);
+    }
 //
 //    //등록
 //    public WelfareFacilityEntity create(WelfareFacilityDto welfareFacilityDto){

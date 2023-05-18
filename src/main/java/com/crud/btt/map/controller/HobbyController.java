@@ -61,13 +61,7 @@
 //                                                  SearchCondition searchCondition){
 //        return hobbyService.getLanguageList(pageable, searchCondition);
 //    }
-//
-//    //카테고리(미디어)별 리스트 조회
-//    @GetMapping("/hobby/medialist")
-//    public Header<List<HobbyDto>> getMediaList(@PageableDefault(sort = {"idx"}) Pageable pageable,
-//                                               SearchCondition searchCondition){
-//        return hobbyService.getMediaList(pageable, searchCondition);
-//    }
+//    술
 //
 //    //등록
 //    public HobbyEntity create(@RequestBody HobbyDto hobbyDto){

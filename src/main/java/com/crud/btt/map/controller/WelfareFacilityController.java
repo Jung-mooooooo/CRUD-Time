@@ -26,6 +26,8 @@ public class WelfareFacilityController {
     @GetMapping("/welfarefacility/welfarefacilitylist")
     public Header<List<WelfareFacilityDto>> getWelfareFacilityList(@PageableDefault(sort = {"wfNo"}) Pageable pageable, SearchCondition searchCondition){
 
+        log.info("info" + pageable.toString());
+
         return welfareFacilityService.getWelfareFacilityList(pageable, searchCondition);
     }
 
@@ -37,18 +39,18 @@ public class WelfareFacilityController {
 //    }
 //
 //    //카테고리(병원)별 리스트 조회
-//    @GetMapping("/hospital/list")
-//    public Header<List<WelfareFacilityDto>> getHospitalList(@PageableDefault(sort = {"idx"}) Pageable pageable,
-//                                                            SearchCondition searchCondition){
-//        return welfareFacilityService.getHospitalList(pageable, searchCondition);
-//    }
+    @GetMapping("/hospital/list")
+    public Header<List<WelfareFacilityDto>> getHospitalList(@PageableDefault(sort = {"wfNo"}) Pageable pageable,
+                                                            SearchCondition searchCondition){
+        return welfareFacilityService.getHospitalList(pageable, searchCondition);
+    }
 //
 //    //카테고리(상담센터)별 리스트 조회
-//    @GetMapping("/counsellingcenter/list")
-//    public Header<List<WelfareFacilityDto>> getCounsellingCenterList(@PageableDefault(sort = {"idx"}) Pageable pageable,
-//                                                                     SearchCondition searchCondition){
-//        return welfareFacilityService.getCounsellingCenterList(pageable, searchCondition);
-//    }
+    @GetMapping("/counsellingcenter/list")
+    public Header<List<WelfareFacilityDto>> getCounsellingCenterList(@PageableDefault(sort = {"wfNo"}) Pageable pageable,
+                                                                     SearchCondition searchCondition){
+        return welfareFacilityService.getCounsellingCenterList(pageable, searchCondition);
+    }
 //
 //    //등록
 //    @PostMapping("/")
