@@ -4,6 +4,7 @@ import com.crud.btt.member.model.dto.MemberDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.persistence.EntityManager;
+import java.util.Optional;
 
 
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
@@ -17,4 +18,6 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
                                             //중복이 하나라도 발생시, 즉시 쿼리 종료.
     boolean existsByPhone(String phone);
     boolean existsByEmail(String email);
+
+    Optional<MemberEntity> findByUserId(String username);
 }

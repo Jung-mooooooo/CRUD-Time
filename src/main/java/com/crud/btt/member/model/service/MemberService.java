@@ -1,12 +1,11 @@
 package com.crud.btt.member.model.service;
 
-import com.crud.btt.member.entity.MemberEntity;
-import com.crud.btt.member.entity.MemberRepository;
-import com.crud.btt.member.entity.QuitEntity;
-import com.crud.btt.member.entity.QuitRepository;
+import com.crud.btt.member.entity.*;
 import com.crud.btt.member.model.dto.MemberDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,6 +24,10 @@ public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
     private final QuitRepository quitRepository;
+//    private final MemberEntity memberE;
+
+
+    //    private final PasswordEncoder passwordEncoder;
     private static final String FROM_ADDRESS = "본인의 이메일 주소를 입력하세요!";
 
     //user info 가져오기. 존재여부 확인
@@ -91,20 +94,45 @@ public class MemberService implements UserDetailsService {
 
 
     //회원가입
-    public Long save(MemberDto memberDto){
+    public MemberEntity save(MemberDto memberDto){
+
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDto.setUserPw(passwordEncoder.encode(memberDto.getUserPw()));
+        //MemberAuth memberAuth = new MemberAuth();
 
-        return memberRepository.save(MemberEntity.builder()
+//       Long userCode = memberRepository.save(MemberEntity.builder()
+//                .userId(memberDto.getUserId())
+//                .userPw(memberDto.getUserPw())
+//                .userName(memberDto.getUserName())
+//                .phone(memberDto.getPhone())
+//                .email(memberDto.getEmail())
+//                .enrollDate(LocalDateTime.now())
+//                .build()
+//        ).getUserCode();
+
+
+
+
+        MemberEntity memberEntity = MemberEntity.builder()
                 .userId(memberDto.getUserId())
                 .userPw(memberDto.getUserPw())
                 .userName(memberDto.getUserName())
                 .phone(memberDto.getPhone())
                 .email(memberDto.getEmail())
                 .enrollDate(LocalDateTime.now())
-                .build()
-        ).getUserCode();
+                .build();
+
+        MemberAuth memberAuth = new MemberAuth();
+        memberAuth.setAuth("ROLE_MEMBER");
+        memberEntity.addAuth(memberAuth);
+
+//        memberRepository.save(memberE);
+
+
+
+        return memberRepository.save(memberEntity);
     }
+
 
 
     //아이디찾기
@@ -156,9 +184,25 @@ public class MemberService implements UserDetailsService {
      * @return UserDetails
      * @throws //UsernameNotFoundException 유저가 없을 때 예외 발생
      */
-    @Override   //기본 반환 타입 : Member
-    public MemberEntity loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+//    @Override   //기본 반환 타입 : Member
+//    public MemberEntity loadUserByUsername(String username) throws UsernameNotFoundException {
+//        return null;
+//    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return memberRepository.findByUserId(username)
+                .map(this::createUserDetails)
+                .orElseThrow(() -> new UsernameNotFoundException("해당하는 유저를 찾을 수 없습니다."));
+    }
+
+    // 해당하는 User 의 데이터가 존재한다면 UserDetails 객체로 만들어서 리턴
+    private UserDetails createUserDetails(MemberEntity member) {
+        return User.builder()
+                .username(member.getUsername())
+                .password(member.getUserPw())
+                .roles(member.getAuthList().toArray(new String[0]))
+                .build();
     }
 
 

@@ -1,5 +1,8 @@
 package com.crud.btt.member.controller;
 
+import com.crud.btt.jwt.JwtTokenProvider;
+import com.crud.btt.member.entity.MemberEntity;
+import com.crud.btt.member.entity.MemberRepository;
 import com.crud.btt.member.model.dto.MemberDto;
 import com.crud.btt.member.model.service.MemberService;
 import com.crud.btt.member.validator.CheckEmailValidator;
@@ -30,6 +33,8 @@ import java.util.Map;
 public class MemberController {
 
     private final MemberService memberService;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final MemberRepository memberRepository;
 
     //중복 체크 유효성 검사를 위한 멤버
     private final CheckUserIdValidator checkUserIdValidator;
@@ -43,6 +48,15 @@ public class MemberController {
         binder.addValidators(checkPhoneValidator);
         binder.addValidators(checkEmailValidator);
 
+    }
+
+    @PostMapping("/member/login")
+    public String login(@RequestBody MemberDto memberDto) {
+//        log.info("user email = {}", user.get("email"));
+        MemberEntity member = memberRepository.findByUserId(memberDto.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 ID 입니다."));
+
+        return jwtTokenProvider.createToken(member.getUserId(), member.getAuthList());
     }
 
 

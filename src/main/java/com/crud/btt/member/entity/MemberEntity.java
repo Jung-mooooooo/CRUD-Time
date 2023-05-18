@@ -8,16 +8,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @JsonIgnoreProperties(value="hibernateLazyInitializer")
 @Data
+@EqualsAndHashCode(of="userCode")
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Table(name = "MEMBER")
 @Entity
@@ -30,7 +29,7 @@ public class MemberEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MEMBER")
     @Column(name="USER_CODE")
     private Long userCode;     //회원코드
-    @Column(name="USER_ID")
+    @Column(unique = true, name="USER_ID")
     private String userId;     //유저아이디
     @Column(name="USER_PW")
     private String userPw;     //유저패스워드
@@ -51,6 +50,13 @@ public class MemberEntity implements UserDetails {
     @Column(name="ENROLL_DATE")
     private LocalDateTime enrollDate;   //가입일
 
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinColumn(name = "user_code")
+//    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<MemberAuth> authList = new ArrayList<MemberAuth>();
+//    private List<String> roles = new ArrayList<>();
+
 
 
     //update를 위한
@@ -63,13 +69,31 @@ public class MemberEntity implements UserDetails {
 
     //사용자의 권한을 콜렉션 형태로 반환
     //클래스 자료형은 GrantedAuthority 구현
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        Set<GrantedAuthority> roles = new HashSet<>();
+//        for(String role : permit.split(",")){
+//            roles.add(new SimpleGrantedAuthority(role));
+//        }
+//        return roles;
+//    }
+
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return this.roles.stream()
+//                .map(SimpleGrantedAuthority::new)
+//                .collect(Collectors.toList());
+//    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> roles = new HashSet<>();
-        for(String role : permit.split(",")){
-            roles.add(new SimpleGrantedAuthority(role));
-        }
-        return roles;
+        return getAuthList().stream().map(o -> new SimpleGrantedAuthority(
+                o.getAuth()
+        )).collect(Collectors.toList());
+    }
+
+    public void addAuth(MemberAuth auth) {
+        authList.add(auth);
     }
 
 

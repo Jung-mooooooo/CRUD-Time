@@ -54,6 +54,7 @@ build
 /src/main/resources/static/favicon.ico
 /src/main/resources/static/index.html
 /src/test/java/com/crud/btt/bttTests.java
-/src/test/java/com/crud/btt/MemberConnectTest.java
+/src/test
+/src/test/java/com/crud/btt/*.java
 /src/main/resources/application.yml
 /src/main/generated/

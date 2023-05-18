@@ -33,7 +33,7 @@ public class MemberRepositoryTest {
                     .userPw("pass"+i)
                     .phone("010-1234-000"+i)
                     .email("abcd"+i+"@naver.com")
-                    .enrollDate(new Date(new java.util.Date().getTime()))
+//                    .enrollDate(new Date(new java.util.Date().getTime()))
                     .build();
 
             log.info("member save 전 : " + memberEntity);

@@ -1,5 +1,6 @@
 package com.crud.btt.member.model.dto;
 
+import com.crud.btt.member.entity.MemberAuth;
 import com.crud.btt.member.entity.MemberEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +10,8 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -38,6 +40,7 @@ public class MemberDto {
     private String googleId;   //구글로그인
     private String permit;      //회원체크
     private String enrollDate;   //가입일
+    private List<MemberAuth> authList = new ArrayList<MemberAuth>();
 
     public MemberEntity toEntity() {
         return MemberEntity.builder()
@@ -48,4 +51,5 @@ public class MemberDto {
                 .email(email)
                 .build();
     }
+
 }
