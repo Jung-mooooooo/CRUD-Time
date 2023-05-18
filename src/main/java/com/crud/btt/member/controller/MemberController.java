@@ -7,6 +7,7 @@ import com.crud.btt.member.validator.CheckPhoneValidator;
 import com.crud.btt.member.validator.CheckUserIdValidator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 
 @Slf4j
@@ -30,6 +32,7 @@ import java.util.Map;
 public class MemberController {
 
     private final MemberService memberService;
+    private final RegisterMail registerMail;
 
     //중복 체크 유효성 검사를 위한 멤버
     private final CheckUserIdValidator checkUserIdValidator;
@@ -124,7 +127,7 @@ public class MemberController {
         memberService.save(memberDto);
         System.out.println(memberDto.toString());
         System.out.println(String.valueOf(new ResponseEntity<>(memberDto, HttpStatus.OK)));
-        return String.valueOf(new ResponseEntity<>(memberDto, HttpStatus.OK));
+        return "saveOk";
     }
 
     //아이디찾기
@@ -159,14 +162,35 @@ public class MemberController {
 //
 //    }
 
-    // 이메일 인증
-//    @PostMapping("login/mailConfirm")
-//    @ResponseBody
-//    String mailConfirm(@RequestParam("email") String email) throws Exception {
-//
-//        String code = registerMail.sendSimpleMessage(email);
-//        System.out.println("인증코드 : " + code);
-//        return code;
-//    }
+    //회원가입 이메일 인증
+    @GetMapping("/enroll/email")
+    public String mailConfirm(@RequestParam("email") String email) throws Exception {
+        System.out.println("이메일 인증을 위한 컨트롤러 도착!");
+        System.out.println(email);
+        String code = registerMail.sendSimpleMessage(email);
+        System.out.println("인증코드 : " + code);
+        return code;
+    }
+
+    //회원가입 핸드폰 인증
+    @GetMapping("/enroll/phone")
+    public String sendSMS(@RequestParam("phone") String phone) throws CoolsmsException {
+        String code = memberService.autoPhoneNumber(phone);
+        return code;
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
