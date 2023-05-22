@@ -1,5 +1,6 @@
 package com.crud.btt.member.controller;
 
+import com.crud.btt.jwt.JwtToken;
 import com.crud.btt.jwt.JwtTokenProvider;
 import com.crud.btt.member.entity.MemberEntity;
 import com.crud.btt.member.entity.MemberRepository;
@@ -12,25 +13,30 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.JSONObject;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 
 @Slf4j
 @AllArgsConstructor
-@CrossOrigin
+//@CrossOrigin
+//@RequestMapping("/member")
 @RestController
 public class MemberController {
 
@@ -38,6 +44,10 @@ public class MemberController {
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
     private final RegisterMail registerMail;
+//    private final BCryptPasswordEncoder encoder;
+
+
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
 
     //중복 체크 유효성 검사를 위한 멤버
@@ -55,13 +65,61 @@ public class MemberController {
     }
 
     @PostMapping("/member/login")
-    public String login(@RequestBody MemberDto memberDto) {
+    public String login(@RequestBody MemberDto memberDto, String userId, String userPw) {
 //        log.info("user email = {}", user.get("email"));
+
         MemberEntity member = memberRepository.findByUserId(memberDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 ID 입니다."));
 
-        return jwtTokenProvider.createToken(member.getUserId(), member.getAuthList());
+//        if(!encoder.matches(userPw, member.getPassword())){
+//            System.out.println("비밀번호가 틀렸습니다.");
+//        }
+
+        return jwtTokenProvider.createToken(member.getUserId(), member.getAuth());
     }
+
+//    @PostMapping("/member/login")
+//    public ResponseEntity<String> loginSuccess(@RequestBody Map<String, String> loginForm){
+//        log.info("여기는왔니?");
+//        String token = memberService.login(loginForm.get("username"), loginForm.get("password"));
+//
+////        return ResponseEntity.ok(token);
+//        return ResponseEntity.ok(token);
+//    }
+
+//      @PostMapping("/member/login")
+//      public ResponseEntity<JwtToken> loginSuccess(@Valid @RequestBody MemberDto memberDto){
+//
+//          UsernamePasswordAuthenticationToken authenticationToken =
+//                  new UsernamePasswordAuthenticationToken(memberDto.getUserId(), memberDto.getUserPw());
+//
+//          Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+//          SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//          String jwt = jwtTokenProvider.createToken(authentication);
+//
+//          HttpHeaders httpHeaders = new HttpHeaders();
+//          httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+//
+//          return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+//    }
+
+
+//    @PostMapping("/member/login")
+//    public ResponseEntity<JwtToken> authorize(@Valid @RequestBody MemberDto memberDto) {
+//
+//        UsernamePasswordAuthenticationToken authenticationToken =
+//                new UsernamePasswordAuthenticationToken(memberDto.getUserId(), memberDto.getUserPw());
+//
+//        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//        String jwt = tokenProvider.createToken(authentication);
+//
+//        return new ResponseEntity<>(new JwtToken(jwt), HttpStatus.OK);
+//    }
+
+
 
 //    //해당 회원 존재 여부 확인 및 정보 출력용
 ////    @GetMapping("/member/{userCode}") //mapping은 임의로 작성한것.
@@ -187,6 +245,27 @@ public class MemberController {
         String code = memberService.autoPhoneNumber(phone);
         return code;
     }
+
+    @GetMapping("/member/myinfo/{userId}")
+    public MemberDto getMemberInfo(@PathVariable String userId) {
+        return memberService.getMemberInfo(userId);
+    }
+
+
+
+
+//    @PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
+//    @GetMapping("/myinfo")
+//    public ResponseEntity<MemberEntity> getMyInfo(@AuthenticationPrincipal MemberEntity Memberentity) throws Exception {
+//        Long userCode = Memberentity.getUserCode();
+//        log.info("register userNo = " + userCode);
+//
+//        MemberEntity member = memberService.read(userCode);
+//
+//        member.setUserPw("");
+//
+//        return new ResponseEntity<>(member, HttpStatus.OK);
+//    }
 
 }
 

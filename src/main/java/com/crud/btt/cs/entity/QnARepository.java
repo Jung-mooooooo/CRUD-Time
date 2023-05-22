@@ -37,7 +37,7 @@ public interface QnARepository extends JpaRepository<QnAEntity, Long>{
     @Query(value = "SELECT q FROM QnAEntity q WHERE q.qnaNo = q.qnaRef ORDER BY q.qnaNo DESC", nativeQuery = false)
     List<QnAEntity> findSameBtwTwoColumn();
 
-    @Query(value = "SELECT q FROM QnAEntity q WHERE q.qnaNo = :qnaNo AND ", nativeQuery = false)
+    @Query(value = "SELECT q FROM QnAEntity q WHERE q.qnaNo = :qnaNo", nativeQuery = false)
     QnAEntity findByQnaNo(@Param("qnaNo") Long qnaNo);
 
     /*

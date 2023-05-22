@@ -40,13 +40,14 @@ public class MemberDto {
     private String googleId;   //구글로그인
     private String permit;      //회원체크
     private String enrollDate;   //가입일
-    private List<MemberAuth> authList = new ArrayList<MemberAuth>();
+//    private List<MemberAuth> authList = new ArrayList<MemberAuth>();
+    private String auth;
 
     public MemberEntity toEntity() {
         return MemberEntity.builder()
                 .userId(userId)
                 .userPw(userPw)
-                .userName(userName)
+                .userNamee(userName)
                 .phone(phone)
                 .email(email)
                 .build();

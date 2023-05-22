@@ -12,9 +12,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-@JsonIgnoreProperties(value="hibernateLazyInitializer")
+//@JsonIgnoreProperties(value="hibernateLazyInitializer")
 @Data
-@EqualsAndHashCode(of="userCode")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
@@ -34,7 +33,7 @@ public class MemberEntity implements UserDetails {
     @Column(name="USER_PW")
     private String userPw;     //유저패스워드
     @Column(name="USER_NAME")
-    private String userName;   //유저이름
+    private String userNamee;   //유저이름
     @Column(name="PHONE")
     private String phone;       //전화번호
     @Column(name="EMAIL")
@@ -49,12 +48,20 @@ public class MemberEntity implements UserDetails {
     private String permit;      //회원체크
     @Column(name="ENROLL_DATE")
     private LocalDateTime enrollDate;   //가입일
+//    @Enumerated(EnumType.STRING)
+    @Column(name="AUTH")
+    private String auth;
 
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-    @JoinColumn(name = "user_code")
+//    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+//    @ManyToMany
+//    @JoinTable(
+//            name = "member_auth",
+//            joinColumns = {@JoinColumn(name = "user_code", referencedColumnName = "user_code")},
+//            inverseJoinColumns = {@JoinColumn(name = "auth", referencedColumnName = "auth")})
+//    @JoinColumn(name = "user_code")
 //    @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
-    private List<MemberAuth> authList = new ArrayList<MemberAuth>();
+//    @Builder.Default
+//    private List<MemberAuth> authList = new ArrayList<MemberAuth>();
 //    private List<String> roles = new ArrayList<>();
 
 
@@ -69,14 +76,14 @@ public class MemberEntity implements UserDetails {
 
     //사용자의 권한을 콜렉션 형태로 반환
     //클래스 자료형은 GrantedAuthority 구현
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        Set<GrantedAuthority> roles = new HashSet<>();
-//        for(String role : permit.split(",")){
-//            roles.add(new SimpleGrantedAuthority(role));
-//        }
-//        return roles;
-//    }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> roles = new HashSet<>();
+        for(String role : permit.split(",")){
+            roles.add(new SimpleGrantedAuthority(role));
+        }
+        return roles;
+    }
 
 //    @Override
 //    public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -85,17 +92,22 @@ public class MemberEntity implements UserDetails {
 //                .collect(Collectors.toList());
 //    }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getAuthList().stream().map(o -> new SimpleGrantedAuthority(
-                o.getAuth()
-        )).collect(Collectors.toList());
-    }
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return getAuth().stream().map(o -> new SimpleGrantedAuthority(
+//                o.getAuth()
+//        )).collect(Collectors.toList());
+//    }
+//
+//    public void addAuth(MemberAuth auth) {
+//        authList.add(auth);
+//    }
 
-    public void addAuth(MemberAuth auth) {
-        authList.add(auth);
-    }
 
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return null;
+//    }
 
     @Override
     public String getPassword() {
@@ -107,6 +119,11 @@ public class MemberEntity implements UserDetails {
     public String getUsername() {
         return userId;
     }
+
+    public long getUserNo() {
+       return userCode;
+    }
+
 
     //계정 만료 여부 반환
     @Override
@@ -139,6 +156,10 @@ public class MemberEntity implements UserDetails {
     @PrePersist
     public void perPersist(){
 
+    }
+
+    public boolean isActivated() {
+        return true;
     }
 }
 

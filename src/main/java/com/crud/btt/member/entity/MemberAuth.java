@@ -14,9 +14,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Setter
 @ToString
 @Entity
-//@Builder
-//@AllArgsConstructor
-//@NoArgsConstructor
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="member_auth")
 public class MemberAuth {
 
@@ -30,7 +30,7 @@ public class MemberAuth {
     @Column(name = "user_code")
     private Long userCode;
 
-    @Column(length = 50)
+    @Column(name = "AUTH", length = 50)
     private String auth;
 
 //    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
