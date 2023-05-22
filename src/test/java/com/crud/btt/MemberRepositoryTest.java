@@ -1,6 +1,6 @@
 package com.crud.btt;
 
-import com.crud.btt.member.entity.JpaMemberRepository;
+
 import com.crud.btt.member.entity.MemberEntity;
 import com.crud.btt.member.entity.MemberRepository;
 import com.crud.btt.member.model.dto.MemberDto;
@@ -20,7 +20,7 @@ import java.util.Optional;
 @Log
 public class MemberRepositoryTest {
 
-    JpaMemberRepository jpaMemberRepository;
+//    JpaMemberRepository jpaMemberRepository;
 
     @Autowired
     MemberRepository memberRepository;

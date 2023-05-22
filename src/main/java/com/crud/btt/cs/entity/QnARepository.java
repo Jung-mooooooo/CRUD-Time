@@ -30,14 +30,14 @@ public interface QnARepository extends JpaRepository<QnAEntity, Long>{
 
     Page<QnAEntity> findAllByOrderByQnaNoDesc(Pageable pageable);
 
-    //QnAEntity findByQnaNo(Long qnaNo);
+//    QnAEntity findByQnaNo(Long qnaNo);
 
     long deleteByQnaNo(Long qnaNo);
 
     @Query(value = "SELECT q FROM QnAEntity q WHERE q.qnaNo = q.qnaRef ORDER BY q.qnaNo DESC", nativeQuery = false)
     List<QnAEntity> findSameBtwTwoColumn();
 
-    @Query(value = "SELECT q FROM QnAEntity q WHERE q.qnaNo = :qnaNo AND ", nativeQuery = false)
+    @Query(value = "SELECT q FROM QnAEntity q WHERE q.qnaNo = :qnaNo", nativeQuery = false)
     QnAEntity findByQnaNo(@Param("qnaNo") Long qnaNo);
 
     /*

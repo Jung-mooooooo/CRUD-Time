@@ -188,6 +188,16 @@ public class MemberController {
         return code;
     }
 
+    //내정보보기
+    @GetMapping("/member/{userCode}")
+    public ResponseEntity<MemberEntity> read(@PathVariable("userCode") String code) throws Exception {
+        log.info("userCode" + code);
+        Long userCode = Long.parseLong(code);
+        MemberEntity member = memberService.read(userCode);
+
+        return new ResponseEntity<>(member, HttpStatus.OK);
+    }
+
 }
 
 
