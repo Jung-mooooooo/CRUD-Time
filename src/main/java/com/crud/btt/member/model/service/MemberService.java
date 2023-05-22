@@ -15,8 +15,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,9 +23,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
+
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -152,6 +149,31 @@ public class MemberService implements UserDetailsService {
 
 
 //        return memberRepository.save(memberEntity);
+
+
+
+//         MemberEntity memberEntity = MemberEntity.builder()
+//                 .userId(memberDto.getUserId())
+//                 .userPw(memberDto.getUserPw())
+//                 .userName(memberDto.getUserName())
+//                 .phone(memberDto.getPhone())
+//                 .email(memberDto.getEmail())
+//                 .enrollDate(LocalDateTime.now())
+//                 .build();
+//         System.out.println("member 유저코드 : " + memberEntity.getUserCode());
+
+//         MemberAuth memberAuth = new MemberAuth();
+//         memberAuth.setAuth("ROLE_MEMBER");
+//         memberEntity.addAuth(memberAuth);
+//         System.out.println("권한 유저코드 에러임?");
+
+
+// //        memberRepository.save(memberE);
+
+
+
+//         return memberRepository.save(memberEntity);
+
     }
 
     public MemberDto getMemberInfo(String userId) {
@@ -267,10 +289,9 @@ public class MemberService implements UserDetailsService {
         return code;
     }
 
-//    public MemberEntity read(Long userCode) throws Exception {
-//        return memberRepository.getOne(userCode);
-//    }
-
+    public MemberEntity read(Long userCode) throws Exception{
+        return memberRepository.getOne(userCode);
+    }
 }
 
 

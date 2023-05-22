@@ -4,7 +4,8 @@ import com.crud.btt.member.model.dto.MemberDto;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.persistence.EntityManager;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 

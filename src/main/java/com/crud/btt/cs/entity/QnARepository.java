@@ -22,7 +22,9 @@ public interface QnARepository extends JpaRepository<QnAEntity, Long>{
 
     Page<QnAEntity> findAllByOrderByQnaNoDesc(Pageable pageable);
 
+
     QnAEntity findByQnaNo(Long qnaNo);
+
 
     long deleteByQnaNo(Long qnaNo);
 
@@ -33,6 +35,7 @@ public interface QnARepository extends JpaRepository<QnAEntity, Long>{
             "FROM QnAEntity a INNER JOIN QnAEntity b ON a.qnaRef = b.qnaNo " +
             "WHERE b.qnaNo = :qnaNo AND a.qnaNo <> b.qnaRef")
     QnAEntity findByQnaRef(@Param("qnaNo") Long qnaNo);
+
 
 
 

@@ -17,7 +17,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="member_auth")
+@Table(name="MEMBER_AUTH")
+
 public class MemberAuth {
 
     @Id
@@ -27,7 +28,7 @@ public class MemberAuth {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MEMBER_AUTH")
     private Long userAuthNo;
 
-    @Column(name = "user_code")
+    @Column(name = "USER_CODE")
     private Long userCode;
 
     @Column(name = "AUTH", length = 50)
