@@ -67,18 +67,18 @@ public class NoticeRepositoryCustom {
 ////
 ////    }
 //
-//    private BooleanExpression searchKeywords(String sk, String sv) {
-//        if ("noticeTitle".equals(sk)) {
-//            if (StringUtils.hasLength(sv)) {
-//                return noticeEntity.noticeTitle.contains(sv);
-//            }
-//        } else if ("noticeContent".equals(sk)) {
-//            if (StringUtils.hasLength(sv)) {
-//                return noticeEntity.noticeContent.contains(sv);
-//            }
-//        }
-//        //return Expressions.asBoolean(true).isTrue(); // 빈 조건식 반환
-//            return null;
-//    }
+    private BooleanExpression searchKeywords(String sk, String sv) {
+        if ("noticeTitle".equals(sk)) {
+            if (StringUtils.hasLength(sv)) {
+                return noticeEntity.noticeTitle.contains(sv);
+            }
+        } else if ("noticeContent".equals(sk)) {
+            if (StringUtils.hasLength(sv)) {
+                return noticeEntity.noticeContent.contains(sv);
+            }
+        }
+        //return Expressions.asBoolean(true).isTrue(); // 빈 조건식 반환
+            return null;
+    }
 }
 

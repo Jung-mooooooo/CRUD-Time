@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -48,13 +47,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void  configure(WebSecurity web) {   //유저 정보 가져오는 클래스
+    public void configure(WebSecurity web) {   //유저 정보 가져오는 클래스
         web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/fonts/**", "/templates/**");
     }
 
     //http 관련 인증 설정하기.
     @Override
-    protected void  configure(HttpSecurity http) throws  Exception {
+    protected void configure(HttpSecurity http) throws Exception {
 
         http
                 .httpBasic().disable()
@@ -127,4 +126,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //    }
 //
 //
-//}
+    }
+}

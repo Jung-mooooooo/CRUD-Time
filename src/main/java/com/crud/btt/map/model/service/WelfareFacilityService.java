@@ -46,7 +46,7 @@ public class WelfareFacilityService {
 
         Pagination pagination = new Pagination(
                 (int) welfareFacilityEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
+                , pageable.getPageNumber() +1
                 , pageable.getPageSize()
                 , 10
         );
@@ -122,22 +122,48 @@ public class WelfareFacilityService {
         return Header.OK(list, pagination);
     }
 
-////
-////    //등록
-////    public WelfareFacilityEntity create(WelfareFacilityDto welfareFacilityDto){
-////        WelfareFacilityEntity entity = WelfareFacilityEntity.builder().build();
-////
-////        return welfareFacilityRepository.save(entity);
-////    }
-////
-////    //수정
-////    public WelfareFacilityEntity update(WelfareFacilityDto welfareFacilityDto){
-////        WelfareFacilityEntity entity = WelfareFacilityEntity.builder().build();
-////
-////        return welfareFacilityRepository.save(entity);
-////    }
-////
-////    //삭제
-////    public void delete (Long wf_no){}
-}
+
+    //등록
+    public WelfareFacilityEntity create(WelfareFacilityDto welfareFacilityDto){
+        WelfareFacilityEntity entity = WelfareFacilityEntity.builder()
+                .wfNo(welfareFacilityDto.getWfNo())
+                .wfName(welfareFacilityDto.getWfName())
+                .wfCat(welfareFacilityDto.getWfCat())
+                .address(welfareFacilityDto.getAddress())
+                .address2(welfareFacilityDto.getAddress2())
+                .phone(welfareFacilityDto.getPhone())
+                .latitude(welfareFacilityDto.getLatitude())
+                .longitude(welfareFacilityDto.getLongitude())
+                .build();
+
+        return welfareFacilityRepository.save(entity);
+    }
+
+    //수정
+    public List<WelfareFacilityEntity> update(List<WelfareFacilityEntity> welfareFacilityDtoList){
+        List<WelfareFacilityEntity> updatedEntities = new ArrayList<>();
+
+        for (WelfareFacilityEntity welfareFacilityDto : welfareFacilityDtoList) {
+            WelfareFacilityEntity entity = welfareFacilityRepository.findBywfNo(welfareFacilityDto.getWfNo());
+            entity.setWfNo(welfareFacilityDto.getWfNo());
+            entity.setWfName(welfareFacilityDto.getWfName());
+            entity.setWfCat(welfareFacilityDto.getWfCat());
+            entity.setAddress(welfareFacilityDto.getAddress());
+            entity.setAddress2(welfareFacilityDto.getAddress2());
+            entity.setPhone(welfareFacilityDto.getPhone());
+            entity.setLatitude(welfareFacilityDto.getLatitude());
+            entity.setLongitude(welfareFacilityDto.getLongitude());
+            updatedEntities.add(welfareFacilityRepository.save(entity));
+        }
+
+        return updatedEntities;
+    }
+
+    //삭제
+    public void delete (Long wfNo){
+        WelfareFacilityEntity entity = welfareFacilityRepository.findById(wfNo).orElseThrow(() -> new RuntimeException("해당 업체를 찾을 수 없습니다."));
+        welfareFacilityRepository.delete(entity);
+    }
+    }
+
 

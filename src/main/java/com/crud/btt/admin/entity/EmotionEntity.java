@@ -16,7 +16,13 @@ import javax.persistence.*;
 public class EmotionEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_emotion_gen")
+    @SequenceGenerator(
+            name = "seq_emotion_gen",
+            sequenceName = "SEQ_EMOTION",
+            initialValue=1, //시작값
+            allocationSize=1 //메모리를 통해 할당할 범위 사이즈
+    )
     @Column(name = "EMOTION_NO")
     private Long emotionNo;
     @Column(name = "EMOTION_CAT")

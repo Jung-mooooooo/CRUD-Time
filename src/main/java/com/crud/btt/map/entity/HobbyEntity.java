@@ -16,7 +16,13 @@ import javax.persistence.*;
 public class HobbyEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_hobby_gen")
+    @SequenceGenerator(
+            name = "seq_hobby_gen",
+            sequenceName = "SEQ_HOBBY",
+            initialValue=1, //시작값
+            allocationSize=1 //메모리를 통해 할당할 범위 사이즈
+    )
     @Column(name = "HOBBY_NO")
     private Long hobbyNo;
     @Column(name = "HOBBY_NAME")

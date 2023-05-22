@@ -1,21 +1,12 @@
 package com.crud.btt.admin.controller;
 
-import com.crud.btt.admin.entity.ChatLogEntity;
-import com.crud.btt.admin.model.dto.ChatLogDto;
 import com.crud.btt.admin.model.service.AdminService;
-import com.crud.btt.common.Header;
-import com.crud.btt.common.SearchCondition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,7 +14,7 @@ import java.util.List;
 @RestController
 public class AdminController {
 
-//    private final AdminService adminService;
+    private final AdminService adminService;
 
 //private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
@@ -45,14 +36,17 @@ public class AdminController {
 
 
     //감정현황 조회
-//    public String userEmotionCount(HttpServletResponse response) {
-//        return null;
+//    @GetMapping("/admin")
+//    public List<EmotionEntity> userEmotionCount(HttpServletResponse response) {
+//
+//        return adminService.emotionCount();
 //    }
 
 
     //회원 ip 메소드
     public String getClientIP(HttpServletRequest request){
         String ip = request.getHeader("X-FORWARDED-FOR");
+
         if(ip == null || ip.length() == 0){
             ip = request.getHeader("Proxy-Client-IP");
         }
@@ -67,27 +61,28 @@ public class AdminController {
     }
 
     //접속자 수 조회
-    public String visitUserCount(HttpServletResponse response) {
-
+//    public String visitUserCount(HttpServletResponse response) {
+//
 //        // 오늘 접속자 수
-//        String visitorsT = Integer.toString(adminService.visitCount());
+//        String visitorsT = Integer.toString(Math.toIntExact(adminService.visitCount()));
 //
 //        // 월 접속자 수(해당 달 총 접속자수=> 데일리로 누적됨)
-//        String visitorsM = Integer.toString(adminService.visitCountMonth());
+//        String visitorsM = Integer.toString(Math.toIntExact(adminService.visitCountMonth()));
 //
 //        // 월평균 접속자 수(한달 평균 접속자수)
 //        // 월접속자수를 view단에서 일수로 나누기. => if문 사용
 //        // <c:if test="new Date().substring(4, 6) == '02'">
-//        Date date = new Date();
+//        long datetime = 0;
+//        Date date = new Date(datetime);
 //        String visitorsAvg;
-//        if (date.toString().substring(4, 6) == "02") {
-//            visitorsAvg = Integer.toString(adminService.visitCountMonth() / 28);
-//        } else if (date.toString().substring(4, 6) == "04" || date.toString().substring(4, 6) == "06"
-//                || date.toString().substring(4, 6) == "09" || date.toString().substring(4, 6) == "11") {
-//            visitorsAvg = Integer.toString(adminService.visitCountMonth() / 30);
+//        if (date.toString().substring(4, 6).equals("02")) {
+//            visitorsAvg = Integer.toString((int) (adminService.visitCountMonth() / 28));
+//        } else if (date.toString().substring(4, 6).equals("04") || date.toString().substring(4, 6).equals("06")
+//                || date.toString().substring(4, 6).equals("09") || date.toString().substring(4, 6).equals("11")) {
+//            visitorsAvg = Integer.toString((int) (adminService.visitCountMonth() / 30));
 //
 //        } else {
-//            visitorsAvg = Integer.toString(adminService.visitCountMonth() / 31);
+//            visitorsAvg = Integer.toString((int) (adminService.visitCountMonth() / 31));
 //
 //        }
 //
@@ -98,20 +93,16 @@ public class AdminController {
 //        job.put("visitorsAvg", visitorsAvg);
 //
 //
-//        logger.info("adminBox.do 실행");
-//
 //        return job.toJSONString();
 
-        return null;
-
-    }
+//    }
 
 
 
 
     //음성인식 사용자 수 조회
-    public String visitSpecialUserCount(HttpServletResponse response) {
-
+//    public String visitSpecialUserCount(HttpServletResponse response) {
+//
 //        // 오늘 접속자 수
 //        String visitorsT = Integer.toString(adminService.spVisitCount());
 //
@@ -143,10 +134,8 @@ public class AdminController {
 //        logger.info("adminBox.do 실행");
 //
 //        return job.toJSONString();
-
-        return null;
-
-    }
+//
+//    }
 
 
     //일주일간 이용이 없는 사용자 리스트 조회

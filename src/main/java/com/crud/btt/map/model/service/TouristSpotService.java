@@ -270,24 +270,48 @@ public class TouristSpotService {
 
         return Header.OK(list, pagination);
     }
-//
-//    //등록
-//    public TouristSpotEntity create(TouristSpotDto touristSpotDto){
-//        TouristSpotEntity entity = TouristSpotEntity.builder().build();
-//
-//        return touristSpotRepository.save(entity);
-//    }
-//
-//    //수정
-//    public TouristSpotEntity update(TouristSpotDto touristSpotDto) {
-//        TouristSpotEntity entity = TouristSpotEntity.builder().build();
-//
-//        return touristSpotRepository.save(entity);
-//    }
-//
-//    //삭제
-//    public void delete (Long ts_no){}
-//
+
+    //등록
+    public TouristSpotEntity create(TouristSpotDto touristSpotDto){
+        TouristSpotEntity entity = TouristSpotEntity.builder()
+                .tsNo(touristSpotDto.getTsNo())
+                .tsName(touristSpotDto.getTsName())
+                .tsCat(touristSpotDto.getTsCat())
+                .address(touristSpotDto.getAddress())
+                .address2(touristSpotDto.getAddress2())
+                .phone(touristSpotDto.getPhone())
+                .latitude(touristSpotDto.getLatitude())
+                .longitude(touristSpotDto.getLongitude())
+                .build();
+
+        return touristSpotRepository.save(entity);
+    }
+
+    //수정
+    public List<TouristSpotEntity> update(List<TouristSpotEntity> touristSpotDtoList) {
+        List<TouristSpotEntity> updatedEntities = new ArrayList<>();
+
+        for(TouristSpotEntity touristSpotDto : touristSpotDtoList){
+            TouristSpotEntity entity = touristSpotRepository.findBytsNo(touristSpotDto.getTsNo());
+            entity.setTsNo(touristSpotDto.getTsNo());
+            entity.setTsName(touristSpotDto.getTsName());
+            entity.setTsCat(touristSpotDto.getTsCat());
+            entity.setAddress(touristSpotDto.getAddress());
+            entity.setAddress2(touristSpotDto.getAddress2());
+            entity.setPhone(touristSpotDto.getPhone());
+            entity.setLatitude(touristSpotDto.getLatitude());
+            entity.setLongitude(touristSpotDto.getLongitude());
+            updatedEntities.add(touristSpotRepository.save(entity));
+        }
+        return updatedEntities;
+    }
+
+    //삭제
+    public void delete (Long tsNo){
+        TouristSpotEntity entity = touristSpotRepository.findById(tsNo).orElseThrow(() -> new RuntimeException("해당 업체를 찾을 수 없습니다."));
+        touristSpotRepository.delete(entity);
+    }
+
 
 
 }

@@ -3,15 +3,14 @@ package com.crud.btt.map.controller;
 
 import com.crud.btt.common.Header;
 import com.crud.btt.common.SearchCondition;
+import com.crud.btt.map.entity.TouristSpotEntity;
 import com.crud.btt.map.model.dto.TouristSpotDto;
 import com.crud.btt.map.model.service.TouristSpotService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -84,20 +83,24 @@ public class TouristSpotController {
                                                        SearchCondition searchCondition){
         return touristSpotService.getGalleryList(pageable, searchCondition);
     }
-//
-//    //등록
-//    public TouristSpotEntity create(@RequestBody TouristSpotDto touristSpotDto){
-//        return touristSpotService.create(touristSpotDto);
-//    }
-//
-//    //수정
-//    public TouristSpotEntity update(@RequestBody TouristSpotDto touristSpotDto){
-//        return touristSpotService.update(touristSpotDto);
-//    }
-//
-//    //삭제
-//    public void delete(@PathVariable Long ts_no){
-//        touristSpotService.delete(ts_no);
-//    }
+
+    //등록
+    @PostMapping("/touristspot")
+    public TouristSpotEntity create(@RequestBody TouristSpotDto touristSpotDto){
+        return touristSpotService.create(touristSpotDto);
+    }
+
+    //수정
+    @PatchMapping("/touristspot")
+    public List<TouristSpotEntity> update(@RequestBody List<TouristSpotEntity> entity){
+
+        return touristSpotService.update(entity);
+    }
+
+    //삭제
+    @DeleteMapping("/touristspot/{tsNo}")
+    public void delete(@PathVariable Long tsNo){
+        touristSpotService.delete(tsNo);
+    }
 }
 
