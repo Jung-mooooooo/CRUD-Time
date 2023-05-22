@@ -14,14 +14,6 @@ public interface QnARepository extends JpaRepository<QnAEntity, Long>{
         @Query : JPQL
         method : 쿼리메소드
     */
-    /*
-    기본 제공 쿼리메서드는 리포지토리에 없어도 쓸 수 있음.
-    또한 이렇게 커스텀도 가능함.
-    @Query(value = "value = INSERT INTO QNA (qna_no, create_at, qna_title, qna_content, qna_readcount, admin_code, user_code, qna_original_file, qna_rename_file, qna_private, qna_ref)" +
-                            "VALUES (qna_sequence_name.nextval, current_timestamp, :qna_title, :qna_content, :qna_readcount, :admin_code, :user_code, :qna_original_file, :qna_rename_file, :qna_private, qna_sequence_name.currval)"
-                             ,nativeQuery = true)
-    QnAEntity save(QnAEntity qnAEntity);
-    */
 
 //    @Query(value = "value = INSERT INTO QnA q (q.qna_no, q.create_at, q.qna_title, q.qna_content, q.qna_readcount, q.admin_code, q.user_code, q.qna_original_file, q.qna_rename_file, q.qna_private, q.qna_ref)" +
 //            "VALUES (qna_sequence_name.nextval, current_timestamp, :#{#qnAEntity.qna_title}:, :#{#qnAEntity.qna_content}, :#{#qnAEntity.qna_readcount}, :#{#qnAEntity.admin_code}, :#{#qnAEntity.user_code}, :#{#qnAEntity.qna_original_file}, :#{#qnAEntity.qna_rename_file}, :#{#qnAEntity.qna_private}, qna_sequence_name.currval)"
@@ -30,15 +22,18 @@ public interface QnARepository extends JpaRepository<QnAEntity, Long>{
 
     Page<QnAEntity> findAllByOrderByQnaNoDesc(Pageable pageable);
 
-    //QnAEntity findByQnaNo(Long qnaNo);
+    QnAEntity findByQnaNo(Long qnaNo);
 
     long deleteByQnaNo(Long qnaNo);
 
     @Query(value = "SELECT q FROM QnAEntity q WHERE q.qnaNo = q.qnaRef ORDER BY q.qnaNo DESC", nativeQuery = false)
     List<QnAEntity> findSameBtwTwoColumn();
 
-    @Query(value = "SELECT q FROM QnAEntity q WHERE q.qnaNo = :qnaNo AND ", nativeQuery = false)
-    QnAEntity findByQnaNo(@Param("qnaNo") Long qnaNo);
+    @Query("SELECT a " +
+            "FROM QnAEntity a INNER JOIN QnAEntity b ON a.qnaRef = b.qnaNo " +
+            "WHERE b.qnaNo = :qnaNo AND a.qnaNo <> b.qnaRef")
+    QnAEntity findByQnaRef(@Param("qnaNo") Long qnaNo);
+
 
     /*
     find ->      select         select *

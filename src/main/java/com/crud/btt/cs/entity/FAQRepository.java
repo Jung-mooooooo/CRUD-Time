@@ -1,12 +1,12 @@
 package com.crud.btt.cs.entity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface FAQRepository extends JpaRepository<FAQEntity, Long> {
-    FAQEntity findByFaqNo(Long faq_no);
+    FAQEntity findByFaqNo(Long faqNo);
+    @Transactional
+    long deleteByFaqNo(Long faqNo);
 
-    long deleteByFaqNo(Long faq_no);
-
-//    Page<FAQEntity> findByFAQTitleOrFAQContent(Pageable pageable, String keyword);
 
 }

@@ -1,130 +1,150 @@
 
 package com.crud.btt.cs.model.service;
 
+import com.crud.btt.common.Header;
+import com.crud.btt.common.Pagination;
+import com.crud.btt.common.SearchCondition;
+import com.crud.btt.cs.controller.FAQController;
 import com.crud.btt.cs.entity.FAQEntity;
 import com.crud.btt.cs.entity.FAQRepository;
+import com.crud.btt.cs.entity.FAQRepositoryCustom;
 import com.crud.btt.cs.model.dto.FAQDto;
-import com.crud.btt.cs.model.dto.FAQUpdateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class FAQService {
-
-    @Autowired
-    FAQRepository faqRepository;
-    //FAQRepositoryCustom faqRepositoryCustom;
-
-
-
-
+    
+    private final FAQRepository faqRepository;
+    private final FAQRepositoryCustom faqRepositoryCustom;
+    private static final Logger logger = LoggerFactory.getLogger(FAQController.class);
     //목록보기
-//    public Header<List<FAQDto>> getFAQList(Pageable pageable, SearchCondition searchCondition) {
-//        List<FAQDto> dtos = new ArrayList<>();
-//
-//        Page<FAQEntity> faqEntities =
-//                faqRepositoryCustom.findAllBySearchCondition(
-//                        pageable, searchCondition);
-//        for (FAQEntity entity : faqEntities) {
-//            FAQDto dto = FAQDto.builder()
-//                    .faq_no(entity.getFaq_no())
-//                    .create_at(entity.getCreate_at())
-//                    .faq_title(entity.getFaq_title())
-//                    .faq_content(entity.getFaq_content())
-//                    .faq_readcount(entity.getFaq_readcount())
-//                    .admin_code(entity.getAdmin_code())
-//                    .build();
-//
-//            dtos.add(dto);
-//        }
-//
-//        Pagination pagination = new Pagination(
-//                (int) faqEntities.getTotalElements()
-//                , pageable.getPageNumber() + 1
-//                , pageable.getPageSize()
-//                , 10
-//        );
-//
-//        return Header.OK(dtos, pagination);
-//    }
-//
-//    // 상세보기
-//    public FAQDto getFAQ(Long faqNo) {
-//
-//        // update set count = count +1;
-//        FAQEntity faqEntity = faqRepository.findById(faqNo).get();
-//
-//        faqEntity.setFaq_readcount(faqEntity.getFaq_readcount()+1);
-//
-//        return new FAQDto(faqRepository.save(faqEntity));
-//    }
+    public Header<List<FAQDto>> getFAQList(Pageable pageable, SearchCondition searchCondition) {
+        List<FAQDto> list = new ArrayList<>();
+        Page<FAQEntity> faqEntities =
+                faqRepositoryCustom.findAllBySearchCondition(
+                        pageable, searchCondition);
+        for (FAQEntity entity : faqEntities) {
+            FAQDto dto = FAQDto.builder()
+                    .faqNo(entity.getFaqNo())
+                    .createAt(entity.getCreateAt())
+                    .faqTitle(entity.getFaqTitle())
+                    .faqContent(entity.getFaqContent())
+                    .adminCode(entity.getAdminCode())
+                    .build();
+            list.add(dto);
+        }
 
-    //작성
-    public FAQDto faqCreate(FAQDto faqDto){
+        Pagination pagination = new Pagination(
+                (int) faqEntities.getTotalElements()
+                , pageable.getPageNumber()
+                , pageable.getPageSize() + 1
+                , 10
+        );
+        logger.info("======================Service FAQList======================" + list.toArray());
+        return Header.OK(list, pagination);
+    }
 
-        FAQEntity faqEntity = FAQEntity.builder()
-                .faqTitle(faqDto.getFaq_title())
-                .faqContent(faqDto.getFaq_content())
-                .createAt(faqDto.getCreate_at())
-                .faqReadCount(faqDto.getFaq_readcount())
-                .build();
+    // 상세보기
+    public FAQDto getFAQ(Long faqNo) {
+        FAQEntity faqEntities = faqRepository.findById(faqNo).orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
 
-        faqEntity = faqRepository.save(faqEntity);
-        // return new FAQDto(faqRepository.save(new FAQEntity(faqDto)));
         return FAQDto.builder()
-                .faq_no(faqEntity.getFaqNo())
-                .faq_title(faqEntity.getFaqTitle())
-                .faq_content(faqEntity.getFaqContent())
-                .create_at(faqEntity.getCreateAt())
-                .faq_readcount(faqEntity.getFaqReadCount())
+                .faqNo(faqEntities.getFaqNo())
+                .faqTitle(faqEntities.getFaqTitle())
+                .faqContent(faqEntities.getFaqContent())
+                .createAt(faqEntities.getCreateAt())
                 .build();
     }
 
-    //수정
-    public FAQUpdateDto faqUpdate(FAQUpdateDto faqUpdateDto){
+    // 글작성
+    public FAQDto faqCreate(FAQDto faqDto) {
 
-        if(faqRepository.findByFaqNo(faqUpdateDto.getFaq_no()) == null){
-            return new FAQUpdateDto("F");
-        }
-
-        TimeZone timeZone = TimeZone.getTimeZone("GMT+9");
+        TimeZone timeZone = TimeZone.getTimeZone("Asia/Seoul");
         Date now = new Date();
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         formatter.setTimeZone(timeZone);
         String formattedDate = formatter.format(now);
 
         try {
             now = formatter.parse(formattedDate);
-        } catch( ParseException e ){
+        } catch (ParseException e) {
             e.printStackTrace();
-        } catch( Exception e ){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        FAQEntity faqEntity = FAQEntity.builder().faqNo(faqUpdateDto.getFaq_no())
-                .faqTitle(faqUpdateDto.getFaq_title())
-                .faqContent(faqUpdateDto.getFaq_content())
+        FAQEntity faqEntities = FAQEntity.builder()
+                .faqNo(faqDto.getFaqNo())
+                .faqTitle(faqDto.getFaqTitle())
+                .faqContent(faqDto.getFaqContent())
+                .adminCode(faqDto.getAdminCode())
+                .createAt(now)
+                .build();
+        faqEntities = faqRepository.save(faqEntities);
+        // return new FAQDto(faqRepository.save(new FAQEntity(faqDto)));
+
+        return FAQDto.builder()
+                .faqNo(faqEntities.getFaqNo())
+                .faqTitle(faqEntities.getFaqTitle())
+                .faqContent(faqEntities.getFaqContent())
+                .adminCode(faqEntities.getAdminCode())
+                .createAt(faqEntities.getCreateAt())
+                .build();
+    }
+
+    //수정
+    public FAQDto update(FAQDto faqDto) {
+        TimeZone timeZone = TimeZone.getTimeZone("GMT+9");
+        Date now = new Date();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        formatter.setTimeZone(timeZone);
+        String formattedDate = formatter.format(now);
+
+        try {
+            now = formatter.parse(formattedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        FAQEntity faqEntity = faqRepository.findById(faqDto.getFaqNo())
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+
+        FAQEntity faqEntities = faqEntity.builder()
+                .faqNo(faqDto.getFaqNo())
+                .faqTitle(faqDto.getFaqTitle())
+                .faqContent(faqDto.getFaqContent())
+                .adminCode(faqDto.getAdminCode())
                 .createAt(now)
                 .build();
 
-        return new FAQUpdateDto(faqRepository.save(faqEntity));
+        return new FAQDto(faqRepository.save(faqEntities));
     }
+
 
     //삭제 (삭제는 반환타입이 Long, 값은 삭제된 행 )
-    public Long faqDelete(Long faq_no){
-        return faqRepository.deleteByFaqNo(faq_no);
+    public Long faqDelete(Long faqNo){
+        faqRepository.deleteByFaqNo(faqNo);
+        return 1L;
     }
-
 
 }
 

@@ -27,7 +27,7 @@ public class QnAController {
 
     //QNA 목록 출력
     @GetMapping("/admin/AdminQnA")
-    public Header<List<QnAListDto>> QnAList(@PageableDefault(sort = {"noticeNo"}) Pageable pageable,
+    public Header<List<QnAListDto>> QnAList(@PageableDefault(sort = {"qnaNo"}) Pageable pageable,
                                             SearchCondition searchCondition){
 
         logger.info("=====================값 확인==================" +

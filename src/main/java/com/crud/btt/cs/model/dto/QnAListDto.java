@@ -30,6 +30,7 @@ public class QnAListDto {
         this.adminCode = qnaEntity.getAdminCode();
         this.userCode = qnaEntity.getUserCode();
         this.qnaRef = qnaEntity.getQnaRef();
+        this.qnaPrivate = qnaEntity.getQnaPrivate();
 
     }
 

@@ -16,7 +16,8 @@ import java.util.Date;
 @Entity
 public class FAQEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_FAQ")
+    @SequenceGenerator(name = "SEQ_FAQ", sequenceName = "SEQ_FAQ", allocationSize = 1)
     @Column(name="FAQ_NO")
     private long faqNo;
     @Column(name="CREATE_AT")

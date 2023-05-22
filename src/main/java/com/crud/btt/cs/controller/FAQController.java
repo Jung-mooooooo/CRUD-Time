@@ -1,11 +1,17 @@
 package com.crud.btt.cs.controller;
 
+import com.crud.btt.common.Header;
+import com.crud.btt.common.SearchCondition;
 import com.crud.btt.cs.model.dto.FAQDto;
-import com.crud.btt.cs.model.dto.FAQUpdateDto;
-
 import com.crud.btt.cs.model.service.FAQService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @CrossOrigin
@@ -14,43 +20,43 @@ public class FAQController {
 
     private final FAQService faqService;
 
-    //FAQ 목록 출력
-//    @GetMapping("/admin/AdminFAQ")
-//    public Header<List<FAQDto>> FAQList(@RequestParam(required = false) String keyword
-//            , @RequestParam(required = false) String keyValue
-//            , @PageableDefault(sort = {"FAQ_no"}) Pageable pageable
-//    ){
-//        /*
-//        검색을 안할때 ( 전체 ) : null ( required ), keyword = "" or null, keyValue = "" or null
-//        검색을 할때           : keyword, keyValue
-//        */
-//        SearchCondition searchCondition = new SearchCondition(keyword,keyValue);
-//        return faqService.getFAQList(pageable,searchCondition);
-//    }
+    private static final Logger logger = LoggerFactory.getLogger(FAQController.class);
 
-    //FAQ 상세보기
-//    @GetMapping("/admin/AdminFAQDetail/{id}")
-//    public FAQDto getFAQ(@PathVariable Long FAQ_no) {
-//        return faqService.getFAQ(FAQ_no);
-//    }
+    //목록출력
+    @GetMapping("/admin/AdminFAQ")
+    public Header<List<FAQDto>> getFAQList(@PageableDefault(sort = {"faqNo"}) Pageable pageable,
+                                              SearchCondition searchCondition){
+        // logger.info(pageable.getPageSize()+"/"+pageable.getPageNumber());
+        logger.info("=====================Controller FAQList==================" + faqService.getFAQList(pageable,searchCondition));
+        return faqService.getFAQList(pageable,searchCondition);
+    }
+    //상세보기
+    @GetMapping("/admin/AdminFAQDetail/{faqNo}")
+    public FAQDto getFAQ(@PathVariable Long faqNo) {
+        //logger.info("=====================Controller FAQDetail==================" +faqService.getFAQ(faqNo));
+        //logger.info("============================================= faqNo : =============================================" + faqNo);
+        //logger.info("=============================================faqService.getFAQ(faqNo) =============================================:"+faqService.getFAQ(faqNo));
+        return faqService.getFAQ(faqNo);
+    }
 
-
-    //FAQ 글 작성
-    @PostMapping("/admin/AdminFAQ/{id}")
+    //작성
+    @PostMapping("/admin/AdminFAQWrite")
     public FAQDto faqCreate(@RequestBody FAQDto faqDto){
+        //logger.info("================AdminFAQWrite : ==============" + faqDto.getCreateAt().toString());
         return faqService.faqCreate(faqDto);
     }
 
-    //FAQ 글 수정
-    @PatchMapping("/admin/AdminFAQDetail/{id}")
-    public FAQUpdateDto faqUpdate(@RequestBody FAQUpdateDto faqUpdateDto){
-        return faqService.faqUpdate(faqUpdateDto);
+    //수정
+    @PatchMapping("/admin/AdminFAQWrite")
+    public FAQDto update(@RequestBody FAQDto faqDto){
+        //logger.info("================AdminFAQWriteUpdate : ==============" + faqDto.getCreateAt().toString());
+        return faqService.update(faqDto);
     }
 
-    //FAQ 글 삭제
-    @DeleteMapping("/admin/AdminFAQDetail/{id}")
-    public Long  faqDelete(@PathVariable Long faq_no){
-        return faqService.faqDelete(faq_no);
+    //삭제
+    @DeleteMapping("/admin/AdminFAQDetail/{faqNo}")
+    public Long  faqDelete(@PathVariable Long faqNo){
+        return faqService.faqDelete(faqNo);
     }
 
 

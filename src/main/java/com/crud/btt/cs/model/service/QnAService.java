@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +22,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class QnAService {
-    @Autowired
-    QnARepository qnARepository;
-    QnARepositoryCustom qnARepositoryCustom;
+
+    private final  QnARepository qnARepository;
+    private final QnARepositoryCustom qnARepositoryCustom;
     private static final Logger logger = LoggerFactory.getLogger(QnAController.class);
 
     //목록보기
@@ -41,26 +40,26 @@ public class QnAService {
         // 질문글을 하나씩 꺼내서 Loop ( for )
         for(QnAEntity entity : qList){
             logger.info("=============entity=============" + entity);
-            QnAEntity AnswerEntity = qnARepository.findByQnaNo(entity.getQnaNo());
+            QnAEntity answerEntity = qnARepository.findByQnaRef(entity.getQnaNo());
             // 질문글의 질문글의 흐름이 있음, 질문글은 무조건 결과리스트에 포함
             // 답변글의 답변글의 흐름이 있음, 답변글은 있어야지만 결과리스트에 포함
-            QnAListDto qnAListQuestion = new QnAListDto(entity);
-            resultList.add(qnAListQuestion);
+            QnAListDto qnaQuestion = new QnAListDto(entity);
+            resultList.add(qnaQuestion);
             // resultList.add(new QnAListDto(entity));
             logger.info("=============resultList=============" + resultList);
 
-            if(AnswerEntity.getQnaNo() != AnswerEntity.getQnaRef()){
-                QnAListDto qnAListAnswer = new QnAListDto(AnswerEntity);
-                logger.info("=============qnAListAnswer=============" + qnAListAnswer);
-                resultList.add(qnAListAnswer);
+            if(answerEntity != null){
+                QnAListDto qnaAnswer = new QnAListDto(answerEntity);
+                logger.info("=============qnAListAnswer=============" + qnaAnswer);
+                resultList.add(qnaAnswer);
                 // resultList.add(new QnAListDto(AnswerEntity));
             }
         }
 
         Pagination pagination = new Pagination(
                 resultList.size()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
+                , pageable.getPageNumber()
+                , pageable.getPageSize() +1
                 , 10
         );
         return Header.OK(resultList, pagination);
