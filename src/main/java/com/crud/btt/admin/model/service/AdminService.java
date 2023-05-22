@@ -1,27 +1,20 @@
 package com.crud.btt.admin.model.service;
 
-import com.crud.btt.admin.entity.*;
-import com.crud.btt.admin.model.dto.ChatLogDto;
-import com.crud.btt.common.Header;
-import com.crud.btt.common.SearchCondition;
+import com.crud.btt.admin.entity.EmotionRepository;
+import com.crud.btt.admin.entity.LogEntity;
+import com.crud.btt.admin.entity.LogRepository;
+import com.crud.btt.admin.model.dto.LogDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class AdminService {
-
-//    private final EmotionRepository emotionRepository;
-//    private final LogRepository logRepository;
 //    private final SpLogRepository spLogRepository;
-
+    private final LogRepository logRepository;
+    private final EmotionRepository emotionRepository;
 
 //    private final ChatLogRepository chatLogRepository;
 //    private final ChatLogRepositoryCustom chatLogRepositoryCustom;
@@ -44,34 +37,41 @@ public class AdminService {
 //    }
 
 
+
+    //감정현황 조회
+//    public List<EmotionEntity> emotionCount(){
 //
-//    //감정현황 조회
-//    public Long emotionCount(){
-//        return emotionRepository.countAllByEmotionNo();
+//        return emotionRepository.countEmotion();
 //    }
-//
-//
-//    //접속자 수 조회
+
+
+    //접속자 수 조회
 //    public Long visitCount() {
-//        return logRepository.countAllByLogNo();
+//        return logRepository.countByLogNo();
 //    }
-//
-//    //월 접속자 수 조회
+
+    //월 접속자 수 조회
 //    public Long visitCountMonth() {
-//        return logRepository.countAllByLogNoBetweenAndVisitTime();
+//        return logRepository.countByMonthLogNo();
 //    }
 //
 //    //월 평균 접속자 수 조회
 //    public int visitCountAvg() {
 //        return 0;
 //    }
-//
-//    //접속자 로그테이블에 저장하기
-////    public int insertLog(LogEntity logEntity) {
-////        return logRepository.findLog(logEntity);
-////    }
-//
-//
+
+    //접속자 로그테이블에 저장하기
+    public LogEntity create(LogDto logDto) {
+        LogEntity entity = LogEntity.builder()
+                .logNo(logDto.getLogNo())
+                .userCode(logDto.getUserCode())
+                .visitIp(Long.valueOf(logDto.getVisitIp()))
+                .visitTime(logDto.getVisitTime().getTime())
+                .build();
+
+        return logRepository.save(entity);
+    }
+
 //    //음성인식 사용자 수 조회
 //    public Long spVisitCount(){
 //        return spLogRepository.countAllByLogNo();

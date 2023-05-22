@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import static com.crud.btt.cs.entity.QQnAEntity.qnAEntity;
 public class QnARepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
+
     public Page<QnAEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition){
 
         JPAQuery<QnAEntity> query = queryFactory.selectFrom(qnAEntity)
@@ -43,6 +45,7 @@ public class QnARepositoryCustom {
                 return qnAEntity.qnaTitle.contains(sv);
             }
         } else if ("qnaContent".equals(sk)) {
+
             if(StringUtils.hasLength(sv)){
                 return qnAEntity.qnaContent.contains(sv);
             }
@@ -50,4 +53,6 @@ public class QnARepositoryCustom {
         return null;
 
     }
+
+
 }

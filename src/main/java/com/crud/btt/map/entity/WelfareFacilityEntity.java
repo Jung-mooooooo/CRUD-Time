@@ -17,9 +17,10 @@ public class WelfareFacilityEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_wf_gen")
     @SequenceGenerator(
-            name = "seq_wf_gen",
-            sequenceName = "SEQ_WELFARE_FACILITY",
-            allocationSize = 1
+            name="seq_wf_gen", //시퀀스 제너레이터 이름
+            sequenceName="SEQ_WELFARE_FACILITY", //시퀀스 이름
+            initialValue=1, //시작값
+            allocationSize=1 //메모리를 통해 할당할 범위 사이즈
     )
     @Column(name = "WF_NO")
     private Long wfNo;

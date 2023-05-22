@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 public class Pagination {
     //페이지당 보여지는 게시글 최대 개수
     private int pageSize;

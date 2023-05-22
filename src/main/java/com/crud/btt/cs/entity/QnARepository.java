@@ -35,6 +35,7 @@ public interface QnARepository extends JpaRepository<QnAEntity, Long>{
     QnAEntity findByQnaRef(@Param("qnaNo") Long qnaNo);
 
 
+
     /*
     find ->      select         select *
     by ->        where          where

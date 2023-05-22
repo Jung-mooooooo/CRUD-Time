@@ -38,7 +38,6 @@ public class NoticeRepositoryCustom {
         return new PageImpl<>(results, pageable, total);
     }
 
-
     private BooleanExpression searchKeywords(String sk, String sv) {
         if ("noticeTitle".equals(sk)) {
             if (StringUtils.hasLength(sv)) {

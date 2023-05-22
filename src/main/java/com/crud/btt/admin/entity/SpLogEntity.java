@@ -17,7 +17,13 @@ import java.time.LocalDateTime;
 public class SpLogEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_splog_gen")
+    @SequenceGenerator(
+            name = "seq_splog_gen",
+            sequenceName = "SEQ_SP_LOG",
+            initialValue=1, //시작값
+            allocationSize=1 //메모리를 통해 할당할 범위 사이즈
+    )
     @Column(name = "LOG_NO")
     private Long logNo;
     @Column(name = "USER_CODE")
