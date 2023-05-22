@@ -4,6 +4,7 @@ import com.crud.btt.common.SearchCondition;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -15,6 +16,7 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 import static com.crud.btt.cs.entity.QQnAEntity.qnAEntity;
+
 
 @RequiredArgsConstructor
 @Repository
@@ -40,11 +42,13 @@ public class QnARepositoryCustom {
 
     private BooleanExpression searchKeywords(String sk, String sv) {
 
+
         if("qnaTitle".equals(sk)){
             if(StringUtils.hasLength(sv)){
                 return qnAEntity.qnaTitle.contains(sv);
             }
         } else if ("qnaContent".equals(sk)) {
+
 
             if(StringUtils.hasLength(sv)){
                 return qnAEntity.qnaContent.contains(sv);
@@ -53,6 +57,5 @@ public class QnARepositoryCustom {
         return null;
 
     }
-
 
 }

@@ -1,6 +1,7 @@
 package com.crud.btt.common.security;
 
 import com.crud.btt.jwt.JwtAuthenticationFilter;
+import com.crud.btt.jwt.JwtToken;
 import com.crud.btt.jwt.JwtTokenProvider;
 import com.crud.btt.member.model.service.MemberService;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private MemberService memberService;
 
     private final JwtTokenProvider jwtTokenProvider;
+
 
     @Autowired
     private DataSource dataSource;
@@ -74,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true);    //로그 아웃 후 세션 전체 삭제 여부
 
         http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
-                UsernamePasswordAuthenticationFilter.class); // JwtAuthenticationFilter를 UsernamePasswordAuthenticationFilter 전에 넣는다
+                UsernamePasswordAuthenticationFilter.class);// JwtAuthenticationFilter를 UsernamePasswordAuthenticationFilter 전에 넣는다
 //        http.authorizeRequests()    //접근에 대한 인증 설정
 ////                .antMatchers("/","/user/signup","/loginhome","/member/login", "/member/enroll").permitAll()    //누구나 접근 가능
 //
@@ -126,5 +128,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //    }
 //
 //
+
     }
 }
+

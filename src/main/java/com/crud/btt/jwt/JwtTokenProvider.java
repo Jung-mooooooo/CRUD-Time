@@ -1,6 +1,5 @@
 package com.crud.btt.jwt;
 
-import com.crud.btt.member.entity.MemberAuth;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -15,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -26,38 +26,45 @@ public class JwtTokenProvider {
     private final Key key;
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        this.key = Keys.hmacShaKeyFor(keyBytes);
+//        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+//        this.key = Keys.hmacShaKeyFor(keyBytes);
+        byte[] secretByteKey = DatatypeConverter.parseBase64Binary(secretKey);
+        this.key = Keys.hmacShaKeyFor(secretByteKey);
     }
 
     // 유저 정보를 가지고 AccessToken, RefreshToken 을 생성하는 메서드
-    public TokenInfo generateToken(Authentication authentication) {
+    public String generateToken(Authentication authentication) {
         // 권한 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        long now = (new Date()).getTime();
         // Access Token 생성
-        Date accessTokenExpiresIn = new Date(now + 86400000);
-        String accessToken = Jwts.builder()
+        return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
-                .setExpiration(accessTokenExpiresIn)
+                .setExpiration(new Date(System.currentTimeMillis()+ 1000 * 60 * 30))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+        // Access Token 생성
+//        String accessToken = Jwts.builder()
+//                .setSubject(authentication.getName())
+//                .claim("auth", authorities)
+//                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+//                .signWith(key, SignatureAlgorithm.HS256)
+//                .compact();
 
         // Refresh Token 생성
-        String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + 86400000))
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
+//        String refreshToken = Jwts.builder()
+//                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 36))
+//                .signWith(key, SignatureAlgorithm.HS256)
+//                .compact();
 
-        return TokenInfo.builder()
-                .grantType("Bearer")
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build();
+//        return JwtToken.builder()
+//                .grantType("Bearer")
+//                .accessToken(accessToken)
+//                .refreshToken(refreshToken)
+//                .build();
     }
 
     // JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
@@ -104,7 +111,7 @@ public class JwtTokenProvider {
             return e.getClaims();
         }
     }
-    private String secretKey = "myprojectsecret";
+    private String secretKey = "myprojectsecretcrudbttasdfabasasasfhafhatrhqafdgasfgafsdgadsfg";
     // 토큰 유효시간 30분
     private long tokenValidTime = 30 * 60 * 1000L;
 
@@ -113,15 +120,15 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
     // JWT 토큰 생성
-    public String createToken(String userPk, List<MemberAuth> authList) {
+    public String createToken(String userPk, String auth) {
         Claims claims = Jwts.claims().setSubject(userPk); // JWT payload 에 저장되는 정보단위, 보통 여기서 user를 식별하는 값을 넣는다.
-        claims.put("auth", authList); // 정보는 key / value 쌍으로 저장된다.
+        claims.put("auth", auth); // 정보는 key / value 쌍으로 저장된다.
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims) // 정보 저장
                 .setIssuedAt(now) // 토큰 발행 시간 정보
                 .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
-//                .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과
+                .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과
 //                 signature 에 들어갈 secret값 세팅
                 .compact();
     }
