@@ -43,14 +43,16 @@ public class MemberDto {
 //    private List<MemberAuth> authList = new ArrayList<MemberAuth>();
     private String auth;
 
-    public MemberEntity toEntity() {
-        return MemberEntity.builder()
-                .userId(userId)
-                .userPw(userPw)
-                .userNamee(userName)
-                .phone(phone)
-                .email(email)
-                .build();
+    public MemberDto(MemberEntity memberEntity) {
+        this.userPw = memberEntity.getUserPw();
+        this.phone = memberEntity.getPhone();
+        this.email = memberEntity.getEmail();
     }
+
+//    public MemberDto toEntity() {
+//        MemberDto dto = MemberDto.builder()
+//                .userName(userName).userId(userId).phone(phone).email(email).build();
+//        return dto;
+//    }
 
 }

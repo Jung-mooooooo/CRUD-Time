@@ -2,6 +2,7 @@ package com.crud.btt.member.controller;
 
 import com.crud.btt.admin.model.service.AdminService;
 import com.crud.btt.common.Header;
+import com.crud.btt.config.ForbiddenException;
 import com.crud.btt.jwt.JwtTokenProvider;
 import com.crud.btt.member.entity.MemberEntity;
 import com.crud.btt.member.entity.MemberRepository;
@@ -14,9 +15,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -24,7 +27,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Member;
 import java.util.*;
 
 
@@ -40,7 +45,8 @@ public class MemberController {
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
     private final RegisterMail registerMail;
-//    private final BCryptPasswordEncoder encoder;
+    private final BCryptPasswordEncoder passwordEncoder;
+
 
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -60,6 +66,69 @@ public class MemberController {
 
     }
 
+    // 비밀번호 확인
+    @PostMapping("/mypage/popupD")
+    public void popupD(@RequestBody MemberDto memberDto){
+
+        log.info("----------------------------------");
+        log.info("여기왔냐?");
+        log.info(memberDto.getUserPw());
+        log.info(memberDto.getUserId());
+        MemberEntity member = memberRepository.findByUserId(memberDto.getUserId()).orElseThrow(() -> new IllegalArgumentException("가입되지 않은 ID 입니다."));
+
+        if(!passwordEncoder.matches(memberDto.getUserPw(), member.getUserPw())){
+            throw new ForbiddenException("패스원드가 일치하지 않습니다.");
+        }
+        System.out.println("비밀번호 확인 성공");
+    }
+
+    // 비밀번호 확인
+    @PostMapping("/mypage/popupU")
+    public void popupU(@RequestBody MemberDto memberDto){
+
+        log.info("----------------------------------");
+        log.info("여기왔냐?");
+        log.info(memberDto.getUserPw());
+        log.info(memberDto.getUserId());
+        MemberEntity member = memberRepository.findByUserId(memberDto.getUserId()).orElseThrow(() -> new IllegalArgumentException("가입되지 않은 ID 입니다."));
+
+        if(!passwordEncoder.matches(memberDto.getUserPw(), member.getUserPw())){
+            throw new ForbiddenException("패스원드가 일치하지 않습니다.");
+        }
+        System.out.println("비밀번호 확인 성공");
+    }
+
+    // QUIT 테이블 유저정보 옮기기
+    @PostMapping("/member/quit")
+    public void createQuit(@RequestBody MemberDto memberDto){
+        log.info("----------------------------------");
+        log.info("여기왔냐?");
+        log.info(String.valueOf(memberDto.getUserCode()));
+        MemberEntity member = memberRepository.findByUserId(memberDto.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 ID 입니다."));
+        if(!Objects.equals(memberDto.getUserCode(), member.getUserCode())){
+            throw new ForbiddenException("유저 정보가 없습니다.");
+        }
+        memberService.createQuit(memberDto);
+
+        memberRepository.delete(member);
+    }
+
+    //회원 정보 수정
+    @PatchMapping("/member/update")
+    public void memberupdate(@RequestBody MemberDto memberDto){
+
+        MemberEntity member = memberRepository.findByUserId(memberDto.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 ID 입니다."));
+        if(!Objects.equals(memberDto.getUserCode(), member.getUserCode())){
+            throw new ForbiddenException("유저 정보가 없습니다.");
+        }
+
+         memberService.memberupdate(memberDto);
+    }
+
+
+
     @PostMapping("/member/login")
     public String login(@RequestBody MemberDto memberDto, String userId, String userPw) {
 //        log.info("user email = {}", user.get("email"));
@@ -67,12 +136,25 @@ public class MemberController {
         MemberEntity member = memberRepository.findByUserId(memberDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 ID 입니다."));
 
-//        if(!encoder.matches(userPw, member.getPassword())){
-//            System.out.println("비밀번호가 틀렸습니다.");
-//        }
+        if(!passwordEncoder.matches(memberDto.getUserPw(), member.getUserPw())){
+            throw new ForbiddenException("패스원드가 일치하지 않습니다.");
+        }
 
         return jwtTokenProvider.createToken(member.getUserId(), member.getAuth());
     }
+
+//    //아이디찾기
+//    @PostMapping("/member/findid")
+//    public ResponseEntity<?> selectId(@RequestBody MemberDto memberDto){
+//        MemberEntity memberEntity = memberService.searchUserName(memberDto.getUserName());
+//        return new ResponseEntity<>(true, HttpStatus.valueOf(memberEntity.getUserId()));
+//    }
+//
+//
+//    //비밀번호찾기
+//    public ResponseEntity<?> findPw(@RequestBody MemberDto memberDto){
+//        MemberEntity memberEntity = memberService.sea
+//    }
 
 //    @PostMapping("/member/login")
 //    public ResponseEntity<String> loginSuccess(@RequestBody Map<String, String> loginForm){
@@ -243,8 +325,8 @@ public class MemberController {
         return code;
     }
 
-    @GetMapping("/member/myinfo/{userId}")
-    public MemberDto getMemberInfo(@PathVariable String userId, HttpServletRequest request) throws Exception{
+    @GetMapping("/member/info/{userId}")
+    public MemberDto getMemberInfo(@PathVariable("userId") String userId, HttpServletRequest request) throws Exception{
         Optional<MemberEntity> user = memberRepository.findByUserId(userId);
         Long userCode = user.get().getUserCode();
         adminService.getClientIP(userCode, request);
@@ -278,14 +360,6 @@ public class MemberController {
 
 
     //내정보보기
-//    @GetMapping("/member/{userCode}")
-//    public ResponseEntity<MemberEntity> read(@PathVariable("userCode") String code) throws Exception {
-//        log.info("userCode" + code);
-//        Long userCode = Long.parseLong(code);
-//        MemberEntity member = memberService.read(userCode);
-//
-//        return new ResponseEntity<>(member, HttpStatus.OK);
-//    }
 
     //admin top5리스트
     @GetMapping("admin/userlist")
@@ -295,10 +369,47 @@ public class MemberController {
         log.info("list" + list);
 
         return memberService.top5UserList();
+
+    @GetMapping("/member/myinfo/{userCode}")
+    public MemberDto read(@PathVariable("userCode") Long userCode) throws Exception {
+;
+//        MemberEntity member = memberService.read(userCode);
+        log.info("------------------------------");
+        return memberService.read(userCode);
     }
 
+    @GetMapping("/member/update/{userCode}")
+    public MemberDto updateread(@PathVariable("userCode") Long userCode) throws Exception {
+        ;
+//        MemberEntity member = memberService.read(userCode);
+        log.info("------------------------------");
+        return memberService.updateread(userCode);
+    }
 
+    @GetMapping("/member/list")
+    public List<MemberDto> getDeptList() {
+        List<MemberEntity> deptlist = memberRepository.findAll();
+        List<MemberDto> list = new ArrayList<>();
+
+        for(MemberEntity entity : deptlist){
+            MemberDto memberDto = MemberDto.builder()
+                    .userId(entity.getUserId())
+                    .userName(entity.getUserNamee())
+                    .phone(entity.getPhone())
+                    .email(entity.getEmail())
+                    .build();
+            list.add(memberDto);
+        }
+
+        log.info(list.toString());
+
+        return list;
+    }
 }
+
+
+
+
 
 
 

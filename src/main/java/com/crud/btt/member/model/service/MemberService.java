@@ -20,10 +20,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Member;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Slf4j
@@ -36,6 +38,7 @@ public class MemberService implements UserDetailsService {
     private final QuitRepository quitRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+//    private final BCryptPasswordEncoder encoder;
 //    private final MemberEntity memberE;
 
 
@@ -67,6 +70,28 @@ public class MemberService implements UserDetailsService {
                 -> new RuntimeException("해당 회원을 찾을 수 없습니다."));
         memberRepository.delete(entity);
     }
+
+
+//    //아이디찾기
+//    public MemberEntity searchUserName(String userName){
+//        return memberRepository.findByUserneme(userName).orElseThrow(() -> {
+//                return new IllegalArgumentException();
+//        });
+//    }
+//
+//    // 임시 비밀번호 DB 저장
+//    @Transactional
+//    public String passwordChange(String userName){
+//        MemberEntity memberEntity = memberRepository.findByUserneme(userName).orElseThrow(() -> {
+//            return new IllegalArgumentException("찾을 수 없는 회원입니다.");
+//        });
+//        String rawPassword = getTempPassword();
+//        String encPassword = encoder.encode(rawPassword);
+//
+//        memberEntity.setUserPw(encPassword);
+//
+//        return rawPassword;
+//    }
 
     //로그인
 //    public String login(String userId, String userPw) {
@@ -188,6 +213,7 @@ public class MemberService implements UserDetailsService {
     }
 
 
+
     //아이디찾기
 //    public Optional<Member> findById(Long id) {
 //        List<Member> result = jdbcTemplate.query("select*from member where id = ?", memberRowMapper(),id);
@@ -287,8 +313,16 @@ public class MemberService implements UserDetailsService {
         return code;
     }
 
-    public MemberEntity read(Long userCode) throws Exception{
-        return memberRepository.getOne(userCode);
+    public MemberDto read(Long userCode) throws Exception{
+        MemberEntity memberEntity = memberRepository.findByUserCode(userCode).orElseThrow(() -> new RuntimeException());
+        memberRepository.getOne(userCode);
+
+        return MemberDto.builder()
+                .userId(memberEntity.getUserId())
+                .userName(memberEntity.getUserNamee())
+                .phone(memberEntity.getPhone())
+                .email(memberEntity.getEmail())
+                .build();
     }
 
     //admin top5리스트
@@ -320,6 +354,58 @@ public class MemberService implements UserDetailsService {
         log.info("list" + list);
 
         return Header.OK(list);
+    }
+
+    //회원정보수정
+    public MemberDto memberupdate(MemberDto memberDto){
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        memberDto.setUserPw(passwordEncoder.encode(memberDto.getUserPw()));
+
+        MemberEntity memberEntity = MemberEntity.builder()
+                .userId(memberDto.getUserId())
+                .userPw(memberDto.getUserPw())
+                .phone(memberDto.getPhone())
+                .email(memberDto.getEmail())
+                .build();
+
+        memberRepository.saveByPwPhEm(memberEntity.getUserPw(), memberEntity.getPhone(),
+                memberEntity.getEmail(), memberDto.getUserId());
+
+        return memberDto;
+
+    }
+
+
+    //회원수정시 기본정보 불러오기
+    public MemberDto updateread(Long userCode) throws Exception{
+        MemberEntity memberEntity = memberRepository.findByUserCode(userCode).orElseThrow(() -> new RuntimeException("회원을 찾을수 없습니다."));
+        memberRepository.getOne(userCode);
+
+        return MemberDto.builder()
+                .userId(memberEntity.getUserId())
+                .userName(memberEntity.getUserNamee())
+                .build();
+    }
+
+    //Quit 테이블 유저정보 옮기기
+    public QuitEntity createQuit(MemberDto memberDto){
+        log.info("-------------------------------------");
+        log.info(memberDto.getUserName());
+        return quitRepository.save(QuitEntity.builder()
+                        .quitUserCode(memberDto.getUserCode())
+                        .quitUserId(memberDto.getUserId())
+                        .quitUserPw(memberDto.getUserPw())
+                        .quitUserName(memberDto.getUserName())
+                        .quitPhone(memberDto.getPhone())
+                        .quitEmail(memberDto.getEmail())
+                        .quitKakaoId(memberDto.getKakaoId())
+                        .quitNaverId(memberDto.getNaverId())
+                        .quitGoogleId(memberDto.getGoogleId())
+                        .quitPermit("Q")
+                        .quitDate(LocalDateTime.now())
+                        .quitAuth(memberDto.getAuth())
+                        .build());
     }
 
 }
