@@ -209,7 +209,7 @@ public class QnAService {
         QnAEntity qnaEntity = QnAEntity.builder().qnaNo(qnaUpdateDto.getQna_no())
                 .qnaTitle(qnaUpdateDto.getQna_title())
                 .qnaContent(qnaUpdateDto.getQna_content())
-                .createAt(now)
+                .createAt(LocalDateTime.now())
                 .qnaOriginalFile(qnaUpdateDto.getQna_original_file())
                 .qnaRenameFile(qnaUpdateDto.getQna_rename_file())
                 .build();
