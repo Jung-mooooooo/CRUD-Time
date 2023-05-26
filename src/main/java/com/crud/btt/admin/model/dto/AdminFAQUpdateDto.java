@@ -1,8 +1,7 @@
-package com.crud.btt.cs.model.dto;
+package com.crud.btt.admin.model.dto;
 
 import com.crud.btt.cs.entity.FAQEntity;
 import lombok.AllArgsConstructor;
-
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +14,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FAQUpdateDto {
+public class AdminFAQUpdateDto {
 
     private long faqNo;
     private Date createAt;
@@ -24,7 +23,7 @@ public class FAQUpdateDto {
     private String faqCat;
     private long adminCode;
 
-    public FAQUpdateDto(FAQEntity faqEntity){
+    public AdminFAQUpdateDto(FAQEntity faqEntity){
         this.faqNo = faqEntity.getFaqNo();
         this.createAt = faqEntity.getCreateAt();
         this.faqTitle = faqEntity.getFaqTitle();
@@ -33,7 +32,7 @@ public class FAQUpdateDto {
         this.adminCode = faqEntity.getAdminCode();
     }
 
-    public FAQUpdateDto(String fail_msg){
+    public AdminFAQUpdateDto(String fail_msg){
         this.faqTitle = fail_msg;
     }
 }

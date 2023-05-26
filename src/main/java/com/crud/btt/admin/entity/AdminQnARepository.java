@@ -1,4 +1,4 @@
-package com.crud.btt.cs.entity;
+package com.crud.btt.admin.entity;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface QnARepository extends JpaRepository<QnAEntity, Long>{
+public interface AdminQnARepository extends JpaRepository<AdminQnAEntity, Long>{
 
     /*
         @Query : JPQL
@@ -21,20 +21,20 @@ public interface QnARepository extends JpaRepository<QnAEntity, Long>{
 //            ,nativeQuery = true)
 //    QnAEntity saveQuestion(@Param(value = "qnAEntity")QnAEntity qnAEntity);
 
-    Page<QnAEntity> findAllByOrderByQnaNoDesc(Pageable pageable);
+    Page<AdminQnAEntity> findAllByOrderByQnaNoDesc(Pageable pageable);
 
 
-    QnAEntity findByQnaNo(Long qnaNo);
+    AdminQnAEntity findByQnaNo(Long qnaNo);
 
     @Transactional
     long deleteByQnaNo(Long qnaNo);
 
     @Query(value = "SELECT q FROM QnAEntity q WHERE q.qnaNo = q.qnaRef ORDER BY q.qnaNo DESC", nativeQuery = false)
-    List<QnAEntity> findSameBtwTwoColumn();
+    List<AdminQnAEntity> findSameBtwTwoColumn();
 
     @Query("SELECT a " +
             "FROM QnAEntity a WHERE a.qnaRef = :qnaNo AND a.qnaNo <> a.qnaRef")
-    QnAEntity findByQnaRef(@Param("qnaNo") Long qnaNo);
+    AdminQnAEntity findByQnaRef(@Param("qnaNo") Long qnaNo);
 
 //    @Query("SELECT a " +
 //            "FROM QnAEntity a INNER JOIN QnAEntity b ON a.qnaRef = b.qnaNo " +

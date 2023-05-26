@@ -1,4 +1,4 @@
-package com.crud.btt.cs.entity;
+package com.crud.btt.admin.entity;
 
 import com.crud.btt.common.SearchCondition;
 import com.querydsl.core.types.Predicate;
@@ -13,15 +13,15 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
-import static com.crud.btt.cs.entity.QFAQEntity.fAQEntity;
+import static com.crud.btt.admin.entity.QAdminFAQEntity.adminFAQEntity;
 
 @RequiredArgsConstructor
 @Repository
-public class FAQRepositoryCustom {
+public class AdminFAQRepositoryCustom {
     private final  JPAQueryFactory queryFactory;
-    public Page<FAQEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition){
+    public Page<AdminFAQEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition){
 
-        JPAQuery<FAQEntity> query = queryFactory.selectFrom(fAQEntity)
+        JPAQuery<AdminFAQEntity> query = queryFactory.selectFrom(adminFAQEntity)
                 .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()));
 
         long total = query.stream().count();
@@ -31,11 +31,11 @@ public class FAQRepositoryCustom {
         int customOffset = pageable.getPageNumber() < 0 ? 0 : (pageable.getPageNumber()-1) * pageable.getPageSize();
         System.out.println("customOffset : "+customOffset);
 
-        List<FAQEntity> results = query
+        List<AdminFAQEntity> results = query
                 .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()))
                 .offset(customOffset)
                 .limit(pageable.getPageSize())
-                .orderBy(fAQEntity.faqNo.desc())
+                .orderBy(adminFAQEntity.faqNo.desc())
                 .fetch();
         return new PageImpl<>(results, pageable, total);
     }
@@ -44,11 +44,11 @@ public class FAQRepositoryCustom {
 
         if("faqTitle".equals(sk)){
             if(StringUtils.hasLength(sv)){
-                return fAQEntity.faqTitle.contains(sv);
+                return adminFAQEntity.faqTitle.contains(sv);
             }
         } else if ("faqContent".equals(sk)) {
             if(StringUtils.hasLength(sv)){
-                return fAQEntity.faqContent.contains(sv);
+                return adminFAQEntity.faqContent.contains(sv);
             }
         }
         return null;

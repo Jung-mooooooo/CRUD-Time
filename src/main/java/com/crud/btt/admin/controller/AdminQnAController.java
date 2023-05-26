@@ -1,11 +1,11 @@
-package com.crud.btt.cs.controller;
+package com.crud.btt.admin.controller;
 
 import com.crud.btt.common.Header;
 import com.crud.btt.common.SearchCondition;
 import com.crud.btt.cs.model.dto.QnADto;
 import com.crud.btt.cs.model.dto.QnAListDto;
 import com.crud.btt.cs.model.dto.QnAUpdateDto;
-import com.crud.btt.cs.model.service.QnAService;
+import com.crud.btt.admin.model.service.AdminQnAService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,51 +18,51 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin
 @RestController
-public class QnAController {
+public class AdminQnAController {
 
 
-    private final QnAService qnaService;
-    private static final Logger logger = LoggerFactory.getLogger(QnAController.class);
+    private final AdminQnAService adminqnaService;
+    private static final Logger logger = LoggerFactory.getLogger(AdminQnAController.class);
 
 
     //QNA 목록 출력
-    @GetMapping("/cs/QnA")
+    @GetMapping("/admin/AdminQnA")
     public Header<List<QnAListDto>> QnAList(@PageableDefault(sort = {"qnaNo"}) Pageable pageable,
                                             SearchCondition searchCondition){
 
 //        logger.info("=====================값 확인==================" +
 //                // 전체 리스트를 조회하는거
-//                qnaService.getQnAList(pageable,searchCondition));
+//                adminqnaService.getQnAList(pageable,searchCondition));
 
-        return qnaService.getQnAList(pageable,searchCondition);
+        return adminqnaService.getQnAList(pageable,searchCondition);
     }
 
     //QNA 상세보기
-    @GetMapping("/cs/QnADetail/{qnaNo}")
+    @GetMapping("/admin/AdminQnADetail/{qnaNo}")
     public QnADto getQnA(@PathVariable Long qnaNo) {
         logger.info("상세보기 : " + qnaNo);
-        return qnaService.getQnA(qnaNo);
+        return adminqnaService.getQnA(qnaNo);
     }
 
 
     //QNA 글 작성
-    @PostMapping("/cs/QnAWrite")
+    @PostMapping("/admin/AdminQnAWrite")
     public QnADto qnaCreate(@RequestBody QnADto qnaDto){
         logger.info("qnaCreate In");
         logger.info("qnaDto : "+qnaDto.getQnaRef());
-        return qnaService.qnaCreate(qnaDto);
+        return adminqnaService.qnaCreate(qnaDto);
     }
 
     //QNA 글 수정
-    @PatchMapping("/cs/QnADetail/{id}")
+    @PatchMapping("/admin/AdminQnADetail/{id}")
         public QnAUpdateDto qnaUpdate(@RequestBody QnAUpdateDto qnaUpdateDto){
-        return qnaService.qnaUpdate(qnaUpdateDto);
+        return adminqnaService.qnaUpdate(qnaUpdateDto);
     }
 
     //QNA 글 삭제
-    @DeleteMapping("/cs/QnADelete/{qnaNo}")
+    @DeleteMapping("/admin/AdminQnADelete/{qnaNo}")
     public Long  qnaDelete(@PathVariable Long qnaNo){
-        return qnaService.qnaDelete(qnaNo);
+        return adminqnaService.qnaDelete(qnaNo);
     }
 
 }

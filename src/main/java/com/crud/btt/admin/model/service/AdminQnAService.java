@@ -1,4 +1,4 @@
-package com.crud.btt.cs.model.service;
+package com.crud.btt.admin.model.service;
 
 import com.crud.btt.admin.entity.AdminRepository;
 import com.crud.btt.common.CustomPageable;
@@ -34,7 +34,7 @@ import java.util.TimeZone;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class QnAService {
+public class AdminQnAService {
 
     private final  QnARepository qnARepository;
     private final MemberRepository memberRepository;

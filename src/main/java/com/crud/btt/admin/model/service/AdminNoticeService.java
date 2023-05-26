@@ -1,4 +1,4 @@
-package com.crud.btt.cs.model.service;
+package com.crud.btt.admin.model.service;
 
 import com.crud.btt.common.CustomPageable;
 import com.crud.btt.common.Header;
@@ -16,17 +16,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class  NoticeService {
+public class AdminNoticeService {
 
     private final NoticeRepository noticeRepository;
     private final NoticeRepositoryCustom noticeRepositoryCustom;
-    private static final Logger logger = LoggerFactory.getLogger(NoticeService.class);
+    private static final Logger logger = LoggerFactory.getLogger(AdminNoticeService.class);
 
     //목록보기
     public Header<List<NoticeDto>> getNoticeList(Pageable oriPageable, SearchCondition searchCondition) {
@@ -81,86 +85,86 @@ public class  NoticeService {
                     .build();
         }
 
-//    // 글작성
-//       public NoticeDto noticeCreate(NoticeDto noticeDto) {
-//
-//           TimeZone timeZone = TimeZone.getTimeZone("Asia/Seoul");
-//           Date now = new Date();
-//
-//           SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//           formatter.setTimeZone(timeZone);
-//           String formattedDate = formatter.format(now);
-//
-//           try {
-//               now = formatter.parse(formattedDate);
-//           } catch (ParseException e) {
-//               e.printStackTrace();
-//           } catch (Exception e) {
-//               e.printStackTrace();
-//           }
-//
-//        NoticeEntity noticeEntity = NoticeEntity.builder()
-//                .noticeTitle(noticeDto.getNoticeTitle())
-//                .noticeContent(noticeDto.getNoticeContent())
-//                .adminCode(noticeDto.getAdminCode())
-//                .createAt(now)
-//                .noticeReadCount(noticeDto.getNoticeReadCount())
-//                .noticeOriginalFile(noticeDto.getNoticeOriginalFile())
-//                .noticeRenameFile(noticeDto.getNoticeRenameFile()).build();
-//        noticeEntity = noticeRepository.save(noticeEntity);
-//        // return new NoticeDto(noticeRepository.save(new NoticeEntity(noticeDto)));
-//
-//      return NoticeDto.builder()
-//              .noticeNo(noticeEntity.getNoticeNo())
-//              .noticeTitle(noticeEntity.getNoticeTitle())
-//              .noticeContent(noticeEntity.getNoticeContent())
-//              .adminCode(noticeEntity.getAdminCode())
-//              .createAt(noticeEntity.getCreateAt())
-//              .noticeReadCount(noticeEntity.getNoticeReadCount())
-//              .noticeOriginalFile(noticeEntity.getNoticeOriginalFile())
-//              .noticeRenameFile(noticeEntity.getNoticeRenameFile())
-//              .build();
-//    }
-//
-//
-//    //수정
-//    public NoticeDto update(NoticeDto noticeDto) {
-//        TimeZone timeZone = TimeZone.getTimeZone("GMT+9");
-//        Date now = new Date();
-//
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        formatter.setTimeZone(timeZone);
-//        String formattedDate = formatter.format(now);
-//
-//        try {
-//            now = formatter.parse(formattedDate);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        NoticeEntity existingNoticeEntity = noticeRepository.findById(noticeDto.getNoticeNo())
-//                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
-//
-//        NoticeEntity noticeEntity = NoticeEntity.builder()
-//                .noticeNo(noticeDto.getNoticeNo())
-//                .noticeTitle(noticeDto.getNoticeTitle())
-//                .noticeContent(noticeDto.getNoticeContent())
-//                .noticeReadCount(existingNoticeEntity.getNoticeReadCount()-1)
-//                .adminCode(noticeDto.getAdminCode())
-//                .createAt(now)
-//                .build();
-//
-//        return new NoticeDto(noticeRepository.save(noticeEntity));
-//    }
-//
-//
-//    //삭제 (삭제는 반환타입이 Long, 값은 삭제된 행 )
-//    public Long noticeDelete(Long noticeNo){
-//         noticeRepository.deleteByNoticeNo(noticeNo);
-//         return 1L;
-//    }
+    // 글작성
+       public NoticeDto noticeCreate(NoticeDto noticeDto) {
+
+           TimeZone timeZone = TimeZone.getTimeZone("Asia/Seoul");
+           Date now = new Date();
+
+           SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+           formatter.setTimeZone(timeZone);
+           String formattedDate = formatter.format(now);
+
+           try {
+               now = formatter.parse(formattedDate);
+           } catch (ParseException e) {
+               e.printStackTrace();
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
+
+        NoticeEntity noticeEntity = NoticeEntity.builder()
+                .noticeTitle(noticeDto.getNoticeTitle())
+                .noticeContent(noticeDto.getNoticeContent())
+                .adminCode(noticeDto.getAdminCode())
+                .createAt(now)
+                .noticeReadCount(noticeDto.getNoticeReadCount())
+                .noticeOriginalFile(noticeDto.getNoticeOriginalFile())
+                .noticeRenameFile(noticeDto.getNoticeRenameFile()).build();
+        noticeEntity = noticeRepository.save(noticeEntity);
+        // return new NoticeDto(noticeRepository.save(new NoticeEntity(noticeDto)));
+
+      return NoticeDto.builder()
+              .noticeNo(noticeEntity.getNoticeNo())
+              .noticeTitle(noticeEntity.getNoticeTitle())
+              .noticeContent(noticeEntity.getNoticeContent())
+              .adminCode(noticeEntity.getAdminCode())
+              .createAt(noticeEntity.getCreateAt())
+              .noticeReadCount(noticeEntity.getNoticeReadCount())
+              .noticeOriginalFile(noticeEntity.getNoticeOriginalFile())
+              .noticeRenameFile(noticeEntity.getNoticeRenameFile())
+              .build();
+    }
+
+
+    //수정
+    public NoticeDto update(NoticeDto noticeDto) {
+        TimeZone timeZone = TimeZone.getTimeZone("GMT+9");
+        Date now = new Date();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        formatter.setTimeZone(timeZone);
+        String formattedDate = formatter.format(now);
+
+        try {
+            now = formatter.parse(formattedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        NoticeEntity existingNoticeEntity = noticeRepository.findById(noticeDto.getNoticeNo())
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+
+        NoticeEntity noticeEntity = NoticeEntity.builder()
+                .noticeNo(noticeDto.getNoticeNo())
+                .noticeTitle(noticeDto.getNoticeTitle())
+                .noticeContent(noticeDto.getNoticeContent())
+                .noticeReadCount(existingNoticeEntity.getNoticeReadCount()-1)
+                .adminCode(noticeDto.getAdminCode())
+                .createAt(now)
+                .build();
+
+        return new NoticeDto(noticeRepository.save(noticeEntity));
+    }
+
+
+    //삭제 (삭제는 반환타입이 Long, 값은 삭제된 행 )
+    public Long noticeDelete(Long noticeNo){
+         noticeRepository.deleteByNoticeNo(noticeNo);
+         return 1L;
+    }
 
 }
 

@@ -1,5 +1,5 @@
 
-package com.crud.btt.cs.entity;
+package com.crud.btt.admin.entity;
 
 import com.crud.btt.cs.model.dto.QnADto;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.Date;
 @Builder
 @Table(name = "QNA")
 @Entity
-public class QnAEntity {
+public class AdminQnAEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_QNA")
     @SequenceGenerator(name = "SEQ_QNA", sequenceName = "SEQ_QNA", allocationSize = 1)
@@ -44,7 +44,7 @@ public class QnAEntity {
     @Column(name="QNA_REF")
     private Long qnaRef;
 
-    public QnAEntity(QnADto qnADto, Long userCode, String mode, Date createAt){
+    public AdminQnAEntity(QnADto qnADto, Long userCode, String mode, Date createAt){
         this.qnaTitle = qnADto.getQnaTitle();
         this.qnaContent = qnADto.getQnaContent();
         this.userCode = userCode;
@@ -52,7 +52,7 @@ public class QnAEntity {
         this.qnaPrivate = qnADto.getQnaPrivate();
     }
 
-    public QnAEntity(QnADto qnADto, Long adminCode, Date createAt, String qnaPrivate){
+    public AdminQnAEntity(QnADto qnADto, Long adminCode, Date createAt, String qnaPrivate){
         this.qnaRef = qnADto.getQnaRef();
         this.qnaTitle = qnADto.getQnaTitle();
         this.qnaContent = qnADto.getQnaContent();

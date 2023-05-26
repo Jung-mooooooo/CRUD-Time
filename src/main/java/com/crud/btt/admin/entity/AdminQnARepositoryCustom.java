@@ -1,4 +1,4 @@
-package com.crud.btt.cs.entity;
+package com.crud.btt.admin.entity;
 
 import com.crud.btt.common.SearchCondition;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -13,27 +13,27 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
-import static com.crud.btt.cs.entity.QQnAEntity.qnAEntity;
+import static com.crud.btt.admin.entity.QAdminQnAEntity.adminQnAEntity;
 
 
 @RequiredArgsConstructor
 @Repository
-public class QnARepositoryCustom {
+public class AdminQnARepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
-    public Page<QnAEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition){
+    public Page<AdminQnAEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition){
 
-        JPAQuery<QnAEntity> query = queryFactory.selectFrom(qnAEntity)
+        JPAQuery<AdminQnAEntity> query = queryFactory.selectFrom(adminQnAEntity)
                 .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()));
 
         long total = query.stream().count();
 
-        List<QnAEntity> results = query
+        List<AdminQnAEntity> results = query
                 .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(qnAEntity.qnaNo.desc())
+                .orderBy(adminQnAEntity.qnaNo.desc())
                 .fetch();
         return new PageImpl<>(results, pageable, total);
     }
@@ -43,13 +43,13 @@ public class QnARepositoryCustom {
 
         if("qnaTitle".equals(sk)){
             if(StringUtils.hasLength(sv)){
-                return qnAEntity.qnaTitle.contains(sv);
+                return adminQnAEntity.qnaTitle.contains(sv);
             }
         } else if ("qnaContent".equals(sk)) {
 
 
             if(StringUtils.hasLength(sv)){
-                return qnAEntity.qnaContent.contains(sv);
+                return adminQnAEntity.qnaContent.contains(sv);
             }
         }
         return null;

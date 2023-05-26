@@ -1,4 +1,4 @@
-package com.crud.btt.cs.model.dto;
+package com.crud.btt.admin.model.dto;
 
 import com.crud.btt.cs.entity.QnAEntity;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class QnAListDto {
+public class AdminQnAListDto {
 
     private long qnaNo;
     private Date createAt;
@@ -23,7 +23,7 @@ public class QnAListDto {
     private String qnaPrivate;
     private long qnaRef;
 
-    public QnAListDto(QnAEntity qnaEntity, String userId){
+    public AdminQnAListDto(QnAEntity qnaEntity, String userId){
         this.qnaNo = qnaEntity.getQnaNo();
         this.qnaTitle = qnaEntity.getQnaTitle();
         this.qnaReadCount = qnaEntity.getQnaReadCount();

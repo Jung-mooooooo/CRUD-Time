@@ -1,4 +1,4 @@
-package com.crud.btt.cs.entity;
+package com.crud.btt.admin.entity;
 
 import com.crud.btt.common.SearchCondition;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -13,18 +13,18 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
-import static com.crud.btt.cs.entity.QNoticeEntity.noticeEntity;
+import static com.crud.btt.admin.entity.QAdminNoticeEntity.adminNoticeEntity;
 @RequiredArgsConstructor
 @Repository
 //@ComponentScan(basePackages = "com.crud.btt.cs.entity")
-public class NoticeRepositoryCustom {
+public class AdminNoticeRepositoryCustom {
 
 
     private final JPAQueryFactory queryFactory;
 
-    public Page<NoticeEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition){
+    public Page<AdminNoticeEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition){
 
-        JPAQuery<NoticeEntity> query = queryFactory.selectFrom(noticeEntity)
+        JPAQuery<AdminNoticeEntity> query = queryFactory.selectFrom(adminNoticeEntity)
                 .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()));
 
         long total = query.stream().count();
@@ -33,11 +33,11 @@ public class NoticeRepositoryCustom {
         // int customOffset = pageable.getPageNumber() == 0 ? 0 : (pageable.getPageNumber()-1) * pageable.getPageSize();
         // System.out.println("customOffset : "+customOffset);
 
-        List<NoticeEntity> results = query
+        List<AdminNoticeEntity> results = query
                 .where(searchKeywords(searchCondition.getSk(), searchCondition.getSv()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(noticeEntity.noticeNo.desc())
+                .orderBy(adminNoticeEntity.noticeNo.desc())
                 .fetch();
         System.out.println("offset : " + pageable.getOffset());
         return new PageImpl<>(results, pageable, total);
@@ -46,11 +46,11 @@ public class NoticeRepositoryCustom {
     private BooleanExpression searchKeywords(String sk, String sv) {
         if ("noticeTitle".equals(sk)) {
             if (StringUtils.hasLength(sv)) {
-                return noticeEntity.noticeTitle.contains(sv);
+                return adminNoticeEntity.noticeTitle.contains(sv);
             }
         } else if ("noticeContent".equals(sk)) {
             if (StringUtils.hasLength(sv)) {
-                return noticeEntity.noticeContent.contains(sv);
+                return adminNoticeEntity.noticeContent.contains(sv);
             }
         }
             return null;

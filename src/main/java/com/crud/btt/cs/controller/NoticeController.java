@@ -22,7 +22,7 @@ public class NoticeController {
     private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
 
     //목록출력
-    @GetMapping("/admin/AdminNotice")
+    @GetMapping("/cs/Notice")
     public Header<List<NoticeDto>> NoticeList(@PageableDefault(sort = {"noticeNo"}) Pageable pageable,
                                               SearchCondition searchCondition){
         // logger.info(pageable.getPageSize()+"/"+pageable.getPageNumber());
@@ -30,33 +30,33 @@ public class NoticeController {
         return noticeService.getNoticeList(pageable,searchCondition);
     }
     //상세보기
-    @GetMapping("/admin/AdminNoticeDetail/{noticeNo}")
+    @GetMapping("/cs/NoticeDetail/{noticeNo}")
     public NoticeDto getNotice(@PathVariable Long noticeNo) {
         //logger.info("=====================Controller NoticeDetail==================" +noticeService.getNotice(noticeNo));
-       //logger.info("============================================= noticeNo : =============================================" + noticeNo);
-       //logger.info("=============================================noticeService.getNotice(noticeNo) =============================================:"+noticeService.getNotice(noticeNo));
+        //logger.info("============================================= noticeNo : =============================================" + noticeNo);
+        //logger.info("=============================================noticeService.getNotice(noticeNo) =============================================:"+noticeService.getNotice(noticeNo));
         return noticeService.getNotice(noticeNo);
     }
 
-    //작성
-    @PostMapping("/admin/AdminNoticeWrite")
-    public NoticeDto noticeCreate(@RequestBody NoticeDto noticeDto){
-        //logger.info("================AdminNoticeWrite : ==============" + noticeDto.getCreateAt().toString());
-        return noticeService.noticeCreate(noticeDto);
-    }
-
-    //수정
-    @PatchMapping("/admin/AdminNoticeWrite")
-    public NoticeDto update(@RequestBody NoticeDto noticeDto){
-        //logger.info("================AdminNoticeWriteUpdate : ==============" + noticeDto.getCreateAt().toString());
-        return noticeService.update(noticeDto);
-    }
-
-    //삭제
-    @DeleteMapping("/admin/AdminNoticeDetail/{noticeNo}")
-    public Long  noticeDelete(@PathVariable Long noticeNo){
-        return noticeService.noticeDelete(noticeNo);
-    }
+//    //작성
+//    @PostMapping("/admin/AdminNoticeWrite")
+//    public NoticeDto noticeCreate(@RequestBody NoticeDto noticeDto){
+//        //logger.info("================AdminNoticeWrite : ==============" + noticeDto.getCreateAt().toString());
+//        return noticeService.noticeCreate(noticeDto);
+//    }
+//
+//    //수정
+//    @PatchMapping("/admin/AdminNoticeWrite")
+//    public NoticeDto update(@RequestBody NoticeDto noticeDto){
+//        //logger.info("================AdminNoticeWriteUpdate : ==============" + noticeDto.getCreateAt().toString());
+//        return noticeService.update(noticeDto);
+//    }
+//
+//    //삭제
+//    @DeleteMapping("/admin/AdminNoticeDelete/{noticeNo}")
+//    public Long  noticeDelete(@PathVariable Long noticeNo){
+//        return noticeService.noticeDelete(noticeNo);
+//    }
 
 
 
