@@ -23,5 +23,6 @@ public class QuitDto {
     private String quitNaverId;    //탈퇴네이버로그인
     private String quitGoogleId;   //탈퇴구글로그인
     private String quitPermit;      //탈퇴회원체크
-    private Date quitDate;          //탈퇴일
+    private String quitDate;          //탈퇴일
+    private String quitauth;
 }

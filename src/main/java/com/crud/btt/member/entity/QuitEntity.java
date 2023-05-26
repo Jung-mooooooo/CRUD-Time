@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -16,7 +17,6 @@ import java.sql.Date;
 @Entity
 public class QuitEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="quit_user_code")
     private Long quitUserCode;     //탈퇴회원코드
     @Column(name="quit_user_id")
@@ -38,5 +38,7 @@ public class QuitEntity {
     @Column(name="quit_permit")
     private String quitPermit;      //탈퇴회원체크
     @Column(name="quit_date")
-    private Date quitDate;          //탈퇴일
+    private LocalDateTime quitDate; //탈퇴일
+    @Column(name="quit_auth")
+    private String quitAuth;
 }

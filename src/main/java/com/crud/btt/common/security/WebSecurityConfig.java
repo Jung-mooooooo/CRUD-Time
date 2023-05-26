@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //    private  CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder encodePassword() {
         return new BCryptPasswordEncoder();
     }
 
