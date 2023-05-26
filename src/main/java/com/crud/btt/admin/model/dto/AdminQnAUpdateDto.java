@@ -14,7 +14,7 @@ import java.util.Date;
 public class AdminQnAUpdateDto {
 
     private long qna_no;
-    private Date create_at;
+    private LocalDateTime create_at;
     private String qna_title;
     private String qna_content;
     private String qna_original_file;
