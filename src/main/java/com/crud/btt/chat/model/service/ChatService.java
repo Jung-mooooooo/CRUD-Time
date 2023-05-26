@@ -3,9 +3,9 @@ package com.crud.btt.chat.model.service;
 
 import com.crud.btt.chat.entity.ChatListEntity;
 import com.crud.btt.chat.model.dto.ChatListDto;
-//import com.crud.btt.chat.model.dto.ChatListRepository;
+import com.crud.btt.chat.model.dto.ChatListRepository;
 import com.crud.btt.chat.model.dto.ChatRoom;
-//import com.crud.btt.chat.model.dto.ChatRoomRepository;
+import com.crud.btt.chat.model.dto.ChatRoomRepository;
 import com.crud.btt.member.entity.MemberEntity;
 import com.crud.btt.member.model.service.MemberService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,6 +17,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Slf4j
@@ -85,20 +86,24 @@ public class ChatService {
 //    }
 
 
-//    private final MemberService memberService;
-//    private final ChatListRepository chatListRepository;
-//
-//    //채팅유저리스트 생성
-//    public ChatListEntity save(Long userCode) throws Exception {
+
+    private final ChatListRepository chatListRepository;
+
+    //채팅유저리스트 생성
+    public ChatListEntity save(ChatListDto chatListDto) throws Exception {
 //        MemberEntity member = memberService.read(userCode);
-//        log.info(member.toString());
-//        ChatListEntity chatListEntity = ChatListEntity.builder()
-//                .userCode(userCode)
-//                .userName(member.getUsername())
-//                .build();
-//              return chatListRepository.save(chatListEntity);
-//    }
+        log.info("여기는 서비스" + chatListDto.toString());
+        ChatListEntity chatListEntity = ChatListEntity.builder()
+                .userCode(chatListDto.getUserCode())
+                .userName(chatListDto.getUserName())
+                .enter(LocalDateTime.now())
+                .build();
+              return chatListRepository.save(chatListEntity);
+    }
 
-
-
+    //채팅유저삭제
+    public void chatUserListDelete(Long userCode) {
+//        ChatListEntity entity = chatListRepository.(userCode).orElseThrow(() -> new RuntimeException("해당 회원을 찾을 수 없습니다."));
+        chatListRepository.deleteById(userCode);
+    }
 }

@@ -1,11 +1,12 @@
 package com.crud.btt.member.entity;
 
 import com.crud.btt.member.model.dto.MemberDto;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
-
-import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 
@@ -21,7 +22,39 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     boolean existsByPhone(String phone);
     boolean existsByEmail(String email);
 
+
     Optional<MemberEntity> findByUserId(String username);
+
+//    String findByUserNameeAndPhone(String userNamee, String phone);
+//
+//    String findByUserNameeAndEmail(String userNamee, String email);
+
+
+    //id찾기 - phone
+    @Query(value = "select * from Member where user_name= :userName and phone= :phone", nativeQuery = true)
+    MemberEntity findByUserNameAndPhone(@Param("userName") String userName, @Param("phone") String phone);
+
+   //id찾기 - email
+    @Query(value = "select * from Member where user_name= :userName and email= :email", nativeQuery = true)
+    MemberEntity findByUserNameAndEmail(@Param("userName") String userName, @Param("email") String email);
+
+
+
+
+    //패스워드 찾기 - phone
+    @Query(value = "select * from Member where user_id= :userId and phone= :phone", nativeQuery = true)
+    MemberEntity findByUserIdAndPhone(@Param("userId") String userId, @Param("phone") String phone);
+
+    //패스워드 찾기 - email
+    @Query(value = "select * from Member where user_id= :userId and email= :email", nativeQuery = true)
+    MemberEntity findByUserIdAndEmail(@Param("userId") String userId, @Param("email") String email);
+
+
+    //패스워드 수정
+    @Modifying
+    @Query(value = "update Member set user_pw = :userPw where user_id = :userId", nativeQuery = true)
+    void saveByPw(@Param("userPw") String userPw, @Param("userId") String userId);
+
 
 //    @EntityGraph(attributePaths = "auth")
 //    Optional<MemberEntity> findOneWithAuthoritiesByUsername(String username);

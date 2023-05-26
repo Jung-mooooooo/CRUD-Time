@@ -1,11 +1,16 @@
 package com.crud.btt.admin.controller;
 
+import com.crud.btt.admin.entity.EmotionEntity;
+import com.crud.btt.admin.model.dto.EmotionDto;
 import com.crud.btt.admin.model.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RestController;
+import org.hibernate.annotations.Fetch;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.json.JsonObject;
 import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
@@ -15,8 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 public class AdminController {
 
     private final AdminService adminService;
-
-//private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
 
     //chatlist 출력용
@@ -41,6 +44,20 @@ public class AdminController {
 //
 //        return adminService.emotionCount();
 //    }
+
+
+
+    //감정 체크
+    @PatchMapping("/emotion")
+    public ResponseEntity<EmotionEntity> userEmotion(@RequestBody EmotionDto emotionDto) {
+        String emotionCat = emotionDto.getEmotionCat();
+        Long userCode = emotionDto.getUserCode();
+
+        log.info("유저 감정 컨트롤 - " + userCode + "님의 감정 상태는 "+ emotionCat);
+        EmotionEntity emotionEntity = adminService.SaveUserEmotion(emotionCat, userCode);
+        return new ResponseEntity<>(emotionEntity, HttpStatus.OK);
+    }
+
 
 
     //회원 ip 메소드

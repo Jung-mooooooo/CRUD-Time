@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {   //유저 정보 가져오는 클래스
-        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/fonts/**", "/templates/**");
+        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/fonts/**", "/templates/**", "/error/**");
     }
 
     //http 관련 인증 설정하기.

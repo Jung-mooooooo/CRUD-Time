@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -25,11 +26,12 @@ public class EmotionEntity {
     )
     @Column(name = "EMOTION_NO")
     private Long emotionNo;
-    @Column(name = "EMOTION_CAT")
-    private Long emotionCat;
-    @Column(name = "EMOTION_DATE")
-    private Long emotionDate;
     @Column(name = "USER_CODE")
     private Long userCode;
+    @Column(name = "EMOTION_CAT")
+    private String emotionCat;
+    @Column(name = "EMOTION_DATE")
+    private LocalDateTime emotionDate;
+
 
 }

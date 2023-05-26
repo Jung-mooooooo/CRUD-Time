@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 //@JsonIgnoreProperties(value="hibernateLazyInitializer")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Builder
 @Table(name = "MEMBER")
 @Entity

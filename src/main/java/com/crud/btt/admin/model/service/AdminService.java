@@ -1,5 +1,6 @@
 package com.crud.btt.admin.model.service;
 
+import com.crud.btt.admin.entity.EmotionEntity;
 import com.crud.btt.admin.entity.EmotionRepository;
 import com.crud.btt.admin.entity.LogEntity;
 import com.crud.btt.admin.entity.LogRepository;
@@ -7,6 +8,8 @@ import com.crud.btt.admin.model.dto.LogDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -70,6 +73,33 @@ public class AdminService {
                 .build();
 
         return logRepository.save(entity);
+    }
+
+
+    //유저 감정현황 저장
+    public EmotionEntity SaveUserEmotion(String emotion, Long userCode) {
+        log.info("현재 " + userCode +"의 감정은 "+emotion + "입니다.");
+        if(emotion == null) {
+            EmotionEntity emotionEntity = EmotionEntity.builder()
+                    .emotionCat("NEUTRAL")
+                    .emotionDate(LocalDateTime.now())
+                    .userCode(userCode)
+                    .build();
+
+            log.info(emotionEntity.toString());
+            return emotionRepository.save(emotionEntity);
+
+        }else {
+            EmotionEntity emotionEntity = EmotionEntity.builder()
+                    .emotionCat(emotion)
+                    .emotionDate(LocalDateTime.now())
+                    .userCode(userCode)
+                    .build();
+            log.info(emotionEntity.toString());
+            return emotionRepository.patch(emotionEntity.getUserCode(), emotionEntity.getEmotionCat(), emotionEntity.getEmotionDate());
+
+        }
+
     }
 
 //    //음성인식 사용자 수 조회
