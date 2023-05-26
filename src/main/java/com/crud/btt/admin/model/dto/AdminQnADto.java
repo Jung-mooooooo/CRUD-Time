@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class AdminQnADto {
     private Long qnaNo;
-    private Date createAt;
+    private LocalDateTime createAt;
     private String userId;
     private String qnaTitle;
     private String qnaContent;
