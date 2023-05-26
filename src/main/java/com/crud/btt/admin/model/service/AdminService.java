@@ -69,8 +69,8 @@ public class AdminService {
 
     //접속자 로그테이블에 저장하기
     public LogEntity getClientIP(@RequestBody Long userCode, HttpServletRequest request) throws Exception {
-        MemberEntity member = memberService.read(userCode);
-        log.info(member.toString());
+//         MemberEntity member = memberService.read(userCode);
+//         log.info(member.toString());
 
         String ip = request.getHeader("X-FORWARDED-FOR");
 
