@@ -27,12 +27,12 @@ public class EmotionEntity {
     )
     @Column(name = "EMOTION_NO")
     private Long emotionNo;
-    @Column(name = "EMOTION_CAT")
-    private String emotionCat;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
-    @Column(name = "EMOTION_DATE")
-    private LocalDateTime emotionDate;
     @Column(name = "USER_CODE")
     private Long userCode;
+    @Column(name = "EMOTION_CAT")
+    private String emotionCat;
+    @Column(name = "EMOTION_DATE")
+    private LocalDateTime emotionDate;
+
 
 }

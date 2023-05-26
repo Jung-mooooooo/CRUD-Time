@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -16,14 +17,10 @@ import javax.persistence.*;
 public class ChatListEntity {
 
     @Id
-    @SequenceGenerator(name = "SEQ_CHAT_LIST",
-            sequenceName = "SEQ_CHAT_LIST",
-            allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CHAT_LIST")
-    @Column(name="LIST_NO")
-    private Long listNo;        //채팅유저리스트순번
     @Column(name="USER_CODE")
     private Long userCode;      //유저코드
     @Column(name="USER_NAME")
     private String userName;    //유저이름
+    @Column(name="ENTER")
+    private LocalDateTime enter;       //입장시간
 }

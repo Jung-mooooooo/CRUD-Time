@@ -5,7 +5,17 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
+import java.time.LocalDateTime;
+
 public interface EmotionRepository extends JpaRepository<EmotionEntity, Long> {
+
+    //감정 업데이트
+    @Query(value = "update Emotion set emotion_cat = :emotionCat, emotion_date = :emotionDate where user_code = :userCode" , nativeQuery = true)
+    EmotionEntity patch(@Param("userCode") Long userCode, @Param("emotionCat") String emotionCat, @Param("emotionDate")LocalDateTime emotionDate);
+
+
 
     //@Query(value = "SELECT q FROM QnAEntity q WHERE q.qnaNo = q.qnaRef ORDER BY q.qnaNo DESC", nativeQuery = false)
 

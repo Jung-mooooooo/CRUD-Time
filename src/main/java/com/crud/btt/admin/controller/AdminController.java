@@ -3,6 +3,7 @@ package com.crud.btt.admin.controller;
 import com.crud.btt.admin.entity.EmotionEntity;
 import com.crud.btt.admin.entity.EmotionRepository;
 import com.crud.btt.admin.entity.LogRepository;
+import com.crud.btt.admin.model.dto.EmotionDto;
 import com.crud.btt.admin.model.service.AdminService;
 import com.crud.btt.member.model.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.hibernate.annotations.Fetch;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import javax.json.JsonObject;
+import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,8 +32,6 @@ public class AdminController {
     private final MemberService memberService;
     private final LogRepository logRepository;
     private final EmotionRepository emotionRepository;
-
-//private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
 
     //chatlist 출력용
@@ -45,20 +50,17 @@ public class AdminController {
 //    }
 
 
-    //감정클릭 테이블에 저장
-    @PostMapping("/home/emotion")
-    public EmotionEntity getUserEmotion(@RequestBody Long userCode, String emotion) {
+    //감정 체크
+    @PatchMapping("/emotion")
+    public ResponseEntity<EmotionEntity> userEmotion(@RequestBody EmotionDto emotionDto) {
+        String emotionCat = emotionDto.getEmotionCat();
+        Long userCode = emotionDto.getUserCode();
 
-        EmotionEntity entity = EmotionEntity.builder()
-                .userCode(userCode)
-                .emotionCat(emotion)
-                .emotionDate(LocalDateTime.now())
-                .build();
-
-        log.info("entity" + entity);
-
-        return emotionRepository.save(entity);
+        log.info("유저 감정 컨트롤 - " + userCode + "님의 감정 상태는 "+ emotionCat);
+        EmotionEntity emotionEntity = adminService.SaveUserEmotion(emotionCat, userCode);
+        return new ResponseEntity<>(emotionEntity, HttpStatus.OK);
     }
+
 
     //감정현황 조회
     @GetMapping("/admin/emotion")

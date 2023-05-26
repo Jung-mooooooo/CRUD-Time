@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -103,6 +105,33 @@ public class AdminService {
         log.info("entity" + entity);
 
         return logRepository.save(entity);
+    }
+
+
+    //유저 감정현황 저장
+    public EmotionEntity SaveUserEmotion(String emotion, Long userCode) {
+        log.info("현재 " + userCode +"의 감정은 "+emotion + "입니다.");
+        if(emotion == null) {
+            EmotionEntity emotionEntity = EmotionEntity.builder()
+                    .emotionCat("NEUTRAL")
+                    .emotionDate(LocalDateTime.now())
+                    .userCode(userCode)
+                    .build();
+
+            log.info(emotionEntity.toString());
+            return emotionRepository.save(emotionEntity);
+
+        }else {
+            EmotionEntity emotionEntity = EmotionEntity.builder()
+                    .emotionCat(emotion)
+                    .emotionDate(LocalDateTime.now())
+                    .userCode(userCode)
+                    .build();
+            log.info(emotionEntity.toString());
+            return emotionRepository.patch(emotionEntity.getUserCode(), emotionEntity.getEmotionCat(), emotionEntity.getEmotionDate());
+
+        }
+
     }
 
 //    //음성인식 사용자 수 조회

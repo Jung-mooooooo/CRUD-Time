@@ -3,6 +3,10 @@ package com.crud.btt.member.controller;
 import com.crud.btt.admin.model.service.AdminService;
 import com.crud.btt.common.Header;
 import com.crud.btt.config.ForbiddenException;
+import com.crud.btt.admin.controller.AdminController;
+import com.crud.btt.admin.entity.EmotionEntity;
+import com.crud.btt.admin.model.dto.EmotionDto;
+import com.crud.btt.jwt.JwtToken;
 import com.crud.btt.jwt.JwtTokenProvider;
 import com.crud.btt.member.entity.MemberEntity;
 import com.crud.btt.member.entity.MemberRepository;
@@ -27,10 +31,18 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Member;
 import java.util.*;
+import javax.mail.internet.MimeMessage;
+import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -46,7 +58,10 @@ public class MemberController {
     private final MemberRepository memberRepository;
     private final RegisterMail registerMail;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final RegisterMailForPw registerMailForPw;
 
+    //emotion을 위한 컨트롤러
+    private final AdminController adminController;
 
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -143,91 +158,6 @@ public class MemberController {
         return jwtTokenProvider.createToken(member.getUserId(), member.getAuth());
     }
 
-//    //아이디찾기
-//    @PostMapping("/member/findid")
-//    public ResponseEntity<?> selectId(@RequestBody MemberDto memberDto){
-//        MemberEntity memberEntity = memberService.searchUserName(memberDto.getUserName());
-//        return new ResponseEntity<>(true, HttpStatus.valueOf(memberEntity.getUserId()));
-//    }
-//
-//
-//    //비밀번호찾기
-//    public ResponseEntity<?> findPw(@RequestBody MemberDto memberDto){
-//        MemberEntity memberEntity = memberService.sea
-//    }
-
-//    @PostMapping("/member/login")
-//    public ResponseEntity<String> loginSuccess(@RequestBody Map<String, String> loginForm){
-//        log.info("여기는왔니?");
-//        String token = memberService.login(loginForm.get("username"), loginForm.get("password"));
-//
-////        return ResponseEntity.ok(token);
-//        return ResponseEntity.ok(token);
-//    }
-
-//      @PostMapping("/member/login")
-//      public ResponseEntity<JwtToken> loginSuccess(@Valid @RequestBody MemberDto memberDto){
-//
-//          UsernamePasswordAuthenticationToken authenticationToken =
-//                  new UsernamePasswordAuthenticationToken(memberDto.getUserId(), memberDto.getUserPw());
-//
-//          Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-//          SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//          String jwt = jwtTokenProvider.createToken(authentication);
-//
-//          HttpHeaders httpHeaders = new HttpHeaders();
-//          httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-//
-//          return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
-//    }
-
-
-//    @PostMapping("/member/login")
-//    public ResponseEntity<JwtToken> authorize(@Valid @RequestBody MemberDto memberDto) {
-//
-//        UsernamePasswordAuthenticationToken authenticationToken =
-//                new UsernamePasswordAuthenticationToken(memberDto.getUserId(), memberDto.getUserPw());
-//
-//        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//        String jwt = tokenProvider.createToken(authentication);
-//
-//        return new ResponseEntity<>(new JwtToken(jwt), HttpStatus.OK);
-//    }
-
-
-
-//    //해당 회원 존재 여부 확인 및 정보 출력용
-////    @GetMapping("/member/{userCode}") //mapping은 임의로 작성한것.
-////    public MemberDto getMember(@PathVariable Long userCode) {
-////        return memberService.getMember(userCode);
-////    }
-//
-//    //탈퇴회원 quit table로 이동
-////    @PostMapping
-////    public QuitEntity create(@RequestBody MemberDto memberDto) {
-////        return create(memberService.create(memberDto));
-////    }
-//
-//    //탈퇴하기
-////    @DeleteMapping
-////    public void delete(@PathVariable Long userCode) {
-////
-////        if(getMember(userCode) != null) {
-////            //if(만약 quit create가 성공이라면){
-////
-////            //member table의 user를 삭제한다.
-////            memberService.delete(userCode);
-////            //}
-
-//    //로그인 처리용
-////    @GetMapping("/member/login")
-////    public void login(){
-////        System.out.println("123");
-//////        LOG.info("GET successfully called on /login resource");
-////    }
 
     //id 중복체크
    @GetMapping("/member/enroll/userId/{userId}")
@@ -276,37 +206,91 @@ public class MemberController {
         return "saveOk";
     }
 
+
     //아이디찾기
-////    @GetMapping("/member/find/id")
-////    public ResponseEntity<String> findId(String email){
-////        return null;
-////    }
-//
-////    //비밀번호찾기
-////    @GetMapping("/member/find/id")
-////    public String resetPassword(String user_name, String email, RedirectAttributes ra){
-////        // 비밀번호를 찾으면 로그인 창으로 이동해 "임시 비밀번호를 이메일로 전송했습니다."라고 출력하려고 한다.
-////        // 비밀번호를 못 찾으면 GET /member/reset_password로 이동해서 "비밀번호를 찾지 못했습니다"라고 출력하려고 한다.
-//////        Boolean result = service.resetPassword(username, email);
-//////        if(result==true) {
-//////            ra.addFlashAttribute("msg", "임시비밀번호를 이메일로 전송했습니다");
-//////            return "redirect:/member/login";
-//////        } else {
-//////            ra.addFlashAttribute("msg", "비밀번호를 찾지 못했습니다");
-//////            return "redirect:/member/reset_password";
-//////        }
-////
-////        //임시로 넣은것
-////        return null;
-////    }
-////
-////    //이메일인증
-////    @PostMapping("/check/findPw/sendEmail")
-////    public @ResponseBody void sendEmail(String userEmail, String userName){
-//////        MailDto dto = sendEmailService.createMailAndChangePassword(userEmail, userName);
-//////        sendEmailService.mailSend(dto);
-////
-////    }
+    @GetMapping("/find/id/{val1}/{val2}/{val3}")
+    public String findId(@PathVariable(value = "val1") String userName,
+                                         @PathVariable(value = "val2") String key,
+                                         @PathVariable(value = "val3") String item) {
+       String userId = null;
+
+        log.info(userName);
+        log.info(key);
+        log.info(item);
+
+
+        //핸드폰
+        if(userName != null && item != null && key.equals("phone")) {
+            userId = memberService.findIdP(userName, item).getUserId();
+            log.info("아이디 핸드폰으로 찾기" + userId);
+
+            System.out.println(userId);
+        }
+
+        //이메일
+        if(userName != null && item != null && key.equals("email")) {
+            userId = memberService.findIdE(userName, item).getUserId();
+            log.info("아이디 이메일 찾기" + userId);
+        }
+
+        return userId;
+    }
+
+    //비밀번호 찾기
+    @GetMapping("/find/pw/{val1}/{val2}/{val3}")
+    public ResponseEntity<String> findPw(@PathVariable(value = "val1") String userId,
+                         @PathVariable(value = "val2") String key,
+                         @PathVariable(value = "val3") String item) {
+        //check
+        log.info(userId);
+        log.info(key);
+        log.info(item);
+
+        MemberDto member = null;
+        RegisterMailForPw mailSend = new RegisterMailForPw();
+
+
+        //핸드폰
+        if (userId != null && item != null && key.equals("phone")) {
+            member = memberService.findPwP(userId, item);
+
+            if (member != null) {
+                System.out.println(member.getUserId());
+
+                try {
+                    log.info(member.getEmail());
+                    String message = pwSendMail(member.getEmail());
+                    member = memberService.updatePassword(member, message);
+                    return new ResponseEntity<>("ok", HttpStatus.OK);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        }
+
+        //이메일
+        if (userId != null && item != null && key.equals("email")) {
+            member = memberService.findPwE(userId, item);
+
+            if (member != null) {
+                System.out.println(member.getUserId());
+
+                try {
+                    String message = pwSendMail(member.getEmail());
+                    member = memberService.updatePassword(member, message);
+                    return new ResponseEntity<>("ok", HttpStatus.OK);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+        return new ResponseEntity<>("no", HttpStatus.OK);
+
+
+    }
+
 
     //회원가입 이메일 인증
     @GetMapping("/enroll/email")
@@ -325,23 +309,30 @@ public class MemberController {
         return code;
     }
 
+    //세션 값 전화
     @GetMapping("/member/info/{userId}")
-    public MemberDto getMemberInfo(@PathVariable("userId") String userId, HttpServletRequest request) throws Exception{
+    public MemberDto getMemberInfo(@PathVariable("userId") String userId, HttpServletRequest request) throws Exception {
         Optional<MemberEntity> user = memberRepository.findByUserId(userId);
         Long userCode = user.get().getUserCode();
         adminService.getClientIP(userCode, request);
-        return memberService.getMemberInfo(userId);
+        MemberDto memberDto = memberService.getMemberInfo(userId);
+        EmotionDto emotionDto = new EmotionDto();
+        emotionDto.setUserCode(memberDto.getUserCode());
+
+            adminController.userEmotion(emotionDto);
+
+
+        return memberDto;
     }
 
-//    @GetMapping("/member/myinfo")
-//    public LogEntity getMemberIp(@RequestBody Long userCode, LogDto logDto, HttpServletRequest request) throws Exception {
-//
-//        return adminService.getClientIP(userCode, logDto, request);
-//    }
-
-
-
-
+    //이메일 인증
+    public String pwSendMail(String email) throws Exception {
+        System.out.println("이메일 인증을 위한 컨트롤러 도착!");
+        System.out.println(email);
+        String code = registerMailForPw.sendSimpleMessage(email);
+        System.out.println("인증코드 : " + code);
+        return code;
+    }
 
 
 
@@ -405,6 +396,7 @@ public class MemberController {
 
         return list;
     }
+}
 }
 
 

@@ -15,7 +15,7 @@ import java.util.Set;
 //@JsonIgnoreProperties(value="hibernateLazyInitializer")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Builder
 @Table(name = "MEMBER")
 @Entity
