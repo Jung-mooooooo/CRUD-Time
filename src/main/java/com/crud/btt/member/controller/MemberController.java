@@ -360,7 +360,7 @@ public class MemberController {
         log.info("list" + list);
 
         return memberService.top5UserList();
-
+    }
     @GetMapping("/member/myinfo/{userCode}")
     public MemberDto read(@PathVariable("userCode") Long userCode) throws Exception {
 ;
@@ -397,7 +397,7 @@ public class MemberController {
         return list;
     }
 }
-}
+
 
 
 
