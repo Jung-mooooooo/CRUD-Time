@@ -1,12 +1,19 @@
 package com.crud.btt.admin.model.service;
 
+import com.crud.btt.admin.entity.EmotionEntity;
 import com.crud.btt.admin.entity.EmotionRepository;
 import com.crud.btt.admin.entity.LogEntity;
 import com.crud.btt.admin.entity.LogRepository;
-import com.crud.btt.admin.model.dto.LogDto;
+import com.crud.btt.member.entity.MemberEntity;
+import com.crud.btt.member.model.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -15,6 +22,7 @@ public class AdminService {
 //    private final SpLogRepository spLogRepository;
     private final LogRepository logRepository;
     private final EmotionRepository emotionRepository;
+    private final MemberService memberService;
 
 //    private final ChatLogRepository chatLogRepository;
 //    private final ChatLogRepositoryCustom chatLogRepositoryCustom;
@@ -38,36 +46,61 @@ public class AdminService {
 
 
 
+
     //감정현황 조회
-//    public List<EmotionEntity> emotionCount(){
-//
-//        return emotionRepository.countEmotion();
-//    }
+    public List<EmotionEntity> emotionCount(){
+
+        return emotionRepository.countEmotionCat();
+    }
 
 
     //접속자 수 조회
-//    public Long visitCount() {
-//        return logRepository.countByLogNo();
-//    }
+    public Long visitCount() {
+        return logRepository.countByLogNo();
+    }
 
     //월 접속자 수 조회
-//    public Long visitCountMonth() {
-//        return logRepository.countByMonthLogNo();
-//    }
-//
-//    //월 평균 접속자 수 조회
-//    public int visitCountAvg() {
-//        return 0;
-//    }
+    public Long visitCountMonth() {
+        return logRepository.countByMonthLogNo();
+    }
+
 
     //접속자 로그테이블에 저장하기
-    public LogEntity create(LogDto logDto) {
+    public LogEntity getClientIP(@RequestBody Long userCode, HttpServletRequest request) throws Exception {
+        MemberEntity member = memberService.read(userCode);
+        log.info(member.toString());
+
+        String ip = request.getHeader("X-FORWARDED-FOR");
+
+        if (ip == null) {
+            ip = request.getHeader("Proxy-Client-IP");
+            log.info(">>>> Proxy-Client-IP : " + ip);
+        }
+        if (ip == null) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+            log.info(">>>> WL-Proxy-Client-IP : " + ip);
+        }
+        if (ip == null) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+            log.info(">>>> HTTP_CLIENT_IP : " + ip);
+        }
+        if (ip == null) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+            log.info(">>>> HTTP_X_FORWARDED_FOR : " + ip);
+        }
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
+        log.info(">>>> Result : IP Address : "+ip);
+
         LogEntity entity = LogEntity.builder()
-                .logNo(logDto.getLogNo())
-                .userCode(logDto.getUserCode())
-                .visitIp(Long.valueOf(logDto.getVisitIp()))
-                .visitTime(logDto.getVisitTime().getTime())
+                .userCode(userCode)
+                .visitIp(ip)
+                .visitTime(LocalDateTime.now())
                 .build();
+
+        log.info("ip" + ip);
+        log.info("entity" + entity);
 
         return logRepository.save(entity);
     }

@@ -1,11 +1,13 @@
 package com.crud.btt.admin.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -20,7 +22,6 @@ public class LogEntity {
     @SequenceGenerator(
             name = "seq_log_gen",
             sequenceName = "SEQ_LOG",
-            initialValue=1, //시작값
             allocationSize=1 //메모리를 통해 할당할 범위 사이즈
     )
     @Column(name = "LOG_NO")
@@ -28,8 +29,9 @@ public class LogEntity {
     @Column(name = "USER_CODE")
     private Long userCode;
     @Column(name = "VISIT_IP")
-    private Long visitIp;
+    private String visitIp;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     @Column(name = "VISIT_TIME")
-    private Long visitTime;
+    private LocalDateTime visitTime;
 
 }

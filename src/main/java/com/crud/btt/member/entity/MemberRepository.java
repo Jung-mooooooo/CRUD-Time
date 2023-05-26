@@ -1,11 +1,8 @@
 package com.crud.btt.member.entity;
 
-import com.crud.btt.member.model.dto.MemberDto;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -22,6 +19,8 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     boolean existsByEmail(String email);
 
     Optional<MemberEntity> findByUserId(String username);
+
+    List<MemberEntity> findTop5ByOrderByEnrollDateDesc();
 
 //    @EntityGraph(attributePaths = "auth")
 //    Optional<MemberEntity> findOneWithAuthoritiesByUsername(String username);

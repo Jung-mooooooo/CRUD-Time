@@ -1,5 +1,6 @@
 package com.crud.btt.map.model.service;
 
+import com.crud.btt.common.CustomPageable;
 import com.crud.btt.common.Header;
 import com.crud.btt.common.Pagination;
 import com.crud.btt.common.SearchCondition;
@@ -26,7 +27,8 @@ public class TouristSpotService {
     private final TouristSpotRepositoryCustom touristSpotRepositoryCustom;
 
     //지도 목록 조회(페이징 처리)
-    public Header<List<TouristSpotDto>> getTouristSpotList(Pageable pageable, SearchCondition searchCondition){
+    public Header<List<TouristSpotDto>> getTouristSpotList(Pageable page, SearchCondition searchCondition){
+        CustomPageable pageable = new CustomPageable(page);
         List<TouristSpotDto> list = new ArrayList<>();
 
         Page<TouristSpotEntity> touristSpotEntities = touristSpotRepositoryCustom.findAllBySearchCondition(pageable, searchCondition);
@@ -47,8 +49,8 @@ public class TouristSpotService {
 
         Pagination pagination = new Pagination(
                 (int) touristSpotEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
+                , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
+                , pageable.getPageSize() +1
                 , 10
         );
 
@@ -62,7 +64,8 @@ public class TouristSpotService {
 //
 //
 //    //카테고리(바다)별 리스트 조회
-    public Header<List<TouristSpotDto>> getSeaList(Pageable pageable, SearchCondition searchCondition){
+    public Header<List<TouristSpotDto>> getSeaList(Pageable page, SearchCondition searchCondition){
+        CustomPageable pageable = new CustomPageable(page);
         List<TouristSpotDto> list = new ArrayList<>();
 
         Page<TouristSpotEntity> touristSpotEntities = touristSpotRepositoryCustom.findAllByCategoryIsAndNameLikeSea(pageable, searchCondition);
@@ -83,8 +86,8 @@ public class TouristSpotService {
 
         Pagination pagination = new Pagination(
                 (int) touristSpotEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
+                , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
+                , pageable.getPageSize() +1
                 , 10
         );
 
@@ -92,7 +95,8 @@ public class TouristSpotService {
     }
 //
 //    //카테고리(공원)별 리스트 조회
-    public Header<List<TouristSpotDto>> getParkList(Pageable pageable, SearchCondition searchCondition){
+    public Header<List<TouristSpotDto>> getParkList(Pageable page, SearchCondition searchCondition){
+        CustomPageable pageable = new CustomPageable(page);
         List<TouristSpotDto> list = new ArrayList<>();
 
         Page<TouristSpotEntity> touristSpotEntities = touristSpotRepositoryCustom.findAllByCategoryIsAndNameLikePark(pageable, searchCondition);
@@ -113,8 +117,8 @@ public class TouristSpotService {
 
         Pagination pagination = new Pagination(
                 (int) touristSpotEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
+                , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
+                , pageable.getPageSize() +1
                 , 10
         );
 
@@ -122,7 +126,8 @@ public class TouristSpotService {
     }
 //
 //    //카테고리(휴양림)별 리스트 조회
-    public Header<List<TouristSpotDto>> getForestList(Pageable pageable, SearchCondition searchCondition){
+    public Header<List<TouristSpotDto>> getForestList(Pageable page, SearchCondition searchCondition){
+        CustomPageable pageable = new CustomPageable(page);
         List<TouristSpotDto> list = new ArrayList<>();
 
         Page<TouristSpotEntity> touristSpotEntities = touristSpotRepositoryCustom.findAllByCategoryIsAndNameLikeForest(pageable, searchCondition);
@@ -143,8 +148,8 @@ public class TouristSpotService {
 
         Pagination pagination = new Pagination(
                 (int) touristSpotEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
+                , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
+                , pageable.getPageSize() +1
                 , 10
         );
 
@@ -152,7 +157,8 @@ public class TouristSpotService {
     }
 //
 //    //카테고리(액티비티)별 리스트 조회
-    public Header<List<TouristSpotDto>> getActivityList(Pageable pageable, SearchCondition searchCondition){
+    public Header<List<TouristSpotDto>> getActivityList(Pageable page, SearchCondition searchCondition){
+        CustomPageable pageable = new CustomPageable(page);
         List<TouristSpotDto> list = new ArrayList<>();
 
         Page<TouristSpotEntity> touristSpotEntities = touristSpotRepositoryCustom.findAllByCategoryIsAndNameLikeActivity(pageable, searchCondition);
@@ -173,8 +179,8 @@ public class TouristSpotService {
 
         Pagination pagination = new Pagination(
                 (int) touristSpotEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
+                , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
+                , pageable.getPageSize() +1
                 , 10
         );
 
@@ -182,7 +188,8 @@ public class TouristSpotService {
     }
 //
 //    //카테고리(캠핑)별 리스트 조회
-    public Header<List<TouristSpotDto>> getCampingList(Pageable pageable, SearchCondition searchCondition){
+    public Header<List<TouristSpotDto>> getCampingList(Pageable page, SearchCondition searchCondition){
+        CustomPageable pageable = new CustomPageable(page);
         List<TouristSpotDto> list = new ArrayList<>();
 
         Page<TouristSpotEntity> touristSpotEntities = touristSpotRepositoryCustom.findAllByCategoryIsAndNameLikeCamping(pageable, searchCondition);
@@ -203,8 +210,8 @@ public class TouristSpotService {
 
         Pagination pagination = new Pagination(
                 (int) touristSpotEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
+                , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
+                , pageable.getPageSize() +1
                 , 10
         );
 
@@ -212,7 +219,8 @@ public class TouristSpotService {
     }
 //
 //    //카테고리(박물관)별 리스트 조회
-    public Header<List<TouristSpotDto>> getMuseumList(Pageable pageable, SearchCondition searchCondition){
+    public Header<List<TouristSpotDto>> getMuseumList(Pageable page, SearchCondition searchCondition){
+        CustomPageable pageable = new CustomPageable(page);
             List<TouristSpotDto> list = new ArrayList<>();
 
             Page<TouristSpotEntity> touristSpotEntities = touristSpotRepositoryCustom.findAllByCategoryIsAndNameLikeMuseum(pageable, searchCondition);
@@ -233,8 +241,8 @@ public class TouristSpotService {
 
             Pagination pagination = new Pagination(
                     (int) touristSpotEntities.getTotalElements()
-                    , pageable.getPageNumber() + 1
-                    , pageable.getPageSize()
+                    , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
+                    , pageable.getPageSize() +1
                     , 10
             );
 
@@ -242,7 +250,8 @@ public class TouristSpotService {
     }
 //
 //    //카테고리(미술관)별 리스트 조회
-    public Header<List<TouristSpotDto>> getGalleryList(Pageable pageable, SearchCondition searchCondition){
+    public Header<List<TouristSpotDto>> getGalleryList(Pageable page, SearchCondition searchCondition){
+        CustomPageable pageable = new CustomPageable(page);
         List<TouristSpotDto> list = new ArrayList<>();
 
         Page<TouristSpotEntity> touristSpotEntities = touristSpotRepositoryCustom.findAllByCategoryIsAndNameLikeGallery(pageable, searchCondition);
@@ -263,8 +272,8 @@ public class TouristSpotService {
 
         Pagination pagination = new Pagination(
                 (int) touristSpotEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
+                , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
+                , pageable.getPageSize() +1
                 , 10
         );
 

@@ -52,6 +52,8 @@ public class WelfareFacilityRepositoryCustom {
                 .orderBy(welfareFacilityEntity.wfNo.asc())
                 .fetch();
 
+        System.out.println("offset : " + pageable.getOffset());
+
         return new PageImpl<>(results, pageable, total);
     }
 

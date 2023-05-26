@@ -1,11 +1,13 @@
 package com.crud.btt.admin.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -26,9 +28,10 @@ public class EmotionEntity {
     @Column(name = "EMOTION_NO")
     private Long emotionNo;
     @Column(name = "EMOTION_CAT")
-    private Long emotionCat;
+    private String emotionCat;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     @Column(name = "EMOTION_DATE")
-    private Long emotionDate;
+    private LocalDateTime emotionDate;
     @Column(name = "USER_CODE")
     private Long userCode;
 

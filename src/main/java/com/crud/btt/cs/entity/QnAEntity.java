@@ -7,8 +7,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -23,7 +26,7 @@ public class QnAEntity {
     @Column(name="QNA_NO")
     private Long qnaNo;
     @Column(name="CREATE_AT")
-    private Date createAt;
+    private LocalDateTime createAt;
     @Column(name="QNA_TITLE")
     private String qnaTitle;
     @Column(name="QNA_CONTENT")
@@ -31,7 +34,11 @@ public class QnAEntity {
     @Column(name="QNA_READCOUNT")
     private Integer qnaReadCount = 0 ;
     @Column(name="ADMIN_CODE")
-    private Long adminCode;
+    private long adminCode;
+
+    @Column(name="USER_ID")
+    private String userId;
+
     @Column(name="USER_CODE")
     private Long userCode;
     @Column(name="QNA_ORIGINAL_FILE")

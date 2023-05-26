@@ -1,31 +1,29 @@
 package com.crud.btt.member.model.service;
 
-import com.crud.btt.jwt.JwtToken;
+import com.crud.btt.common.Header;
 import com.crud.btt.jwt.JwtTokenProvider;
-import com.crud.btt.member.entity.*;
+import com.crud.btt.member.entity.MemberEntity;
+import com.crud.btt.member.entity.MemberRepository;
+import com.crud.btt.member.entity.QuitEntity;
+import com.crud.btt.member.entity.QuitRepository;
 import com.crud.btt.member.model.dto.MemberDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
-
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 @Slf4j
@@ -292,6 +290,38 @@ public class MemberService implements UserDetailsService {
     public MemberEntity read(Long userCode) throws Exception{
         return memberRepository.getOne(userCode);
     }
+
+    //admin top5리스트
+    public Header<List<MemberDto>> top5UserList(){
+
+        List<MemberDto> list = new ArrayList<>();
+
+        //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+
+        List<MemberEntity> entities = memberRepository.findTop5ByOrderByEnrollDateDesc();
+        for (MemberEntity entity : entities) {
+            MemberDto dto = MemberDto.builder()
+                    .userCode(entity.getUserCode())
+                    .userId(entity.getUserId())
+                    .userPw(entity.getUserPw())
+                    .userName(entity.getUserNamee())
+                    .phone(entity.getPhone())
+                    .email(entity.getEmail())
+                    .kakaoId(entity.getKakaoId())
+                    .naverId(entity.getNaverId())
+                    .googleId(entity.getGoogleId())
+                    .permit(entity.getPermit())
+                    .enrollDate(String.valueOf(entity.getEnrollDate()))
+                    .build();
+
+            list.add(dto);
+        }
+
+        log.info("list" + list);
+
+        return Header.OK(list);
+    }
+
 }
 
 

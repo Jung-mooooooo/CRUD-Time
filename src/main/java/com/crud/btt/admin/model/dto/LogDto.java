@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +16,6 @@ public class LogDto {
     private Long logNo;
     private Long userCode;
     private String visitIp;
-    private Date visitTime;
+    private LocalDateTime visitTime;
 
 }

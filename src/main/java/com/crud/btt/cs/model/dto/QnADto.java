@@ -1,16 +1,19 @@
 package com.crud.btt.cs.model.dto;
 
 import com.crud.btt.cs.entity.QnAEntity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class QnADto {
     private Long qnaNo;
-    private Date createAt;
+    private LocalDateTime createAt;
     private String userId;
     private String qnaTitle;
     private String qnaContent;

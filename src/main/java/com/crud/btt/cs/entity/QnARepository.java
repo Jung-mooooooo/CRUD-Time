@@ -21,6 +21,16 @@ public interface QnARepository extends JpaRepository<QnAEntity, Long>{
 //            ,nativeQuery = true)
 //    QnAEntity saveQuestion(@Param(value = "qnAEntity")QnAEntity qnAEntity);
 
+//    @Query(value = "SELECT q.qnaNo, q.qnaTitle, m.userId, q.createAt FROM QnAEntity q join MemberEntity m on q.userCode = m.userCode ORDER BY q.createAt DESC", nativeQuery = false)
+//    @Query(value = "SELECT ROWNUM, qa.qnaNo, qa.qnaTitle, qa.userId, qa.createAt " +
+//        "FROM (SELECT q.qnaNo, q.qnaTitle, m.userId, q.createAt " +
+//        "FROM QnAEntity q " +
+//        "JOIN MemberEntity m ON q.userCode = m.userCode " +
+//        "ORDER BY q.createAt DESC) qa " +
+//        "WHERE ROWNUM <= 5",
+//        nativeQuery = true)
+//    List<QnAEntity> findTop5ByOrderByCreateAtDesc();
+
     Page<QnAEntity> findAllByOrderByQnaNoDesc(Pageable pageable);
 
 

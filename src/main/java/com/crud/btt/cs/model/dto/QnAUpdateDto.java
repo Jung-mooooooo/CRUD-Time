@@ -3,7 +3,7 @@ package com.crud.btt.cs.model.dto;
 import com.crud.btt.cs.entity.QnAEntity;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 @Data
@@ -14,7 +14,7 @@ import java.util.Date;
 public class QnAUpdateDto {
 
     private long qna_no;
-    private Date create_at;
+    private LocalDateTime create_at;
     private String qna_title;
     private String qna_content;
     private String qna_original_file;

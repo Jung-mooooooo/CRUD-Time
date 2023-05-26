@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -24,6 +25,14 @@ public class QnAController {
     private final QnAService qnaService;
     private static final Logger logger = LoggerFactory.getLogger(QnAController.class);
 
+    //admin top5리스트
+    @GetMapping("admin/qnalist")
+    public Header<List<QnADto>> getTop5QnaList(){
+
+        List<QnADto> list = new ArrayList<>();
+
+        return qnaService.top5QnaList();
+    }
 
     //QNA 목록 출력
     @GetMapping("/cs/QnA")
