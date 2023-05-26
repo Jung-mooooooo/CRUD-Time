@@ -1,5 +1,6 @@
 package com.crud.btt.map.model.service;
 
+import com.crud.btt.common.CustomPageable;
 import com.crud.btt.common.Header;
 import com.crud.btt.common.Pagination;
 import com.crud.btt.common.SearchCondition;
@@ -24,7 +25,8 @@ public class HobbyService {
     private final HobbyRepositoryCustom hobbyRepositoryCustom;
 
     //지도 목록 조회(페이징 처리)
-    public Header<List<HobbyDto>> getHobbyList(Pageable pageable, SearchCondition searchCondition){
+    public Header<List<HobbyDto>> getHobbyList(Pageable page, SearchCondition searchCondition){
+        CustomPageable pageable = new CustomPageable(page);
         List<HobbyDto> list = new ArrayList<>();
 
         Page<HobbyEntity> hobbyEntities = hobbyRepositoryCustom.findAllBySearchCondition(pageable, searchCondition);
@@ -46,8 +48,8 @@ public class HobbyService {
 
         Pagination pagination = new Pagination(
                 (int) hobbyEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
+                , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
+                , pageable.getPageSize() +1
                 , 10
         );
 
@@ -61,7 +63,8 @@ public class HobbyService {
 //
 //
     //카테고리(음악)별 리스트 조회
-    public Header<List<HobbyDto>> getMusicList(Pageable pageable, SearchCondition searchCondition){
+    public Header<List<HobbyDto>> getMusicList(Pageable page, SearchCondition searchCondition){
+        CustomPageable pageable = new CustomPageable(page);
         List<HobbyDto> list = new ArrayList<>();
 
         Page<HobbyEntity> hobbyEntities = hobbyRepositoryCustom.findAllByCategoryIsAndNameLikeMusic(pageable, searchCondition);
@@ -82,8 +85,8 @@ public class HobbyService {
 
         Pagination pagination = new Pagination(
                 (int) hobbyEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
+                , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
+                , pageable.getPageSize() +1
                 , 10
         );
 
@@ -91,7 +94,8 @@ public class HobbyService {
     }
 
     //카테고리(미술)별 리스트 조회
-    public Header<List<HobbyDto>> getArtList(Pageable pageable, SearchCondition searchCondition){
+    public Header<List<HobbyDto>> getArtList(Pageable page, SearchCondition searchCondition){
+        CustomPageable pageable = new CustomPageable(page);
         List<HobbyDto> list = new ArrayList<>();
 
         Page<HobbyEntity> hobbyEntities = hobbyRepositoryCustom.findAllByCategoryIsAndNameLikeArt(pageable, searchCondition);
@@ -112,8 +116,8 @@ public class HobbyService {
 
         Pagination pagination = new Pagination(
                 (int) hobbyEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
+                , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
+                , pageable.getPageSize() +1
                 , 10
         );
 
@@ -121,7 +125,8 @@ public class HobbyService {
     }
 
     //카테고리(무용)별 리스트 조회
-    public Header<List<HobbyDto>> getDanceList(Pageable pageable, SearchCondition searchCondition){
+    public Header<List<HobbyDto>> getDanceList(Pageable page, SearchCondition searchCondition){
+        CustomPageable pageable = new CustomPageable(page);
         List<HobbyDto> list = new ArrayList<>();
 
         Page<HobbyEntity> hobbyEntities = hobbyRepositoryCustom.findAllByCategoryIsAndNameLikeDance(pageable, searchCondition);
@@ -142,8 +147,8 @@ public class HobbyService {
 
         Pagination pagination = new Pagination(
                 (int) hobbyEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
+                , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
+                , pageable.getPageSize() +1
                 , 10
         );
 
@@ -151,7 +156,8 @@ public class HobbyService {
     }
 
     //카테고리(언어)별 리스트 조회
-    public Header<List<HobbyDto>> getLanguageList(Pageable pageable, SearchCondition searchCondition){
+    public Header<List<HobbyDto>> getLanguageList(Pageable page, SearchCondition searchCondition){
+        CustomPageable pageable = new CustomPageable(page);
         List<HobbyDto> list = new ArrayList<>();
 
         Page<HobbyEntity> hobbyEntities = hobbyRepositoryCustom.findAllByCategoryIsAndNameLikeLanguage(pageable, searchCondition);
@@ -172,8 +178,8 @@ public class HobbyService {
 
         Pagination pagination = new Pagination(
                 (int) hobbyEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
+                , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
+                , pageable.getPageSize() +1
                 , 10
         );
 

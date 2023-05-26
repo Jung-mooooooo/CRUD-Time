@@ -2,6 +2,7 @@ package com.crud.btt.cs.controller;
 
 import com.crud.btt.common.Header;
 import com.crud.btt.common.SearchCondition;
+import com.crud.btt.cs.model.dto.QnADto;
 import com.crud.btt.cs.model.dto.QnAListDto;
 import com.crud.btt.cs.model.service.QnAService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -24,6 +26,14 @@ public class QnAController {
     private final QnAService qnaService;
     private static final Logger logger = LoggerFactory.getLogger(QnAController.class);
 
+    //admin top5리스트
+    @GetMapping("admin/qnalist")
+    public Header<List<QnADto>> getTop5QnaList(){
+
+        List<QnADto> list = new ArrayList<>();
+
+        return qnaService.top5QnaList();
+    }
 
     //QNA 목록 출력
     @GetMapping("/admin/AdminQnA")

@@ -1,5 +1,6 @@
 package com.crud.btt.map.model.service;
 
+import com.crud.btt.common.CustomPageable;
 import com.crud.btt.common.Header;
 import com.crud.btt.common.Pagination;
 import com.crud.btt.common.SearchCondition;
@@ -25,7 +26,8 @@ public class WelfareFacilityService {
     private final WelfareFacilityRepositoryCustom welfareFacilityRepositoryCustom;
 
     //지도 목록 조회(페이징 처리)
-    public Header<List<WelfareFacilityDto>> getWelfareFacilityList(Pageable pageable, SearchCondition searchCondition){
+    public Header<List<WelfareFacilityDto>> getWelfareFacilityList(Pageable page, SearchCondition searchCondition){
+        CustomPageable pageable = new CustomPageable(page);
         List<WelfareFacilityDto> list = new ArrayList<>();
 
         Page<WelfareFacilityEntity> welfareFacilityEntities = welfareFacilityRepositoryCustom.findAllBySearchCondition(pageable, searchCondition);
@@ -46,8 +48,8 @@ public class WelfareFacilityService {
 
         Pagination pagination = new Pagination(
                 (int) welfareFacilityEntities.getTotalElements()
-                , pageable.getPageNumber() +1
-                , pageable.getPageSize()
+                , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
+                , pageable.getPageSize() +1
                 , 10
         );
 
@@ -64,7 +66,8 @@ public class WelfareFacilityService {
 
 
 //    //카테고리(병원)별 리스트 조회
-    public Header<List<WelfareFacilityDto>> getHospitalList(Pageable pageable, SearchCondition searchCondition){
+    public Header<List<WelfareFacilityDto>> getHospitalList(Pageable page, SearchCondition searchCondition){
+        CustomPageable pageable = new CustomPageable(page);
         List<WelfareFacilityDto> list = new ArrayList<>();
 
         Page<WelfareFacilityEntity> welfareFacilityEntities = welfareFacilityRepositoryCustom.findAllByCategoryIsAndNameLikeHospital(pageable, searchCondition);
@@ -84,8 +87,8 @@ public class WelfareFacilityService {
 
         Pagination pagination = new Pagination(
                 (int) welfareFacilityEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
+                , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
+                , pageable.getPageSize() +1
                 , 10
         );
 
@@ -93,7 +96,8 @@ public class WelfareFacilityService {
     }
 //
 //    //카테고리(상담센터)별 리스트 조회
-    public Header<List<WelfareFacilityDto>> getCounsellingCenterList(Pageable pageable, SearchCondition searchCondition){
+    public Header<List<WelfareFacilityDto>> getCounsellingCenterList(Pageable page, SearchCondition searchCondition){
+        CustomPageable pageable = new CustomPageable(page);
         List<WelfareFacilityDto> list = new ArrayList<>();
 
         Page<WelfareFacilityEntity> welfareFacilityEntities = welfareFacilityRepositoryCustom.findAllByCategoryIsAndNameLikeCounselling(pageable, searchCondition);
@@ -114,8 +118,8 @@ public class WelfareFacilityService {
 
         Pagination pagination = new Pagination(
                 (int) welfareFacilityEntities.getTotalElements()
-                , pageable.getPageNumber() + 1
-                , pageable.getPageSize()
+                , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
+                , pageable.getPageSize() +1
                 , 10
         );
 

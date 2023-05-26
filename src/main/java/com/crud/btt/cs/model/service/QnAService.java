@@ -7,6 +7,7 @@ import com.crud.btt.cs.controller.QnAController;
 import com.crud.btt.cs.entity.QnAEntity;
 import com.crud.btt.cs.entity.QnARepository;
 import com.crud.btt.cs.entity.QnARepositoryCustom;
+import com.crud.btt.cs.model.dto.QnADto;
 import com.crud.btt.cs.model.dto.QnAListDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,33 @@ public class QnAService {
     private final  QnARepository qnARepository;
     private final QnARepositoryCustom qnARepositoryCustom;
     private static final Logger logger = LoggerFactory.getLogger(QnAController.class);
+
+    //admin top5리스트
+    public Header<List<QnADto>> top5QnaList(){
+
+        List<QnADto> list = new ArrayList<>();
+
+        List<QnAEntity> entities = qnARepositoryCustom.findTop5ByOrderByCreateAtDesc();
+        for (QnAEntity entity : entities) {
+            QnADto dto = QnADto.builder()
+                    .qnaNo(entity.getQnaNo())
+                    .createAt(entity.getCreateAt())
+                    .qnaTitle(entity.getQnaTitle())
+                    .qnaReadCount(entity.getQnaReadCount())
+                    .adminCode(entity.getAdminCode())
+                    .userCode(entity.getUserCode())
+                    .qnaPrivate(entity.getQnaPrivate())
+                    .qnaRef(entity.getQnaRef())
+                    .userId(entity.getUserId())
+                    .build();
+
+            list.add(dto);
+        }
+
+        log.info("list" + list);
+
+        return Header.OK(list);
+    }
 
     //목록보기
     public Header<List<QnAListDto>> getQnAList(Pageable pageable, SearchCondition searchCondition) {

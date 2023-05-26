@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -15,7 +15,7 @@ public class EmotionDto {
 
     private Long emotionNo;
     private String emotionCat;
-    private Date emotionDate;
+    private LocalDateTime emotionDate;
     private Long userCode;
 
 }

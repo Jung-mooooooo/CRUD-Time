@@ -1,12 +1,19 @@
 package com.crud.btt.admin.controller;
 
+import com.crud.btt.admin.entity.EmotionEntity;
+import com.crud.btt.admin.entity.EmotionRepository;
+import com.crud.btt.admin.entity.LogRepository;
 import com.crud.btt.admin.model.service.AdminService;
+import com.crud.btt.member.model.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RestController;
+import org.json.simple.JSONObject;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -15,6 +22,9 @@ import javax.servlet.http.HttpServletRequest;
 public class AdminController {
 
     private final AdminService adminService;
+    private final MemberService memberService;
+    private final LogRepository logRepository;
+    private final EmotionRepository emotionRepository;
 
 //private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
@@ -35,67 +45,66 @@ public class AdminController {
 //    }
 
 
-    //감정현황 조회
-//    @GetMapping("/admin")
-//    public List<EmotionEntity> userEmotionCount(HttpServletResponse response) {
-//
-//        return adminService.emotionCount();
-//    }
+    //감정클릭 테이블에 저장
+    @PostMapping("/home/emotion")
+    public EmotionEntity getUserEmotion(@RequestBody Long userCode, String emotion) {
 
+        EmotionEntity entity = EmotionEntity.builder()
+                .userCode(userCode)
+                .emotionCat(emotion)
+                .emotionDate(LocalDateTime.now())
+                .build();
 
-    //회원 ip 메소드
-    public String getClientIP(HttpServletRequest request){
-        String ip = request.getHeader("X-FORWARDED-FOR");
+        log.info("entity" + entity);
 
-        if(ip == null || ip.length() == 0){
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if(ip == null || ip.length() == 0){
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if(ip == null || ip.length() == 0){
-            ip = request.getRemoteAddr();
-        }
-
-        return ip;
+        return emotionRepository.save(entity);
     }
 
-    //접속자 수 조회
-//    public String visitUserCount(HttpServletResponse response) {
-//
-//        // 오늘 접속자 수
-//        String visitorsT = Integer.toString(Math.toIntExact(adminService.visitCount()));
-//
-//        // 월 접속자 수(해당 달 총 접속자수=> 데일리로 누적됨)
-//        String visitorsM = Integer.toString(Math.toIntExact(adminService.visitCountMonth()));
-//
-//        // 월평균 접속자 수(한달 평균 접속자수)
-//        // 월접속자수를 view단에서 일수로 나누기. => if문 사용
-//        // <c:if test="new Date().substring(4, 6) == '02'">
-//        long datetime = 0;
-//        Date date = new Date(datetime);
-//        String visitorsAvg;
-//        if (date.toString().substring(4, 6).equals("02")) {
-//            visitorsAvg = Integer.toString((int) (adminService.visitCountMonth() / 28));
-//        } else if (date.toString().substring(4, 6).equals("04") || date.toString().substring(4, 6).equals("06")
-//                || date.toString().substring(4, 6).equals("09") || date.toString().substring(4, 6).equals("11")) {
-//            visitorsAvg = Integer.toString((int) (adminService.visitCountMonth() / 30));
-//
-//        } else {
-//            visitorsAvg = Integer.toString((int) (adminService.visitCountMonth() / 31));
-//
-//        }
-//
-//        JSONObject job = new JSONObject();
-//
-//        job.put("visitorsT", visitorsT);
-//        job.put("visitorsM", visitorsM);
-//        job.put("visitorsAvg", visitorsAvg);
-//
-//
-//        return job.toJSONString();
+    //감정현황 조회
+    @GetMapping("/admin/emotion")
+    public List<EmotionEntity> userEmotionCount() {
 
-//    }
+        return adminService.emotionCount();
+    }
+
+
+    //접속자 수 조회
+    @GetMapping("/admin/user")
+    public String visitUserCount(HttpServletResponse response) {
+
+        // 오늘 접속자 수
+        String visitorsT = Integer.toString(Math.toIntExact(adminService.visitCount()));
+
+        // 월 접속자 수(해당 달 총 접속자수=> 데일리로 누적됨)
+        String visitorsM = Integer.toString(Math.toIntExact(adminService.visitCountMonth()));
+
+        // 월평균 접속자 수(한달 평균 접속자수)
+        // 월접속자수를 view단에서 일수로 나누기. => if문 사용
+        // <c:if test="new Date().substring(4, 6) == '02'">
+        long datetime = 0;
+        Date date = new Date(datetime);
+        String visitorsAvg;
+        if (date.toString().substring(4, 6).equals("02")) {
+            visitorsAvg = Integer.toString((int) (adminService.visitCountMonth() / 28));
+        } else if (date.toString().substring(4, 6).equals("04") || date.toString().substring(4, 6).equals("06")
+                || date.toString().substring(4, 6).equals("09") || date.toString().substring(4, 6).equals("11")) {
+            visitorsAvg = Integer.toString((int) (adminService.visitCountMonth() / 30));
+
+        } else {
+            visitorsAvg = Integer.toString((int) (adminService.visitCountMonth() / 31));
+
+        }
+
+        JSONObject job = new JSONObject();
+
+        job.put("visitorsT", visitorsT);
+        job.put("visitorsM", visitorsM);
+        job.put("visitorsAvg", visitorsAvg);
+
+
+        return job.toJSONString();
+
+    }
 
 
 

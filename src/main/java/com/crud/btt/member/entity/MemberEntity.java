@@ -1,6 +1,5 @@
 package com.crud.btt.member.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,8 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 
 //@JsonIgnoreProperties(value="hibernateLazyInitializer")
@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @Entity
 //@DynamicInsert
 public class MemberEntity implements UserDetails {
+
     @Id
     @SequenceGenerator(name = "SEQ_MEMBER",
             sequenceName = "SEQ_MEMBER",

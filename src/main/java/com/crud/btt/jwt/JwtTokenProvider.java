@@ -1,7 +1,6 @@
 package com.crud.btt.jwt;
 
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +15,10 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Collection;
+import java.util.Date;
 import java.util.stream.Collectors;
 @Slf4j
 //@RequiredArgsConstructor
@@ -131,5 +133,7 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과
 //                 signature 에 들어갈 secret값 세팅
                 .compact();
+
+
     }
 }

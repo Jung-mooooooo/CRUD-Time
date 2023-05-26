@@ -1,6 +1,7 @@
 package com.crud.btt.member.controller;
 
-import com.crud.btt.jwt.JwtToken;
+import com.crud.btt.admin.model.service.AdminService;
+import com.crud.btt.common.Header;
 import com.crud.btt.jwt.JwtTokenProvider;
 import com.crud.btt.member.entity.MemberEntity;
 import com.crud.btt.member.entity.MemberRepository;
@@ -13,14 +14,9 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.JSONObject;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -28,9 +24,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 
 @Slf4j
@@ -40,6 +35,7 @@ import java.util.Map;
 @RestController
 public class MemberController {
 
+    private final AdminService adminService;
     private final MemberService memberService;
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
@@ -192,6 +188,7 @@ public class MemberController {
         }
 
         memberService.save(memberDto);
+
         System.out.println(memberDto.toString());
         System.out.println(String.valueOf(new ResponseEntity<>(memberDto, HttpStatus.OK)));
         return "saveOk";
@@ -247,9 +244,21 @@ public class MemberController {
     }
 
     @GetMapping("/member/myinfo/{userId}")
-    public MemberDto getMemberInfo(@PathVariable String userId) {
+    public MemberDto getMemberInfo(@PathVariable String userId, HttpServletRequest request) throws Exception{
+        Optional<MemberEntity> user = memberRepository.findByUserId(userId);
+        Long userCode = user.get().getUserCode();
+        adminService.getClientIP(userCode, request);
         return memberService.getMemberInfo(userId);
     }
+
+//    @GetMapping("/member/myinfo")
+//    public LogEntity getMemberIp(@RequestBody Long userCode, LogDto logDto, HttpServletRequest request) throws Exception {
+//
+//        return adminService.getClientIP(userCode, logDto, request);
+//    }
+
+
+
 
 
 
@@ -269,13 +278,23 @@ public class MemberController {
 
 
     //내정보보기
-    @GetMapping("/member/{userCode}")
-    public ResponseEntity<MemberEntity> read(@PathVariable("userCode") String code) throws Exception {
-        log.info("userCode" + code);
-        Long userCode = Long.parseLong(code);
-        MemberEntity member = memberService.read(userCode);
+//    @GetMapping("/member/{userCode}")
+//    public ResponseEntity<MemberEntity> read(@PathVariable("userCode") String code) throws Exception {
+//        log.info("userCode" + code);
+//        Long userCode = Long.parseLong(code);
+//        MemberEntity member = memberService.read(userCode);
+//
+//        return new ResponseEntity<>(member, HttpStatus.OK);
+//    }
 
-        return new ResponseEntity<>(member, HttpStatus.OK);
+    //admin top5리스트
+    @GetMapping("admin/userlist")
+    public Header<List<MemberDto>> getTop5UserList(){
+
+        List<MemberDto> list = new ArrayList<>();
+        log.info("list" + list);
+
+        return memberService.top5UserList();
     }
 
 

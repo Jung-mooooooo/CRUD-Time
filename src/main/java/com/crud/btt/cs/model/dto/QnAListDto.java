@@ -6,7 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -14,7 +15,7 @@ import java.util.Date;
 public class QnAListDto {
 
     private long qnaNo;
-    private Date createAt;
+    private LocalDateTime createAt;
     private String qnaTitle;
     private int qnaReadCount;
     private long adminCode;
