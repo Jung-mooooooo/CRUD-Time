@@ -36,4 +36,21 @@ public class QnADto {
         this.qnaOriginalFile = qnaEntity.getQnaOriginalFile();
         this.qnaRenameFile = qnaEntity.getQnaRenameFile();
     }
+    
+        public QnAEntity(QnADto qnADto, Long userCode, String mode, Date createAt){
+        this.qnaTitle = qnADto.getQnaTitle();
+        this.qnaContent = qnADto.getQnaContent();
+        this.userCode = userCode;
+//         this.createAt = createAt;
+        this.qnaPrivate = qnADto.getQnaPrivate();
+    }
+
+    public QnAEntity(QnADto qnADto, Long adminCode, Date createAt, String qnaPrivate){
+        this.qnaRef = qnADto.getQnaRef();
+        this.qnaTitle = qnADto.getQnaTitle();
+        this.qnaContent = qnADto.getQnaContent();
+        this.adminCode = adminCode;
+//         this.createAt = createAt;
+        this.qnaPrivate = qnaPrivate;
+    }
 }
