@@ -14,7 +14,7 @@ import java.util.Date;
 public class AdminQnAListDto {
 
     private long qnaNo;
-    private Date createAt;
+    private LocalDateTime createAt;
     private String qnaTitle;
     private int qnaReadCount;
     // private long adminCode;
