@@ -46,6 +46,7 @@ public class QnAEntity {
     private Long qnaRef;
 
     public QnAEntity(QnADto qnADto, Long userCode, String mode, LocalDateTime createAt){
+        this.qnaNo = qnADto.getQnaNo();
         this.qnaTitle = qnADto.getQnaTitle();
         this.qnaContent = qnADto.getQnaContent();
         this.userCode = userCode;

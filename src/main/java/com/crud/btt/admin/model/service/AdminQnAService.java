@@ -153,7 +153,7 @@ public class AdminQnAService {
 //        } catch( Exception e ){
 //            e.printStackTrace();
 //        }
-                                                            //시큐리티 컨택스트(like 세션) //사용자 인증정보
+        //시큐리티 컨택스트(like 세션) //사용자 인증정보
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         String loginId = authentication.getName();
@@ -343,15 +343,15 @@ public class AdminQnAService {
                 .setParameter(21,pageable.getPageSize())
                 .setParameter(22,pageable.getPageNumber())
                 .setParameter(23,pageable.getPageSize())
-        ;
+                ;
 
         List<QnAEntity> entities = nativeQuery.getResultList();
         List<QnAListDto> results = new ArrayList<>();
         for( QnAEntity entity : entities){
             String userId = "";
-            if( entity.getQnaNo() == entity.getQnaRef() ) userId = memberRepository.findById(entity.getUserCode()).get().getUserId();
+            if( (entity.getQnaNo() - entity.getQnaRef())<0.1 ) userId = memberRepository.findById(entity.getUserCode()).get().getUserId();
             else userId = adminRepository.findById(entity.getUserCode()).get().getAdminId();
-            if(entity.getQnaRef() != entity.getQnaNo()) entity.setQnaTitle("  ┗>[답변입니다] " + entity.getQnaTitle());
+            if(!((entity.getQnaNo() - entity.getQnaRef())<0.1)) entity.setQnaTitle("  ┗>[답변입니다] " + entity.getQnaTitle());
             QnAListDto dtos = new QnAListDto(entity, userId);
             results.add(dtos);
         }
