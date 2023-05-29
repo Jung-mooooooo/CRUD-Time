@@ -17,22 +17,17 @@ import java.time.LocalDateTime;
 @Entity
 public class EmotionEntity {
 
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_EMOTION")
+    @SequenceGenerator(name = "SEQ_EMOTION", sequenceName = "SEQ_EMOTION", allocationSize = 1)
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_emotion_gen")
-    @SequenceGenerator(
-            name = "seq_emotion_gen",
-            sequenceName = "SEQ_EMOTION",
-            initialValue=1, //시작값
-            allocationSize=1 //메모리를 통해 할당할 범위 사이즈
-    )
     @Column(name = "EMOTION_NO")
-    private Long emotionNo;
+    private Long emotionNo;            //이모션 넘버링
     @Column(name = "USER_CODE")
-    private Long userCode;
+    private Long userCode;              //유저코드
     @Column(name = "EMOTION_CAT")
-    private String emotionCat;
+    private String emotionCat;          //감정카테고리
     @Column(name = "EMOTION_DATE")
-    private LocalDateTime emotionDate;
+    private LocalDateTime emotionDate;  //날짜
 
 
 }

@@ -54,15 +54,19 @@ public class AdminController {
 //        return adminService.create(chatLogDto);
 //    }
 
+    //유저의 1일 접속 횟수 카운드(감정현황 디폴트 값 저장을 위한 메소드)_유정
+    public int todayUserCount(Long userCode) {
+        return adminService.todayUserCount(userCode);
+    }
 
-    //감정 체크
+    //감정 체크(유저 선택시 변경되는 감정현황)
     @PatchMapping("/emotion")
     public ResponseEntity<EmotionEntity> userEmotion(@RequestBody EmotionDto emotionDto) {
         String emotionCat = emotionDto.getEmotionCat();
         Long userCode = emotionDto.getUserCode();
 
         log.info("유저 감정 컨트롤 - " + userCode + "님의 감정 상태는 "+ emotionCat);
-        EmotionEntity emotionEntity = adminService.SaveUserEmotion(emotionCat, userCode);
+        EmotionEntity emotionEntity = adminService.SaveUserSelectEmotion(userCode, emotionCat);
         return new ResponseEntity<>(emotionEntity, HttpStatus.OK);
     }
 
@@ -136,6 +140,7 @@ public class AdminController {
 
         return job.toJSONString();
     }
+
 
 
     //접속자 수 조회

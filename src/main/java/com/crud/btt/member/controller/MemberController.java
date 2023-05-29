@@ -364,19 +364,24 @@ public class MemberController {
         return code;
     }
 
-    //세션 값 전화
+    //세션 값 전화_ 정무
     @GetMapping("/member/info/{userId}")
     public MemberDto getMemberInfo(@PathVariable("userId") String userId, HttpServletRequest request) throws Exception {
+        //유저의 ip주소 저장(log)_ 화정
         Optional<MemberEntity> user = memberRepository.findByUserId(userId);
         Long userCode = user.get().getUserCode();
         adminService.getClientIP(userCode, request);
+
+
         MemberDto memberDto = memberService.getMemberInfo(userId);
+
+        //유저의 emotion 디폴트 값 최초 로그인 시 저장_ 유정
         EmotionDto emotionDto = new EmotionDto();
         emotionDto.setUserCode(memberDto.getUserCode());
-
-            adminController.userEmotion(emotionDto);
-
-
+        int connectCount = adminController.todayUserCount(userCode);
+        if (connectCount == 1) {
+            adminService.SaveUserEmotion(userCode);
+        }
         return memberDto;
     }
 

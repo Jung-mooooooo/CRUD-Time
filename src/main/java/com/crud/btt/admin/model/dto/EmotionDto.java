@@ -14,8 +14,9 @@ import java.time.LocalDateTime;
 public class EmotionDto {
 
     private Long emotionNo;
+    private Long userCode;
     private String emotionCat;
     private LocalDateTime emotionDate;
-    private Long userCode;
+
 
 }

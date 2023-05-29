@@ -155,6 +155,7 @@ public class QnAService {
         else qnaEntity = new QnAEntity(qnaDto, Long.parseLong((String)session.getAttribute("idCode")), LocalDateTime.now(), qnARepository.findById(qnaDto.getQnaRef()).get().getQnaPrivate());
         logger.info("Private2 : "+qnaEntity.getQnaPrivate());
 
+
         if( qnARepository.findByQnaRef(qnaDto.getQnaRef()) == null ) qnaEntity = qnARepository.save(qnaEntity);
         else return null;
         qnaEntity.setQnaRef(qnaEntity.getQnaNo());
