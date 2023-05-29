@@ -39,7 +39,7 @@ public class  NoticeService {
                         pageable, searchCondition);
 //        logger.info("noticeEntities.getTotalPages() : "+noticeEntities.getTotalPages());
 //        logger.info("noticeEntities.getNumber() : "+noticeEntities.getNumber());
-//        logger.info("noticeEntities.getPageable().getPageNumber() : "+noticeEntities.getPageable().getPageNumber());
+        logger.info("noticeEntities.getPageable().getPageNumber() : "+noticeEntities.getPageable().getPageNumber());
         for (NoticeEntity entity : noticeEntities) {
             NoticeDto dto = NoticeDto.builder()
                     .noticeNo(entity.getNoticeNo())

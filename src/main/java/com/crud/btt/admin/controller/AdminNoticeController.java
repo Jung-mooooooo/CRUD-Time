@@ -42,6 +42,7 @@ public class AdminNoticeController {
     @PostMapping("/admin/AdminNoticeWrite")
     public NoticeDto noticeCreate(@RequestBody NoticeDto noticeDto){
         //logger.info("================AdminNoticeWrite : ==============" + noticeDto.getCreateAt().toString());
+        logger.info("dto has adminCode : "+noticeDto.getAdminCode());
         return adminNoticeService.noticeCreate(noticeDto);
     }
 

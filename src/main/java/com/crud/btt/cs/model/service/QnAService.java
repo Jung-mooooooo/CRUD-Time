@@ -12,6 +12,7 @@ import com.crud.btt.cs.entity.QnARepositoryCustom;
 import com.crud.btt.cs.model.dto.QnADto;
 import com.crud.btt.cs.model.dto.QnAListDto;
 import com.crud.btt.cs.model.dto.QnAUpdateDto;
+import com.crud.btt.member.entity.MemberEntity;
 import com.crud.btt.member.entity.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,8 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -44,9 +47,9 @@ public class QnAService {
     private final EntityManager entityManager;
     private static final Logger logger = LoggerFactory.getLogger(QnAController.class);
 
-
     //목록보기
-    public Header<List<QnAListDto>> getQnAList(Pageable oriPageable, SearchCondition searchCondition) {
+    public Header<List<QnAListDto>> getQnAList(Pageable oriPageable, SearchCondition searchCondition,
+                                               HttpServletRequest request) {
         CustomPageable pageable = new CustomPageable(oriPageable);
         // 결과 리스트 담을 객체
         // QnAListDto랑 QnADto는 다른 클래스(다른 객체임)
@@ -78,31 +81,42 @@ public class QnAService {
             }
         }
 */
+        HttpSession session = request.getSession();
+        // Long currentUserCode = memberRepository.findByUserId((String)session.getAttribute("id")).get().getUserCode();
+        Long currentUserCode = memberRepository.findByUserId((String)session.getAttribute("id")).orElseGet(MemberEntity::new).getUserCode();
+
         Pagination pagination = new Pagination(
                 new Integer((int)qnARepository.count())
                 , pageable.getPageNumber()
                 , pageable.getPageSize() +1
                 , 10
         );
-        return Header.OK(resultList, pagination);
+        return Header.OK(resultList, pagination, currentUserCode);
     }
 
     // 상세보기
-    public QnADto getQnA(Long qnaNo) {
+    public QnADto getQnA(Long qnaNo, HttpServletRequest request) {
 
         QnAEntity qnaEntity = qnARepository.findById(qnaNo).get();
 //        if(qnaEntity.getQna_private() != "Y" && 작성자 != 유저
 //            || 공개 != "Y" && 관리자 != 유저){
 //            return null;
 //        }
+
+        HttpSession session = request.getSession();
+        // Long currentUserCode = memberRepository.findByUserId((String)session.getAttribute("id")).get().getUserCode();
+        Long currentUserCode = memberRepository.findByUserId((String)session.getAttribute("id")).orElseGet(MemberEntity::new).getUserCode();
+
         qnaEntity.setQnaReadCount(qnaEntity.getQnaReadCount()+1);
         return new QnADto(qnARepository.save(qnaEntity)
-                , memberRepository.findById(
-                        qnaEntity.getUserCode()==null ? qnaEntity.getAdminCode() : qnaEntity.getUserCode()
-                  ).get().getUserId());
+                , qnaEntity.getUserCode() == null ?
+                adminRepository.findById(qnaEntity.getAdminCode()).get().getAdminId()
+                : memberRepository.findById(qnaEntity.getUserCode()).get().getUserId()
+                , currentUserCode);
     }
 
-    public QnADto qnaCreate(QnADto qnaDto){
+    //작성하기
+    public QnADto qnaCreate(QnADto qnaDto, HttpServletRequest request){
         TimeZone timeZone = TimeZone.getTimeZone("GMT+9");
         Date now = new Date();
 
@@ -135,11 +149,17 @@ public class QnAService {
 
         */
         QnAEntity qnaEntity = null;
-        if( qnaDto.getQnaRef() == null || qnaDto.getQnaRef() == 0 ) qnaEntity = new QnAEntity(qnaDto, 3L, "Answer", LocalDateTime.now());
-        else qnaEntity = new QnAEntity(qnaDto, 3L, LocalDateTime.now(), qnARepository.findById(qnaDto.getQnaRef()).get().getQnaPrivate());
+        HttpSession session = request.getSession();
+        logger.info("Private1 : "+qnaDto.getQnaPrivate());
+        if( qnaDto.getQnaRef() == null || qnaDto.getQnaRef() == 0 ) qnaEntity = new QnAEntity(qnaDto, memberRepository.findByUserId((String)session.getAttribute("id")).get().getUserCode(), "Answer", LocalDateTime.now());
+        else qnaEntity = new QnAEntity(qnaDto, Long.parseLong((String)session.getAttribute("idCode")), LocalDateTime.now(), qnARepository.findById(qnaDto.getQnaRef()).get().getQnaPrivate());
+        logger.info("Private2 : "+qnaEntity.getQnaPrivate());
 
         if( qnARepository.findByQnaRef(qnaDto.getQnaRef()) == null ) qnaEntity = qnARepository.save(qnaEntity);
         else return null;
+        qnaEntity.setQnaRef(qnaEntity.getQnaNo());
+        qnaEntity = qnARepository.save(qnaEntity);
+
 //        if(qnaEntity.getQnaRef() > 0){
 //            qnaEntity = qnARepository.save(qnaEntity);
 //        }else {
@@ -154,8 +174,7 @@ public class QnAService {
                 .userCode(qnaEntity.getUserCode())
                 .adminCode(qnaEntity.getAdminCode())
                 .qnaReadCount(qnaEntity.getQnaReadCount())
-                .qnaOriginalFile(qnaEntity.getQnaOriginalFile())
-                .qnaRenameFile(qnaEntity.getQnaRenameFile())
+                .qnaPrivate(qnaEntity.getQnaPrivate())
                 .build();
     }
 
@@ -166,20 +185,20 @@ public class QnAService {
             return new QnAUpdateDto("F");
         }
 
-        TimeZone timeZone = TimeZone.getTimeZone("GMT+9");
-        Date now = new Date();
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
-        formatter.setTimeZone(timeZone);
-        String formattedDate = formatter.format(now);
-
-        try {
-            now = formatter.parse(formattedDate);
-        } catch( ParseException e ){
-            e.printStackTrace();
-        } catch( Exception e ){
-            e.printStackTrace();
-        }
+//        TimeZone timeZone = TimeZone.getTimeZone("GMT+9");
+//        Date now = new Date();
+//
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+//        formatter.setTimeZone(timeZone);
+//        String formattedDate = formatter.format(now);
+//
+//        try {
+//            now = formatter.parse(formattedDate);
+//        } catch( ParseException e ){
+//            e.printStackTrace();
+//        } catch( Exception e ){
+//            e.printStackTrace();
+//        }
 
         QnAEntity qnaEntity = QnAEntity.builder().qnaNo(qnaUpdateDto.getQna_no())
                 .qnaTitle(qnaUpdateDto.getQna_title())
@@ -196,6 +215,21 @@ public class QnAService {
     public Long qnaDelete(Long qna_no){
         qnARepository.deleteById(qna_no);
         return 1L;
+    }
+
+    public QnADto userCheck(HttpServletRequest request){
+        String currentUser = "";
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        currentUser = authentication.getName();
+
+        HttpSession session = request.getSession();
+        logger.info("현재 유저는 : "+currentUser);
+        logger.info("현재 세션id : "+ session.getId());
+        logger.info("현재 세션에 있는 id : "+ session.getAttribute("id"));
+        currentUser = (String)session.getAttribute("id");
+        QnADto qnADto = new QnADto(currentUser);
+        return qnADto;
     }
 
     //QnA 리스트 출력 쿼리문 사용

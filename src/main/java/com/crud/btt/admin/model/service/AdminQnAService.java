@@ -15,6 +15,7 @@ import com.crud.btt.cs.entity.QnARepositoryCustom;
 import com.crud.btt.cs.model.dto.QnADto;
 import com.crud.btt.cs.model.dto.QnAListDto;
 import com.crud.btt.cs.model.dto.QnAUpdateDto;
+import com.crud.btt.member.entity.MemberEntity;
 import com.crud.btt.member.entity.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,11 +32,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -117,35 +118,40 @@ public class AdminQnAService {
     }
 
     // 상세보기
-    public QnADto getQnA(Long qnaNo) {
+    public QnADto getQnA(Long qnaNo, HttpServletRequest request) {
 
         QnAEntity qnaEntity = qnARepository.findById(qnaNo).get();
 //        if(qnaEntity.getQna_private() != "Y" && 작성자 != 유저
 //            || 공개 != "Y" && 관리자 != 유저){
 //            return null;
 //        }
+        HttpSession session = request.getSession();
+        Long currentUserCode = memberRepository.findByUserId((String)session.getAttribute("id")).orElseGet(MemberEntity::new).getUserCode();
+
         qnaEntity.setQnaReadCount(qnaEntity.getQnaReadCount()+1);
+
         return new QnADto(qnARepository.save(qnaEntity)
-                , memberRepository.findById(
-                        qnaEntity.getUserCode()==null ? qnaEntity.getAdminCode() : qnaEntity.getUserCode()
-                  ).get().getUserId());
+                , qnaEntity.getUserCode() == null ?
+                adminRepository.findById(qnaEntity.getAdminCode()).get().getAdminId()
+                : memberRepository.findById(qnaEntity.getUserCode()).get().getUserId()
+                , currentUserCode);
     }
 
     public QnADto qnaCreate(QnADto qnaDto){
-        TimeZone timeZone = TimeZone.getTimeZone("GMT+9");
-        Date now = new Date();
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
-        formatter.setTimeZone(timeZone);
-        String formattedDate = formatter.format(now);
-
-        try {
-            now = formatter.parse(formattedDate);
-        } catch( ParseException e ){
-            e.printStackTrace();
-        } catch( Exception e ){
-            e.printStackTrace();
-        }
+//        TimeZone timeZone = TimeZone.getTimeZone("GMT+9");
+//        Date now = new Date();
+//
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+//        formatter.setTimeZone(timeZone);
+//        String formattedDate = formatter.format(now);
+//
+//        try {
+//            now = formatter.parse(formattedDate);
+//        } catch( ParseException e ){
+//            e.printStackTrace();
+//        } catch( Exception e ){
+//            e.printStackTrace();
+//        }
                                                             //시큐리티 컨택스트(like 세션) //사용자 인증정보
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -164,8 +170,8 @@ public class AdminQnAService {
 
         */
         QnAEntity qnaEntity = null;
-        if( qnaDto.getQnaRef() == null || qnaDto.getQnaRef() == 0 ) qnaEntity = new QnAEntity(qnaDto, 3L, "Answer", LocalDateTime.now());
-        else qnaEntity = new QnAEntity(qnaDto, 3L, LocalDateTime.now(), qnARepository.findById(qnaDto.getQnaRef()).get().getQnaPrivate());
+        if( qnaDto.getQnaRef() == null || qnaDto.getQnaRef() == 0 ) qnaEntity = new QnAEntity(qnaDto, qnaDto.getUserCode(), "Answer", LocalDateTime.now());
+        else qnaEntity = new QnAEntity(qnaDto, qnaDto.getAdminCode(), LocalDateTime.now(), qnARepository.findById(qnaDto.getQnaRef()).get().getQnaPrivate());
 
         if( qnARepository.findByQnaRef(qnaDto.getQnaRef()) == null ) qnaEntity = qnARepository.save(qnaEntity);
         else return null;
@@ -195,25 +201,25 @@ public class AdminQnAService {
             return new QnAUpdateDto("F");
         }
 
-        TimeZone timeZone = TimeZone.getTimeZone("GMT+9");
-        Date now = new Date();
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
-        formatter.setTimeZone(timeZone);
-        String formattedDate = formatter.format(now);
-
-        try {
-            now = formatter.parse(formattedDate);
-        } catch( ParseException e ){
-            e.printStackTrace();
-        } catch( Exception e ){
-            e.printStackTrace();
-        }
+//        TimeZone timeZone = TimeZone.getTimeZone("GMT+9");
+//        Date now = new Date();
+//
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+//        formatter.setTimeZone(timeZone);
+//        String formattedDate = formatter.format(now);
+//
+//        try {
+//            now = formatter.parse(formattedDate);
+//        } catch( ParseException e ){
+//            e.printStackTrace();
+//        } catch( Exception e ){
+//            e.printStackTrace();
+//        }
 
         QnAEntity qnaEntity = QnAEntity.builder().qnaNo(qnaUpdateDto.getQna_no())
                 .qnaTitle(qnaUpdateDto.getQna_title())
                 .qnaContent(qnaUpdateDto.getQna_content())
-                .createAt(LocalDateTime.now())
+                .createAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
                 .qnaOriginalFile(qnaUpdateDto.getQna_original_file())
                 .qnaRenameFile(qnaUpdateDto.getQna_rename_file())
                 .build();

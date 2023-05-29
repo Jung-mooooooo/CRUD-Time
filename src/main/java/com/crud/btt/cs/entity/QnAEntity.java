@@ -32,11 +32,7 @@ public class QnAEntity {
     @Column(name="QNA_READCOUNT")
     private Integer qnaReadCount = 0 ;
     @Column(name="ADMIN_CODE")
-    private long adminCode;
-
-    @Column(name="USER_ID")
-    private String userId;
-
+    private Long adminCode;
     @Column(name="USER_CODE")
     private Long userCode;
     @Column(name="QNA_ORIGINAL_FILE")

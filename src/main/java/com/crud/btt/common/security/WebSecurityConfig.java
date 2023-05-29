@@ -1,23 +1,24 @@
 package com.crud.btt.common.security;
 
 import com.crud.btt.jwt.JwtAuthenticationFilter;
-import com.crud.btt.jwt.JwtToken;
 import com.crud.btt.jwt.JwtTokenProvider;
 import com.crud.btt.member.model.service.MemberService;
+import com.crud.btt.member.model.service.UserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 @AllArgsConstructor
@@ -27,9 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private MemberService memberService;
-
+    private UserDetailsService userDetailsService;
     private final JwtTokenProvider jwtTokenProvider;
-
 
     @Autowired
     private DataSource dataSource;
@@ -42,17 +42,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 //    @Autowired
 //    private  CustomOAuth2UserService customOAuth2UserService;
-
+    @PostConstruct
+    public void init(){
+        SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+    }
     @Bean
     public BCryptPasswordEncoder encodePassword() {
         return new BCryptPasswordEncoder();
     }
 
+//    @Override
+//    public void configure(WebSecurity web) {   //유저 정보 가져오는 클래스
+//        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/fonts/**", "/templates/**", "/error/**");
+//    }
     @Override
-    public void configure(WebSecurity web) {   //유저 정보 가져오는 클래스
-        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/fonts/**", "/templates/**", "/error/**");
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {   //유저 정보 가져오는 클래스
+        auth.userDetailsService(userDetailsService).passwordEncoder(encodePassword());
     }
-
     //http 관련 인증 설정하기.
     @Override
     protected void configure(HttpSecurity http) throws Exception {

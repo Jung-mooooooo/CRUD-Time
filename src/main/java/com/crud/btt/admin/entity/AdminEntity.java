@@ -31,4 +31,6 @@ public class AdminEntity {
     private String email;
     @Column(name="ENROLL_DATE")
     private Date enrollDate;
+    @Column(name="AUTH")
+    private String auth;
 }

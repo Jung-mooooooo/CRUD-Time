@@ -1,17 +1,19 @@
 package com.crud.btt.member.controller;
 
+import com.crud.btt.admin.controller.AdminController;
+import com.crud.btt.admin.entity.AdminEntity;
+import com.crud.btt.admin.entity.AdminRepository;
+import com.crud.btt.admin.model.dto.AdminDto;
+import com.crud.btt.admin.model.dto.EmotionDto;
 import com.crud.btt.admin.model.service.AdminService;
 import com.crud.btt.common.Header;
 import com.crud.btt.config.ForbiddenException;
-import com.crud.btt.admin.controller.AdminController;
-import com.crud.btt.admin.entity.EmotionEntity;
-import com.crud.btt.admin.model.dto.EmotionDto;
-import com.crud.btt.jwt.JwtToken;
 import com.crud.btt.jwt.JwtTokenProvider;
 import com.crud.btt.member.entity.MemberEntity;
 import com.crud.btt.member.entity.MemberRepository;
 import com.crud.btt.member.model.dto.MemberDto;
 import com.crud.btt.member.model.service.MemberService;
+import com.crud.btt.member.model.service.UserDetailsService;
 import com.crud.btt.member.validator.CheckEmailValidator;
 import com.crud.btt.member.validator.CheckPhoneValidator;
 import com.crud.btt.member.validator.CheckUserIdValidator;
@@ -19,10 +21,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,17 +36,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Member;
+import javax.servlet.http.HttpSession;
 import java.util.*;
-import javax.mail.internet.MimeMessage;
-import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -54,6 +49,8 @@ public class MemberController {
 
     private final AdminService adminService;
     private final MemberService memberService;
+    private final AdminRepository adminRepository;
+    private final UserDetailsService userDetailsService;
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
     private final RegisterMail registerMail;
@@ -144,18 +141,76 @@ public class MemberController {
 
 
 
+//    @PostMapping("/member/login")
+//    public String login(@RequestBody MemberDto memberDto, String userId, String userPw, HttpServletRequest request) {
+////        log.info("user email = {}", user.get("email"));
+//
+//        MemberEntity member = memberRepository.findByUserId(memberDto.getUserId())
+//                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 ID 입니다."));
+//
+//        if(!passwordEncoder.matches(memberDto.getUserPw(), member.getUserPw())){
+//            throw new ForbiddenException("패스원드가 일치하지 않습니다.");
+//        }
+//
+//        return jwtTokenProvider.createToken(member.getUserId(), member.getAuth());
+//    }
+
+    //채린수정
     @PostMapping("/member/login")
-    public String login(@RequestBody MemberDto memberDto, String userId, String userPw) {
+    public String login(@RequestBody MemberDto memberDto, String userId, String userPw, HttpServletRequest request) {
 //        log.info("user email = {}", user.get("email"));
+        HttpSession session = request.getSession();
 
-        MemberEntity member = memberRepository.findByUserId(memberDto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 ID 입니다."));
+        MemberEntity member = memberRepository.findByUserId (memberDto.getUserId()).orElseGet(MemberEntity::new);
+        AdminEntity admin = adminRepository.findByAdminId(memberDto.getUserId()).orElseGet(AdminEntity::new);
+        UserDetails userDetails = null;
+        UsernamePasswordAuthenticationToken authenticationToken = null;
+        String result = "";
 
-        if(!passwordEncoder.matches(memberDto.getUserPw(), member.getUserPw())){
-            throw new ForbiddenException("패스원드가 일치하지 않습니다.");
+        if (admin != null && memberDto.getUserId().contains("admin")) {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            System.out.println("암호화 결과 : " + passwordEncoder.encode(memberDto.getUserPw()));
+            if (!passwordEncoder.matches(memberDto.getUserPw(), admin.getAdminPwd())) {
+                throw new ForbiddenException("패스원드가 일치하지 않습니다.");
+            }
+            session.setAttribute("id", admin.getAdminId());
+            session.setAttribute("idCode", admin.getAdminCode());
+            session.setAttribute("auth", admin.getAuth());
+
+            userDetails = userDetailsService.loadUserByUsername(admin.getAdminId());
+
+            authenticationToken =
+                    new UsernamePasswordAuthenticationToken(userDetails, admin.getAdminPwd(), Collections.emptyList());
+
+            result = jwtTokenProvider.createToken(admin.getAdminId(), admin.getAuth());
+        } else if (member != null) {
+            if (!passwordEncoder.matches(memberDto.getUserPw(), member.getUserPw())) {
+                throw new ForbiddenException("패스원드가 일치하지 않습니다.");
+            }
+            if(member.getPermit().startsWith("N")){
+                System.out.println("이용제한 고객입니다.");
+                return "이용제한 고객입니다.";
+            }
+            session.setAttribute("id", member.getUserId());
+            session.setAttribute("idCode", member.getUserCode());
+            session.setAttribute("auth", member.getAuth());
+
+            userDetails = userDetailsService.loadUserByUsername(member.getUserId());
+            authenticationToken =
+                    new UsernamePasswordAuthenticationToken(userDetails, member.getUserPw(), Collections.emptyList());
+            result = jwtTokenProvider.createToken(member.getUserId(), member.getAuth());
+        } else {
+            throw new IllegalArgumentException("가입되지 않은 ID 입니다.");
         }
 
-        return jwtTokenProvider.createToken(member.getUserId(), member.getAuth());
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+        System.out.println("현재 유저는 : " + SecurityContextHolder.getContext().getAuthentication().getName());
+        System.out.println("현재 세션id : " + session.getId());
+        session.setAttribute("id", SecurityContextHolder.getContext().getAuthentication().getName());
+        System.out.println("현재 세션에 있는 id : " + session.getAttribute("id"));
+
+        return jwtTokenProvider.createToken((String) session.getAttribute("id"), (String) session.getAttribute("auth"));
     }
 
 
@@ -323,6 +378,12 @@ public class MemberController {
 
 
         return memberDto;
+    }
+
+    @GetMapping("/member/adminInfo/{memberId}")
+    public AdminDto getAdminInfo(@PathVariable("memberId") String adminId, HttpServletRequest request) throws Exception {
+
+        return new AdminDto(adminRepository.findByAdminId(adminId).get());
     }
 
     //이메일 인증
