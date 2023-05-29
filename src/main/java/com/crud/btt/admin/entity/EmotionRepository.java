@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface EmotionRepository extends JpaRepository<EmotionEntity, Long> {
 
