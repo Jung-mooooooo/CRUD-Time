@@ -103,9 +103,11 @@ public class ChatService {
     public ChatListEntity save(ChatListDto chatListDto) throws Exception {
 //        MemberEntity member = memberService.read(userCode);
         log.info("여기는 서비스" + chatListDto.toString());
+
         ChatListEntity chatListEntity = ChatListEntity.builder()
                 .userCode(chatListDto.getUserCode())
                 .userName(chatListDto.getUserName())
+                .emotionCat(emotionRepository.findByUserCode(chatListDto.getUserCode()).getEmotionCat())
                 .enter(LocalDateTime.now())
                 .build();
         return chatListRepository.save(chatListEntity);
