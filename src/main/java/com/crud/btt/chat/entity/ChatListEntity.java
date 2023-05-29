@@ -21,6 +21,8 @@ public class ChatListEntity {
     private Long userCode;      //유저코드
     @Column(name="USER_NAME")
     private String userName;    //유저이름
+    @Column(name = "EMOTION_CAT")
+    private String emotionCat;         //유저 감정
     @Column(name="ENTER")
     private LocalDateTime enter;       //입장시간
 }

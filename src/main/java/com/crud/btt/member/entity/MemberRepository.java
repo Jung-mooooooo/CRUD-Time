@@ -1,6 +1,13 @@
 package com.crud.btt.member.entity;
 
+import com.crud.btt.common.SearchCondition;
+import com.crud.btt.map.entity.HobbyEntity;
 import com.crud.btt.member.model.dto.MemberDto;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 
 
@@ -14,6 +21,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+
+import static com.crud.btt.map.entity.QHobbyEntity.hobbyEntity;
 
 
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
@@ -74,6 +83,8 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     @Modifying
     @Query(value = "update Member set user_pw = :userPw where user_id = :userId", nativeQuery = true)
     void saveByPw(@Param("userPw") String userPw, @Param("userId") String userId);
+
+
 
 
 //    @EntityGraph(attributePaths = "auth")

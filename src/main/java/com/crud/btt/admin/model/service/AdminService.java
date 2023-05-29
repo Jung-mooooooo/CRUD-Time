@@ -1,5 +1,6 @@
 package com.crud.btt.admin.model.service;
 
+import com.crud.btt.admin.controller.AdminController;
 import com.crud.btt.admin.entity.EmotionEntity;
 import com.crud.btt.admin.entity.EmotionRepository;
 import com.crud.btt.admin.entity.LogEntity;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -107,32 +109,39 @@ public class AdminService {
         return logRepository.save(entity);
     }
 
+    //유저의 1일 접속 횟수 카운드(감정현황 디폴트 값 저장을 위한 메소드)_유정
+    public int todayUserCount(Long userCode) {
+        return logRepository.countForToday(userCode);
+    }
 
-    //유저 감정현황 저장
-    public EmotionEntity SaveUserEmotion(String emotion, Long userCode) {
-        log.info("현재 " + userCode +"의 감정은 "+emotion + "입니다.");
-        if(emotion == null) {
-            EmotionEntity emotionEntity = EmotionEntity.builder()
+    //유저 감정현황 저장    --------------------------------------------------------------
+    //로그인 카운트해서 첫번째 로그인일때만 default로 저장되게 하기.
+    public EmotionEntity SaveUserEmotion(Long userCode) {
+        log.info("현재 " + userCode +"의 감정은 NEUTRAL 입니다.");
+        EmotionEntity emotionEntity = EmotionEntity.builder()
+                    .userCode(userCode)
                     .emotionCat("NEUTRAL")
                     .emotionDate(LocalDateTime.now())
-                    .userCode(userCode)
                     .build();
 
-            log.info(emotionEntity.toString());
+            log.info("첫 로그인 - " + emotionEntity.toString());
             return emotionRepository.save(emotionEntity);
+    }
 
-        }else {
-            EmotionEntity emotionEntity = EmotionEntity.builder()
-                    .emotionCat(emotion)
-                    .emotionDate(LocalDateTime.now())
-                    .userCode(userCode)
-                    .build();
-            log.info(emotionEntity.toString());
-            return emotionRepository.patch(emotionEntity.getUserCode(), emotionEntity.getEmotionCat(), emotionEntity.getEmotionDate());
+    //유저가 감정현황 선택시
+    public EmotionEntity SaveUserSelectEmotion(Long userCode, String emotion) {
 
-        }
+        EmotionEntity emotionEntity = EmotionEntity.builder()
+                .emotionCat(emotion)
+                .emotionDate(LocalDateTime.now())
+                .userCode(userCode)
+                .build();
+        log.info("patch - " + emotionEntity.toString());
+        emotionRepository.patch(emotionEntity.getUserCode(), emotionEntity.getEmotionCat());
+        return emotionEntity;
 
     }
+//-------------------------------------------------------------------------------------------------
 
 //    //음성인식 사용자 수 조회
 //    public Long spVisitCount(){

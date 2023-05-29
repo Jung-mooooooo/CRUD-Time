@@ -1,16 +1,24 @@
 package com.crud.btt.chat.model.service;
 
 
+import com.crud.btt.admin.entity.EmotionEntity;
+import com.crud.btt.admin.entity.EmotionRepository;
+import com.crud.btt.admin.model.dto.EmotionDto;
 import com.crud.btt.chat.entity.ChatListEntity;
-import com.crud.btt.chat.model.dto.ChatListDto;
-import com.crud.btt.chat.model.dto.ChatListRepository;
-import com.crud.btt.chat.model.dto.ChatRoom;
-import com.crud.btt.chat.model.dto.ChatRoomRepository;
+import com.crud.btt.chat.model.dto.*;
+import com.crud.btt.common.Pagination;
+import com.crud.btt.common.SearchCondition;
 import com.crud.btt.member.entity.MemberEntity;
+import com.crud.btt.member.entity.MemberRepository;
+import com.crud.btt.member.model.dto.MemberDto;
 import com.crud.btt.member.model.service.MemberService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -86,8 +94,10 @@ public class ChatService {
 //    }
 
 
-
     private final ChatListRepository chatListRepository;
+    private final EmotionRepository emotionRepository;
+    private final MemberRepository memberRepository;
+
 
     //채팅유저리스트 생성
     public ChatListEntity save(ChatListDto chatListDto) throws Exception {
@@ -98,12 +108,54 @@ public class ChatService {
                 .userName(chatListDto.getUserName())
                 .enter(LocalDateTime.now())
                 .build();
-              return chatListRepository.save(chatListEntity);
+        return chatListRepository.save(chatListEntity);
     }
 
     //채팅유저삭제
     public void chatUserListDelete(Long userCode) {
 //        ChatListEntity entity = chatListRepository.(userCode).orElseThrow(() -> new RuntimeException("해당 회원을 찾을 수 없습니다."));
         chatListRepository.deleteById(userCode);
+    }
+
+    //채팅 유저의 감정 상태 view 출력을 위한 메소드
+    public EmotionDto getUserEmotion(Long userCode) {
+        EmotionEntity emotionEntity = emotionRepository.findByUserCode(userCode);
+        log.info("감정 현황 : " + emotionEntity.getEmotionCat());
+
+
+        return EmotionDto.builder()
+                .emotionNo(emotionEntity.getEmotionNo())
+                .userCode(emotionEntity.getUserCode())
+                .emotionCat(emotionEntity.getEmotionCat())
+                .emotionDate(emotionEntity.getEmotionDate())
+                .build();
+    }
+
+    //유저 리스트 출력 = 동일한 감정 & 현재 접속중인 유저 리스트 출력
+    public List<ChatListDto> chatUserList() {
+
+        List<ChatListDto> list = new ArrayList<>();
+
+        List<Object[]> info = chatListRepository.List();
+
+
+        for (Object[] row : info) {
+            String userCode = (String) row[0].toString();
+            String userName = (String) row[1];
+            String emotionCat = (String) row[2];
+            log.info("emotionCat 서비스단 :"+emotionCat);
+
+            ChatListDto user = ChatListDto.builder()
+                    .userCode(Long.parseLong(userCode))
+                    .userName(userName)
+                    .ENTER(LocalDateTime.now())
+                    .emotionCat(emotionCat)
+                    .build();
+
+            list.add(user);
+        }
+
+
+        return list;
     }
 }
