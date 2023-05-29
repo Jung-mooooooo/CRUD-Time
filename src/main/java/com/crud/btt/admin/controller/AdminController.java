@@ -9,18 +9,13 @@ import com.crud.btt.member.model.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
-import java.time.LocalDateTime;
-import java.util.List;
-import org.hibernate.annotations.Fetch;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-import javax.json.JsonObject;
-import javax.servlet.http.HttpServletRequest;
+import java.text.DecimalFormat;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -64,9 +59,72 @@ public class AdminController {
 
     //감정현황 조회
     @GetMapping("/admin/emotion")
-    public List<EmotionEntity> userEmotionCount() {
+    public String clickEmotionCount() {
 
-        return adminService.emotionCount();
+        // angry 감정클릭 수
+        int angry = Math.toIntExact(adminService.clickEmotionAngry());
+
+        // anxious 감정클릭 수
+        int anxious = Math.toIntExact(adminService.clickEmotionAnxious());
+
+        // excited 감정클릭 수
+        int excited = Math.toIntExact(adminService.clickEmotionExcited());
+
+        // happy 감정클릭 수
+        int happy = Math.toIntExact(adminService.clickEmotionHappy());
+
+        // sad 감정클릭 수
+        int sad = Math.toIntExact(adminService.clickEmotionSad());
+
+        // scary 감정클릭 수
+        int scary = Math.toIntExact(adminService.clickEmotionScary());
+
+        // tired 감정클릭 수
+        int tired = Math.toIntExact(adminService.clickEmotionTired());
+
+        // lonely 감정클릭 수
+        int lonely  = Math.toIntExact(adminService.clickEmotionLonely());
+
+        double sum = angry + anxious + excited + happy + sad + scary + tired + lonely;
+
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        double angryAvgD = (angry / sum) * 100;
+        String angryAvg = decimalFormat.format(angryAvgD);
+
+        double anxiousAvgD = (anxious / sum) * 100;
+        String anxiousAvg = decimalFormat.format(angryAvgD);
+
+        double excitedAvgD = (excited / sum) * 100;
+        String excitedAvg = decimalFormat.format(excitedAvgD);
+
+        double happyAvgD = (happy / sum) * 100;
+        String happyAvg = decimalFormat.format(happyAvgD);
+
+        double sadAvgD = (sad / sum) * 100;
+        String sadAvg = decimalFormat.format(sadAvgD);
+
+        double scaryAvgD = (scary / sum) * 100;
+        String scaryAvg = decimalFormat.format(scaryAvgD);
+
+        double tiredAvgD = (tired / sum) * 100;
+        String tiredAvg = decimalFormat.format(tiredAvgD);
+
+        double lonelyAvgD = (lonely / sum) * 100;
+        String lonelyAvg = decimalFormat.format(lonelyAvgD);
+
+
+        JSONObject job = new JSONObject();
+
+        job.put("angryAvg", angryAvg);
+        job.put("anxiousAvg", anxiousAvg);
+        job.put("excitedAvg", excitedAvg);
+        job.put("happyAvg", happyAvg);
+        job.put("sadAvg", sadAvg);
+        job.put("scaryAvg", scaryAvg);
+        job.put("tiredAvg", tiredAvg);
+        job.put("lonelyAvg", lonelyAvg);
+
+        return job.toJSONString();
     }
 
 

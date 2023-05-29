@@ -1,11 +1,12 @@
 package com.crud.btt.admin.controller;
 
+import com.crud.btt.admin.model.dto.V_QnADto;
+import com.crud.btt.admin.model.service.AdminQnAService;
 import com.crud.btt.common.Header;
 import com.crud.btt.common.SearchCondition;
 import com.crud.btt.cs.model.dto.QnADto;
 import com.crud.btt.cs.model.dto.QnAListDto;
 import com.crud.btt.cs.model.dto.QnAUpdateDto;
-import com.crud.btt.admin.model.service.AdminQnAService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,6 +25,15 @@ public class AdminQnAController {
 
     private final AdminQnAService adminqnaService;
     private static final Logger logger = LoggerFactory.getLogger(AdminQnAController.class);
+
+    //admin top5리스트
+    @GetMapping("admin/qnalist")
+    public Header<List<V_QnADto>> getTop5QnaList(){
+
+        List<QnADto> list = new ArrayList<>();
+
+        return adminqnaService.top5QnaList();
+    }
 
 
     //QNA 목록 출력

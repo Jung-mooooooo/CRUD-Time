@@ -49,7 +49,7 @@ public class HobbyService {
         Pagination pagination = new Pagination(
                 (int) hobbyEntities.getTotalElements()
                 , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
-                , pageable.getPageSize() +1
+                , pageable.getPageSize()
                 , 10
         );
 
@@ -86,7 +86,7 @@ public class HobbyService {
         Pagination pagination = new Pagination(
                 (int) hobbyEntities.getTotalElements()
                 , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
-                , pageable.getPageSize() +1
+                , pageable.getPageSize()
                 , 10
         );
 
@@ -117,7 +117,7 @@ public class HobbyService {
         Pagination pagination = new Pagination(
                 (int) hobbyEntities.getTotalElements()
                 , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
-                , pageable.getPageSize() +1
+                , pageable.getPageSize()
                 , 10
         );
 
@@ -148,7 +148,7 @@ public class HobbyService {
         Pagination pagination = new Pagination(
                 (int) hobbyEntities.getTotalElements()
                 , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
-                , pageable.getPageSize() +1
+                , pageable.getPageSize()
                 , 10
         );
 
@@ -179,7 +179,7 @@ public class HobbyService {
         Pagination pagination = new Pagination(
                 (int) hobbyEntities.getTotalElements()
                 , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
-                , pageable.getPageSize() +1
+                , pageable.getPageSize()
                 , 10
         );
 

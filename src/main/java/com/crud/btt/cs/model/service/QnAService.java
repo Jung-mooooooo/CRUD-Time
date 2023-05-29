@@ -26,6 +26,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,32 +44,6 @@ public class QnAService {
     private final EntityManager entityManager;
     private static final Logger logger = LoggerFactory.getLogger(QnAController.class);
 
-    //admin top5리스트
-    public Header<List<QnADto>> top5QnaList(){
-
-        List<QnADto> list = new ArrayList<>();
-
-        List<QnAEntity> entities = qnARepositoryCustom.findTop5ByOrderByCreateAtDesc();
-        for (QnAEntity entity : entities) {
-            QnADto dto = QnADto.builder()
-                    .qnaNo(entity.getQnaNo())
-                    .createAt(entity.getCreateAt())
-                    .qnaTitle(entity.getQnaTitle())
-                    .qnaReadCount(entity.getQnaReadCount())
-                    .adminCode(entity.getAdminCode())
-                    .userCode(entity.getUserCode())
-                    .qnaPrivate(entity.getQnaPrivate())
-                    .qnaRef(entity.getQnaRef())
-                    .userId(entity.getUserId())
-                    .build();
-
-            list.add(dto);
-        }
-
-        log.info("list" + list);
-
-        return Header.OK(list);
-    }
 
     //목록보기
     public Header<List<QnAListDto>> getQnAList(Pageable oriPageable, SearchCondition searchCondition) {
@@ -160,8 +135,8 @@ public class QnAService {
 
         */
         QnAEntity qnaEntity = null;
-        if( qnaDto.getQnaRef() == null || qnaDto.getQnaRef() == 0 ) qnaEntity = new QnAEntity(qnaDto, 3L, "Answer", now);
-        else qnaEntity = new QnAEntity(qnaDto, 3L, now, qnARepository.findById(qnaDto.getQnaRef()).get().getQnaPrivate());
+        if( qnaDto.getQnaRef() == null || qnaDto.getQnaRef() == 0 ) qnaEntity = new QnAEntity(qnaDto, 3L, "Answer", LocalDateTime.now());
+        else qnaEntity = new QnAEntity(qnaDto, 3L, LocalDateTime.now(), qnARepository.findById(qnaDto.getQnaRef()).get().getQnaPrivate());
 
         if( qnARepository.findByQnaRef(qnaDto.getQnaRef()) == null ) qnaEntity = qnARepository.save(qnaEntity);
         else return null;

@@ -4,7 +4,6 @@ import com.crud.btt.admin.entity.EmotionEntity;
 import com.crud.btt.admin.entity.EmotionRepository;
 import com.crud.btt.admin.entity.LogEntity;
 import com.crud.btt.admin.entity.LogRepository;
-import com.crud.btt.member.entity.MemberEntity;
 import com.crud.btt.member.model.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,9 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
-import java.util.List;
-
 import java.time.LocalDateTime;
 
 @Slf4j
@@ -46,14 +42,6 @@ public class AdminService {
 //        return chatLogRepository.save(entity);
 //    }
 
-
-
-
-    //감정현황 조회
-    public List<EmotionEntity> emotionCount(){
-
-        return emotionRepository.countEmotionCat();
-    }
 
 
     //접속자 수 조회
@@ -105,6 +93,49 @@ public class AdminService {
         log.info("entity" + entity);
 
         return logRepository.save(entity);
+    }
+
+
+
+
+    //월 감정 클릭 조회(angry)
+    public Long clickEmotionAngry(){
+        return emotionRepository.countByMonthAngry();
+    }
+
+    //월 감정 클릭 조회(anxious)
+    public Long clickEmotionAnxious(){
+        return emotionRepository.countByMonthAnxious();
+    }
+
+    //월 감정 클릭 조회(excited)
+    public Long clickEmotionExcited(){
+        return emotionRepository.countByMonthExcited();
+    }
+
+    //월 감정 클릭 조회(happy)
+    public Long clickEmotionHappy(){
+        return emotionRepository.countByMonthHappy();
+    }
+
+    //월 감정 클릭 조회(sad)
+    public Long clickEmotionSad(){
+        return emotionRepository.countByMonthSad();
+    }
+
+    //월 감정 클릭 조회(scary)
+    public Long clickEmotionScary(){
+        return emotionRepository.countByMonthScary();
+    }
+
+    //월 감정 클릭 조회(tired)
+    public Long clickEmotionTired(){
+        return emotionRepository.countByMonthTired();
+    }
+
+    //월 감정 클릭 조회(lonely)
+    public Long clickEmotionLonely(){
+        return emotionRepository.countByMonthLonely();
     }
 
 

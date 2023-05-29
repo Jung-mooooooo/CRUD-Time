@@ -50,7 +50,7 @@ public class TouristSpotService {
         Pagination pagination = new Pagination(
                 (int) touristSpotEntities.getTotalElements()
                 , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
-                , pageable.getPageSize() +1
+                , pageable.getPageSize()
                 , 10
         );
 
@@ -87,7 +87,7 @@ public class TouristSpotService {
         Pagination pagination = new Pagination(
                 (int) touristSpotEntities.getTotalElements()
                 , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
-                , pageable.getPageSize() +1
+                , pageable.getPageSize()
                 , 10
         );
 
@@ -118,7 +118,7 @@ public class TouristSpotService {
         Pagination pagination = new Pagination(
                 (int) touristSpotEntities.getTotalElements()
                 , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
-                , pageable.getPageSize() +1
+                , pageable.getPageSize()
                 , 10
         );
 
@@ -149,7 +149,7 @@ public class TouristSpotService {
         Pagination pagination = new Pagination(
                 (int) touristSpotEntities.getTotalElements()
                 , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
-                , pageable.getPageSize() +1
+                , pageable.getPageSize()
                 , 10
         );
 
@@ -180,7 +180,7 @@ public class TouristSpotService {
         Pagination pagination = new Pagination(
                 (int) touristSpotEntities.getTotalElements()
                 , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
-                , pageable.getPageSize() +1
+                , pageable.getPageSize()
                 , 10
         );
 
@@ -211,7 +211,7 @@ public class TouristSpotService {
         Pagination pagination = new Pagination(
                 (int) touristSpotEntities.getTotalElements()
                 , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
-                , pageable.getPageSize() +1
+                , pageable.getPageSize()
                 , 10
         );
 
@@ -242,7 +242,7 @@ public class TouristSpotService {
             Pagination pagination = new Pagination(
                     (int) touristSpotEntities.getTotalElements()
                     , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
-                    , pageable.getPageSize() +1
+                    , pageable.getPageSize()
                     , 10
             );
 
@@ -273,7 +273,7 @@ public class TouristSpotService {
         Pagination pagination = new Pagination(
                 (int) touristSpotEntities.getTotalElements()
                 , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
-                , pageable.getPageSize() +1
+                , pageable.getPageSize()
                 , 10
         );
 

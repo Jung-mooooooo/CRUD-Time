@@ -2,20 +2,13 @@ package com.crud.btt.member.model.service;
 
 import com.crud.btt.common.Header;
 import com.crud.btt.jwt.JwtTokenProvider;
-import com.crud.btt.member.controller.RegisterMail;
-import com.crud.btt.member.entity.*;
+import com.crud.btt.member.entity.MemberEntity;
+import com.crud.btt.member.entity.MemberRepository;
+import com.crud.btt.member.entity.QuitEntity;
+import com.crud.btt.member.entity.QuitRepository;
 import com.crud.btt.member.model.dto.MemberDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -24,17 +17,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Member;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 @Slf4j
@@ -218,7 +208,7 @@ public class MemberService implements UserDetailsService {
                     .naverId(entity.getNaverId())
                     .googleId(entity.getGoogleId())
                     .permit(entity.getPermit())
-                    .enrollDate(String.valueOf(entity.getEnrollDate()))
+                    .enrollDate(entity.getEnrollDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                     .build();
 
             list.add(dto);
@@ -262,23 +252,24 @@ public class MemberService implements UserDetailsService {
     }
 
     //Quit 테이블 유저정보 옮기기
-    public QuitEntity createQuit(MemberDto memberDto){
+    public QuitEntity createQuit(MemberDto memberDto) {
         log.info("-------------------------------------");
         log.info(memberDto.getUserName());
         return quitRepository.save(QuitEntity.builder()
-                        .quitUserCode(memberDto.getUserCode())
-                        .quitUserId(memberDto.getUserId())
-                        .quitUserPw(memberDto.getUserPw())
-                        .quitUserName(memberDto.getUserName())
-                        .quitPhone(memberDto.getPhone())
-                        .quitEmail(memberDto.getEmail())
-                        .quitKakaoId(memberDto.getKakaoId())
-                        .quitNaverId(memberDto.getNaverId())
-                        .quitGoogleId(memberDto.getGoogleId())
-                        .quitPermit("Q")
-                        .quitDate(LocalDateTime.now())
-                        .quitAuth(memberDto.getAuth())
-                        .build());
+                .quitUserCode(memberDto.getUserCode())
+                .quitUserId(memberDto.getUserId())
+                .quitUserPw(memberDto.getUserPw())
+                .quitUserName(memberDto.getUserName())
+                .quitPhone(memberDto.getPhone())
+                .quitEmail(memberDto.getEmail())
+                .quitKakaoId(memberDto.getKakaoId())
+                .quitNaverId(memberDto.getNaverId())
+                .quitGoogleId(memberDto.getGoogleId())
+                .quitPermit("Q")
+                .quitDate(LocalDateTime.now())
+                .quitAuth(memberDto.getAuth())
+                .build());
+    }
     //id find - phone
     public MemberEntity findIdP(String userName, String phone) {
         System.out.println("여기 서비스단 아이디");

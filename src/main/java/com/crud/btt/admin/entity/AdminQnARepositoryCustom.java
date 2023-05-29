@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 import static com.crud.btt.admin.entity.QAdminQnAEntity.adminQnAEntity;
@@ -21,6 +23,14 @@ import static com.crud.btt.admin.entity.QAdminQnAEntity.adminQnAEntity;
 public class AdminQnARepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
+    private final EntityManager entityManager;
+
+    public List<V_QnAEntity> findTop5ByOrderByCreateAtDesc() {
+        String queryStr = "SELECT q FROM V_QnAEntity q ORDER BY q.createAt DESC";
+        TypedQuery<V_QnAEntity> query = entityManager.createQuery(queryStr, V_QnAEntity.class);
+        query.setMaxResults(5);
+        return query.getResultList();
+    }
 
     public Page<AdminQnAEntity> findAllBySearchCondition(Pageable pageable, SearchCondition searchCondition){
 

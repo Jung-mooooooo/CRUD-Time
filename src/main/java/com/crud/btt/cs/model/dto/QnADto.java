@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -32,7 +33,7 @@ public class QnADto {
         this.qnaTitle = qnaEntity.getQnaTitle();
         this.qnaContent = qnaEntity.getQnaContent();
         this.qnaReadCount = qnaEntity.getQnaReadCount();
-        this.createAt = qnaEntity.getCreateAt();
+        this.createAt =qnaEntity.getCreateAt();
         this.qnaOriginalFile = qnaEntity.getQnaOriginalFile();
         this.qnaRenameFile = qnaEntity.getQnaRenameFile();
     }

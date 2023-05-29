@@ -1,6 +1,9 @@
 package com.crud.btt.admin.model.service;
 
+import com.crud.btt.admin.entity.AdminQnARepositoryCustom;
 import com.crud.btt.admin.entity.AdminRepository;
+import com.crud.btt.admin.entity.V_QnAEntity;
+import com.crud.btt.admin.model.dto.V_QnADto;
 import com.crud.btt.common.CustomPageable;
 import com.crud.btt.common.Header;
 import com.crud.btt.common.Pagination;
@@ -26,6 +29,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,8 +45,33 @@ public class AdminQnAService {
     private final MemberRepository memberRepository;
     private final AdminRepository adminRepository;
     private final QnARepositoryCustom qnARepositoryCustom;
+    private final AdminQnARepositoryCustom adminQnARepositoryCustom;
     private final EntityManager entityManager;
     private static final Logger logger = LoggerFactory.getLogger(QnAController.class);
+
+    //admin top5리스트
+    public Header<List<V_QnADto>> top5QnaList(){
+
+        List<V_QnADto> list = new ArrayList<>();
+
+        List<V_QnAEntity> entities = adminQnARepositoryCustom.findTop5ByOrderByCreateAtDesc();
+        for (V_QnAEntity entity : entities) {
+            V_QnADto dto = V_QnADto.builder()
+                    .qnaNo(entity.getQnaNo())
+                    .createAt(entity.getCreateAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                    .qnaTitle(entity.getQnaTitle())
+                    .qnaContent(entity.getQnaTitle())
+                    .userId(entity.getUserId())
+                    .build();
+
+            list.add(dto);
+        }
+
+        log.info("list" + list);
+
+        return Header.OK(list);
+
+    }
 
     //목록보기
     public Header<List<QnAListDto>> getQnAList(Pageable oriPageable, SearchCondition searchCondition) {
@@ -133,8 +163,8 @@ public class AdminQnAService {
 
         */
         QnAEntity qnaEntity = null;
-        if( qnaDto.getQnaRef() == null || qnaDto.getQnaRef() == 0 ) qnaEntity = new QnAEntity(qnaDto, 3L, "Answer", now);
-        else qnaEntity = new QnAEntity(qnaDto, 3L, now, qnARepository.findById(qnaDto.getQnaRef()).get().getQnaPrivate());
+        if( qnaDto.getQnaRef() == null || qnaDto.getQnaRef() == 0 ) qnaEntity = new QnAEntity(qnaDto, 3L, "Answer", LocalDateTime.now());
+        else qnaEntity = new QnAEntity(qnaDto, 3L, LocalDateTime.now(), qnARepository.findById(qnaDto.getQnaRef()).get().getQnaPrivate());
 
         if( qnARepository.findByQnaRef(qnaDto.getQnaRef()) == null ) qnaEntity = qnARepository.save(qnaEntity);
         else return null;

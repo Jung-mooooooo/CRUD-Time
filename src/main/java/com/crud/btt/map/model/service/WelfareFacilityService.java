@@ -49,7 +49,7 @@ public class WelfareFacilityService {
         Pagination pagination = new Pagination(
                 (int) welfareFacilityEntities.getTotalElements()
                 , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
-                , pageable.getPageSize() +1
+                , pageable.getPageSize()
                 , 10
         );
 
@@ -88,7 +88,7 @@ public class WelfareFacilityService {
         Pagination pagination = new Pagination(
                 (int) welfareFacilityEntities.getTotalElements()
                 , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
-                , pageable.getPageSize() +1
+                , pageable.getPageSize()
                 , 10
         );
 
@@ -119,7 +119,7 @@ public class WelfareFacilityService {
         Pagination pagination = new Pagination(
                 (int) welfareFacilityEntities.getTotalElements()
                 , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
-                , pageable.getPageSize() +1
+                , pageable.getPageSize()
                 , 10
         );
 
