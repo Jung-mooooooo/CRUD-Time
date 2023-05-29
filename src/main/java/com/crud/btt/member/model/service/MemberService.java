@@ -281,15 +281,6 @@ public class MemberService implements UserDetailsService {
                 .build().toEntity();
 
     }
-        //id find - phone
-        public MemberEntity findIdP (String userName, String phone){
-            System.out.println("여기 서비스단 아이디");
-            MemberEntity memberEntity = memberRepository.findByUserNameAndPhone(userName, phone);
-
-            return MemberDto.builder()
-                    .userId(memberEntity.getUserId())
-                    .build().toEntity();
-        }
 
     //id find - email
     public MemberEntity findIdE(String userName, String email) {
