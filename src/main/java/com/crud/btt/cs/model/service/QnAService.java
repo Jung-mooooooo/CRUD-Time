@@ -131,7 +131,7 @@ public class QnAService {
         } catch( Exception e ){
             e.printStackTrace();
         }
-                                                            //시큐리티 컨택스트(like 세션) //사용자 인증정보
+        //시큐리티 컨택스트(like 세션) //사용자 인증정보
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         String loginId = authentication.getName();
@@ -150,10 +150,10 @@ public class QnAService {
         */
         QnAEntity qnaEntity = null;
         HttpSession session = request.getSession();
-        logger.info("Private1 : "+qnaDto.getQnaPrivate());
+        logger.info("Private1 : "+qnaDto.getQnaPrivate()+", no : "+qnaDto.getQnaNo()+", ref : "+qnaDto.getQnaRef());
         if( qnaDto.getQnaRef() == null || qnaDto.getQnaRef() == 0 ) qnaEntity = new QnAEntity(qnaDto, memberRepository.findByUserId((String)session.getAttribute("id")).get().getUserCode(), "Answer", LocalDateTime.now());
         else qnaEntity = new QnAEntity(qnaDto, Long.parseLong((String)session.getAttribute("idCode")), LocalDateTime.now(), qnARepository.findById(qnaDto.getQnaRef()).get().getQnaPrivate());
-        logger.info("Private2 : "+qnaEntity.getQnaPrivate());
+        logger.info("no : "+qnaEntity.getQnaNo()+", ref : "+qnaEntity.getQnaRef());
         if( qnARepository.findByQnaRef(qnaDto.getQnaRef()) == null ) qnaEntity = qnARepository.save(qnaEntity);
         else return null;
         qnaEntity.setQnaRef(qnaEntity.getQnaNo());
@@ -340,15 +340,16 @@ public class QnAService {
                 .setParameter(21,pageable.getPageSize())
                 .setParameter(22,pageable.getPageNumber())
                 .setParameter(23,pageable.getPageSize())
-        ;
+                ;
 
         List<QnAEntity> entities = nativeQuery.getResultList();
         List<QnAListDto> results = new ArrayList<>();
         for( QnAEntity entity : entities){
             String userId = "";
-            if( entity.getQnaNo() == entity.getQnaRef() ) userId = memberRepository.findById(entity.getUserCode()).get().getUserId();
+            logger.info("entity "+entity.getQnaNo()+"번 : "+entity.getQnaRef()+" result : "+(entity.getQnaRef() != entity.getQnaNo())+", result2 : "+((entity.getQnaNo() - entity.getQnaRef())<0.1)+", result3 :"+(Integer.parseInt(entity.getQnaNo()+"") - Integer.parseInt(entity.getQnaRef()+"")<0.1));
+            if( (entity.getQnaNo() - entity.getQnaRef())<0.1) userId = memberRepository.findById(entity.getUserCode()).get().getUserId();
             else userId = adminRepository.findById(entity.getUserCode()).get().getAdminId();
-            if(entity.getQnaRef() != entity.getQnaNo()) entity.setQnaTitle("  ┗>[답변입니다] " + entity.getQnaTitle());
+            if(!((entity.getQnaNo() - entity.getQnaRef())<0.1)) entity.setQnaTitle("  ┗>[답변입니다] " + entity.getQnaTitle());
             QnAListDto dtos = new QnAListDto(entity, userId);
             results.add(dtos);
         }
@@ -358,3 +359,4 @@ public class QnAService {
     }
 
 }
+
