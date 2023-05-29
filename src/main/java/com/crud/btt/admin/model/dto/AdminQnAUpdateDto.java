@@ -3,7 +3,7 @@ package com.crud.btt.admin.model.dto;
 import com.crud.btt.cs.entity.QnAEntity;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 @Data

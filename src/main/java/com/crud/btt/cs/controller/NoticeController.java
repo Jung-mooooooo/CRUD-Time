@@ -25,7 +25,7 @@ public class NoticeController {
     @GetMapping("/cs/Notice")
     public Header<List<NoticeDto>> NoticeList(@PageableDefault(sort = {"noticeNo"}) Pageable pageable,
                                               SearchCondition searchCondition){
-        // logger.info(pageable.getPageSize()+"/"+pageable.getPageNumber());
+         logger.info(pageable.getPageSize()+"/"+pageable.getPageNumber());
         // logger.info("=====================Controller NoticeList==================" + noticeService.getNoticeList(pageable,searchCondition));
         return noticeService.getNoticeList(pageable,searchCondition);
     }

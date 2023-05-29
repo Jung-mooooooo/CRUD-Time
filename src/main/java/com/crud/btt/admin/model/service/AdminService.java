@@ -1,21 +1,25 @@
 package com.crud.btt.admin.model.service;
 
-import com.crud.btt.admin.entity.EmotionEntity;
-import com.crud.btt.admin.entity.EmotionRepository;
-import com.crud.btt.admin.entity.LogEntity;
-import com.crud.btt.admin.entity.LogRepository;
+import com.crud.btt.admin.entity.*;
+import com.crud.btt.common.CustomPageable;
+import com.crud.btt.common.Header;
+import com.crud.btt.common.Pagination;
+import com.crud.btt.common.SearchCondition;
 import com.crud.btt.member.entity.MemberEntity;
+import com.crud.btt.member.entity.MemberRepository;
+import com.crud.btt.member.model.dto.MemberDto;
 import com.crud.btt.member.model.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-
-import java.time.LocalDateTime;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,6 +29,8 @@ public class AdminService {
     private final LogRepository logRepository;
     private final EmotionRepository emotionRepository;
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
+    private final AdminRepositoryCustom adminRepositoryCustom;
 
 //    private final ChatLogRepository chatLogRepository;
 //    private final ChatLogRepositoryCustom chatLogRepositoryCustom;
@@ -182,4 +188,45 @@ public class AdminService {
 //                -> new RuntimeException("해당 logNO을 찾을 수 없습니다."));
 //        chatLogRepository.delete(entity);
 //    }
+
+    //회원목록 출력
+    public Header<List<MemberDto>> memberList(Pageable oriPageable, SearchCondition searchCondition) {
+        CustomPageable pageable = new CustomPageable(oriPageable);
+        List<MemberDto> list = new ArrayList<>();
+        Page<MemberEntity> memberEntities =
+                adminRepositoryCustom.findAllBySearchCondition(
+                        pageable, searchCondition);
+
+        for (MemberEntity entity : memberEntities) {
+            MemberDto dto = MemberDto.builder()
+                    .userId(entity.getUserId())
+                    .userCode(entity.getUserCode())
+                    .enrollDate(String.valueOf(entity.getEnrollDate()))
+                    .phone(entity.getPhone())
+                    .email(entity.getEmail())
+                    .userName(entity.getUserNamee())
+                    .permit(entity.getPermit().substring(0,1))
+                    .build();
+            System.out.println("permit : "+entity.getPermit().substring(0,1));
+            list.add(dto);
+        }
+
+        Pagination pagination = new Pagination(
+                (int) memberEntities.getTotalElements()
+                , pageable.getPageNumber() == 0 ? 1 : pageable.getPageNumber()
+                , pageable.getPageSize() + 1
+                , 10
+        );
+
+        return Header.OK(list, pagination);
+    }
+
+    public MemberDto permitMember(MemberDto memberDto) {
+
+        MemberEntity memberEntity = memberRepository.findByUserCode(memberDto.getUserCode()).orElseGet(MemberEntity::new);
+        memberEntity.setPermit(memberDto.getUserId());
+        memberRepository.save(memberEntity);
+
+        return memberDto;
+    }
 }

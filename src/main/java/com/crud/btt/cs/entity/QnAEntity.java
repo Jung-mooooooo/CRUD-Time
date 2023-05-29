@@ -7,10 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
@@ -34,11 +31,7 @@ public class QnAEntity {
     @Column(name="QNA_READCOUNT")
     private Integer qnaReadCount = 0 ;
     @Column(name="ADMIN_CODE")
-    private long adminCode;
-
-    @Column(name="USER_ID")
-    private String userId;
-
+    private Long adminCode;
     @Column(name="USER_CODE")
     private Long userCode;
     @Column(name="QNA_ORIGINAL_FILE")
@@ -51,7 +44,7 @@ public class QnAEntity {
     @Column(name="QNA_REF")
     private Long qnaRef;
 
-    public QnAEntity(QnADto qnADto, Long userCode, String mode, Date createAt){
+    public QnAEntity(QnADto qnADto, Long userCode, String mode, LocalDateTime createAt){
         this.qnaTitle = qnADto.getQnaTitle();
         this.qnaContent = qnADto.getQnaContent();
         this.userCode = userCode;
@@ -59,7 +52,7 @@ public class QnAEntity {
         this.qnaPrivate = qnADto.getQnaPrivate();
     }
 
-    public QnAEntity(QnADto qnADto, Long adminCode, Date createAt, String qnaPrivate){
+    public QnAEntity(QnADto qnADto, Long adminCode, LocalDateTime createAt, String qnaPrivate){
         this.qnaRef = qnADto.getQnaRef();
         this.qnaTitle = qnADto.getQnaTitle();
         this.qnaContent = qnADto.getQnaContent();

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -39,9 +40,9 @@ public class AdminQnAController {
 
     //QNA 상세보기
     @GetMapping("/admin/AdminQnADetail/{qnaNo}")
-    public QnADto getQnA(@PathVariable Long qnaNo) {
+    public QnADto getQnA(@PathVariable Long qnaNo, HttpServletRequest request) {
         logger.info("상세보기 : " + qnaNo);
-        return adminqnaService.getQnA(qnaNo);
+        return adminqnaService.getQnA(qnaNo, request);
     }
 
 

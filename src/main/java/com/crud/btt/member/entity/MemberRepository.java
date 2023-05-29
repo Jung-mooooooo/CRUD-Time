@@ -1,18 +1,11 @@
 package com.crud.btt.member.entity;
 
-import com.crud.btt.member.model.dto.MemberDto;
-import org.springframework.data.jpa.repository.*;
-
-
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Optional;
 
 
@@ -79,4 +72,6 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 //    @EntityGraph(attributePaths = "auth")
 //    Optional<MemberEntity> findOneWithAuthoritiesByUsername(String username);
 //    Optional<MemberAuth> findByUserAuth(String username);
+
+
 }

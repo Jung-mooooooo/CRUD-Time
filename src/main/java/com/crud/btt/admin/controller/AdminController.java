@@ -5,22 +5,24 @@ import com.crud.btt.admin.entity.EmotionRepository;
 import com.crud.btt.admin.entity.LogRepository;
 import com.crud.btt.admin.model.dto.EmotionDto;
 import com.crud.btt.admin.model.service.AdminService;
+import com.crud.btt.common.Header;
+import com.crud.btt.common.SearchCondition;
+import com.crud.btt.member.model.dto.MemberDto;
 import com.crud.btt.member.model.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
-import org.hibernate.annotations.Fetch;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-import javax.json.JsonObject;
-import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -32,7 +34,7 @@ public class AdminController {
     private final MemberService memberService;
     private final LogRepository logRepository;
     private final EmotionRepository emotionRepository;
-
+    private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     //chatlist 출력용
 //    @GetMapping("counseling/chattinglist")
@@ -159,4 +161,21 @@ public class AdminController {
 //    public void delete(@PathVariable Long log_no){
 //        adminService.delete(log_no);
 //    }
+
+    //회원목록
+    @GetMapping("/admin/AdminMemberManager")
+    public Header<List<MemberDto>> memberList(@PageableDefault(sort = {"userCode"}) Pageable pageable,
+                                              SearchCondition searchCondition){
+        // logger.info(pageable.getPageSize()+"/"+pageable.getPageNumber());
+         logger.info("=====================Controller memberList==================" + adminService.memberList(pageable,searchCondition));
+        return adminService.memberList(pageable,searchCondition);
+    }
+
+    @PutMapping("/admin/PermitMember")
+    public MemberDto permitMember(@RequestBody MemberDto memberDto){
+        // logger.info(pageable.getPageSize()+"/"+pageable.getPageNumber());
+        logger.info("memberDto Permit method : "+memberDto.getUserId()+", "+memberDto.getUserCode());
+        return adminService.permitMember(memberDto);
+    }
+
 }

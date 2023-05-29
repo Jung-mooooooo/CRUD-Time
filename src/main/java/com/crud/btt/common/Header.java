@@ -16,6 +16,7 @@ public class Header<T> {
     private String description;
     private T data;
     private Pagination pagination;
+    private Long currentUserCode;
 
 
     public static <T> Header<T> OK() {
@@ -54,6 +55,18 @@ public class Header<T> {
                 .transactionTime(LocalDateTime.now())
                 .resultCode("ERROR")
                 .description(description)
+                .build();
+    }
+
+    //추가
+    public static <T> Header<T> OK(T data, Pagination pagination, Long currentUserCode) {
+        return (Header<T>) Header.builder()
+                .transactionTime(LocalDateTime.now())
+                .resultCode("OK")
+                .description("OK")
+                .data(data)
+                .pagination(pagination)
+                .currentUserCode(currentUserCode)
                 .build();
     }
 }

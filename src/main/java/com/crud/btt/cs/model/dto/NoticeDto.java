@@ -21,6 +21,7 @@ public class NoticeDto {
     private long adminCode;
     private String noticeOriginalFile;
     private String noticeRenameFile;
+    private String adminId;
 
     public NoticeDto(NoticeEntity noticeEntity){
         this.noticeTitle = noticeEntity.getNoticeTitle();

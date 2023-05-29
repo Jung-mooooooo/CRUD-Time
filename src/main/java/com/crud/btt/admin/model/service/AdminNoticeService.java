@@ -1,5 +1,7 @@
 package com.crud.btt.admin.model.service;
 
+import com.crud.btt.admin.entity.AdminEntity;
+import com.crud.btt.admin.entity.AdminRepository;
 import com.crud.btt.common.CustomPageable;
 import com.crud.btt.common.Header;
 import com.crud.btt.common.Pagination;
@@ -29,6 +31,7 @@ import java.util.TimeZone;
 public class AdminNoticeService {
 
     private final NoticeRepository noticeRepository;
+    private final AdminRepository adminRepository;
     private final NoticeRepositoryCustom noticeRepositoryCustom;
     private static final Logger logger = LoggerFactory.getLogger(AdminNoticeService.class);
 
@@ -52,10 +55,11 @@ public class AdminNoticeService {
                     .noticeContent(entity.getNoticeContent())
                     .noticeReadCount(entity.getNoticeReadCount())
                     .adminCode(entity.getAdminCode())
+                    .adminId(adminRepository.findById(entity.getAdminCode()).orElseGet(AdminEntity::new).getAdminId())
                     .noticeOriginalFile(entity.getNoticeOriginalFile())
                     .noticeRenameFile(entity.getNoticeRenameFile())
                     .build();
-
+            if(dto.getAdminId()==null) dto.setAdminId("탈퇴자");
             list.add(dto);
         }
 
@@ -75,14 +79,16 @@ public class AdminNoticeService {
             NoticeEntity noticeEntity = noticeRepository.findById(noticeNo).orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
             noticeEntity.setNoticeReadCount(noticeEntity.getNoticeReadCount() + 1);
             noticeEntity = noticeRepository.save(noticeEntity);
-
-            return NoticeDto.builder()
-                    .noticeNo(noticeEntity.getNoticeNo())
-                    .noticeTitle(noticeEntity.getNoticeTitle())
-                    .noticeContent(noticeEntity.getNoticeContent())
-                    .noticeReadCount(noticeEntity.getNoticeReadCount())
-                    .createAt(noticeEntity.getCreateAt())
-                    .build();
+            NoticeDto noticeDto = NoticeDto.builder()
+                                    .noticeNo(noticeEntity.getNoticeNo())
+                                    .adminId(adminRepository.findById(noticeEntity.getAdminCode()).orElseGet(AdminEntity::new).getAdminId())
+                                    .noticeTitle(noticeEntity.getNoticeTitle())
+                                    .noticeContent(noticeEntity.getNoticeContent())
+                                    .noticeReadCount(noticeEntity.getNoticeReadCount())
+                                    .createAt(noticeEntity.getCreateAt())
+                                    .build();
+            if(noticeDto.getAdminId()==null) noticeDto.setAdminId("탈퇴자");
+            return noticeDto;
         }
 
     // 글작성
@@ -106,6 +112,7 @@ public class AdminNoticeService {
         NoticeEntity noticeEntity = NoticeEntity.builder()
                 .noticeTitle(noticeDto.getNoticeTitle())
                 .noticeContent(noticeDto.getNoticeContent())
+//                .adminCode(Long.parseLong((String)session.getAttribute("idCode")))
                 .adminCode(noticeDto.getAdminCode())
                 .createAt(now)
                 .noticeReadCount(noticeDto.getNoticeReadCount())
