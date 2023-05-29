@@ -354,7 +354,7 @@ public class MemberController {
 
     //admin top5리스트
     @GetMapping("admin/userlist")
-    public Header<List<MemberDto>> getTop5UserList(){
+    public Header<List<MemberDto>> getTop5UserList() {
 
         List<MemberDto> list = new ArrayList<>();
         log.info("list" + list);

@@ -49,7 +49,8 @@ public class MemberDto {
         this.email = memberEntity.getEmail();
     }
 
-  public MemberEntity toEntity() {
+
+    public MemberEntity toEntity() {
         return MemberEntity.builder()
                 .userId(userId)
                 .userPw(userPw)

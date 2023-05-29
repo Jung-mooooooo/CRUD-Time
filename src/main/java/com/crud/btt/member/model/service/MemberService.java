@@ -98,6 +98,7 @@ public class MemberService implements UserDetailsService {
                 .phone(memberDto.getPhone())
                 .email(memberDto.getEmail())
                 .enrollDate(LocalDateTime.now())
+                .permit("Y")
                 .auth("ROLE_MEMBER")
                 .build()
         ).getUserCode();
