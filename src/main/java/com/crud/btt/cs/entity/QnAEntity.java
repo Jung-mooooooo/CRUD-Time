@@ -7,11 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -51,7 +49,7 @@ public class QnAEntity {
     @Column(name="QNA_REF")
     private Long qnaRef;
 
-    public QnAEntity(QnADto qnADto, Long userCode, String mode, Date createAt){
+    public QnAEntity(QnADto qnADto, Long userCode, String mode, LocalDateTime createAt){
         this.qnaTitle = qnADto.getQnaTitle();
         this.qnaContent = qnADto.getQnaContent();
         this.userCode = userCode;
@@ -59,7 +57,7 @@ public class QnAEntity {
         this.qnaPrivate = qnADto.getQnaPrivate();
     }
 
-    public QnAEntity(QnADto qnADto, Long adminCode, Date createAt, String qnaPrivate){
+    public QnAEntity(QnADto qnADto, Long adminCode, LocalDateTime createAt, String qnaPrivate){
         this.qnaRef = qnADto.getQnaRef();
         this.qnaTitle = qnADto.getQnaTitle();
         this.qnaContent = qnADto.getQnaContent();
@@ -67,5 +65,7 @@ public class QnAEntity {
         this.createAt = createAt;
         this.qnaPrivate = qnaPrivate;
     }
+
+
 }
 

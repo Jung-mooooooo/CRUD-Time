@@ -26,6 +26,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -160,8 +161,8 @@ public class QnAService {
 
         */
         QnAEntity qnaEntity = null;
-        if( qnaDto.getQnaRef() == null || qnaDto.getQnaRef() == 0 ) qnaEntity = new QnAEntity(qnaDto, 3L, "Answer", now);
-        else qnaEntity = new QnAEntity(qnaDto, 3L, now, qnARepository.findById(qnaDto.getQnaRef()).get().getQnaPrivate());
+        if( qnaDto.getQnaRef() == null || qnaDto.getQnaRef() == 0 ) qnaEntity = new QnAEntity(qnaDto, 3L, "Answer", LocalDateTime.now());
+        else qnaEntity = new QnAEntity(qnaDto, 3L, LocalDateTime.now(), qnARepository.findById(qnaDto.getQnaRef()).get().getQnaPrivate());
 
         if( qnARepository.findByQnaRef(qnaDto.getQnaRef()) == null ) qnaEntity = qnARepository.save(qnaEntity);
         else return null;
@@ -209,7 +210,7 @@ public class QnAService {
         QnAEntity qnaEntity = QnAEntity.builder().qnaNo(qnaUpdateDto.getQna_no())
                 .qnaTitle(qnaUpdateDto.getQna_title())
                 .qnaContent(qnaUpdateDto.getQna_content())
-                .createAt(now)
+                .createAt(LocalDateTime.now())
                 .qnaOriginalFile(qnaUpdateDto.getQna_original_file())
                 .qnaRenameFile(qnaUpdateDto.getQna_rename_file())
                 .build();

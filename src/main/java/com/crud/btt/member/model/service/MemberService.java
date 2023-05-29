@@ -108,6 +108,7 @@ public class MemberService implements UserDetailsService {
                 .phone(memberDto.getPhone())
                 .email(memberDto.getEmail())
                 .enrollDate(LocalDateTime.now())
+                .permit("Y")
                 .auth("ROLE_MEMBER")
                 .build()
         ).getUserCode();
@@ -262,23 +263,24 @@ public class MemberService implements UserDetailsService {
     }
 
     //Quit 테이블 유저정보 옮기기
-    public QuitEntity createQuit(MemberDto memberDto){
+    public QuitEntity createQuit(MemberDto memberDto) {
         log.info("-------------------------------------");
         log.info(memberDto.getUserName());
         return quitRepository.save(QuitEntity.builder()
-                        .quitUserCode(memberDto.getUserCode())
-                        .quitUserId(memberDto.getUserId())
-                        .quitUserPw(memberDto.getUserPw())
-                        .quitUserName(memberDto.getUserName())
-                        .quitPhone(memberDto.getPhone())
-                        .quitEmail(memberDto.getEmail())
-                        .quitKakaoId(memberDto.getKakaoId())
-                        .quitNaverId(memberDto.getNaverId())
-                        .quitGoogleId(memberDto.getGoogleId())
-                        .quitPermit("Q")
-                        .quitDate(LocalDateTime.now())
-                        .quitAuth(memberDto.getAuth())
-                        .build());
+                .quitUserCode(memberDto.getUserCode())
+                .quitUserId(memberDto.getUserId())
+                .quitUserPw(memberDto.getUserPw())
+                .quitUserName(memberDto.getUserName())
+                .quitPhone(memberDto.getPhone())
+                .quitEmail(memberDto.getEmail())
+                .quitKakaoId(memberDto.getKakaoId())
+                .quitNaverId(memberDto.getNaverId())
+                .quitGoogleId(memberDto.getGoogleId())
+                .quitPermit("Q")
+                .quitDate(LocalDateTime.now())
+                .quitAuth(memberDto.getAuth())
+                .build());
+    }
     //id find - phone
     public MemberEntity findIdP(String userName, String phone) {
         System.out.println("여기 서비스단 아이디");

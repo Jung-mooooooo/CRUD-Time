@@ -49,10 +49,14 @@ public class MemberDto {
         this.email = memberEntity.getEmail();
     }
 
-//    public MemberDto toEntity() {
-//        MemberDto dto = MemberDto.builder()
-//                .userName(userName).userId(userId).phone(phone).email(email).build();
-//        return dto;
-//    }
+    public MemberEntity toEntity() {
+        return MemberEntity.builder()
+                .userId(userId)
+                .userPw(userPw)
+                .userNamee(userName)
+                .phone(phone)
+                .email(email)
+                .build();
+    }
 
 }
